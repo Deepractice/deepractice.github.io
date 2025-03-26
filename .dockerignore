@@ -1,0 +1,12 @@
+# Git相关
+.git
+.gitignore
+
+# Docker相关
+Dockerfile
+.dockerignore
+
+# 开发环境相关
+node_modules/
+*.log
+README.md 

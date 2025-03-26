@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度实践 - AI智能协作平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#platform">平台介绍</a></li>
+                <li><a href="#values">公司理念</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="glitch-text" data-text="深度实践">深度实践</h1>
+            <h2>AI<span class="highlight">智能协作</span>平台</h2>
+            <p>助力您将创意转化为现实的智能生态系统</p>
+            <div class="cta-buttons">
+                <a href="#platform" class="btn primary">了解平台</a>
+                <a href="#contact" class="btn secondary">联系我们</a>
+            </div>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-circle" style="--delay: 0s; --size: 50px; --x: 10%; --y: 20%;"></div>
+            <div class="floating-circle" style="--delay: 2s; --size: 30px; --x: 70%; --y: 30%;"></div>
+            <div class="floating-circle" style="--delay: 1s; --size: 40px; --x: 20%; --y: 60%;"></div>
+            <div class="floating-circle" style="--delay: 3s; --size: 25px; --x: 80%; --y: 70%;"></div>
+            <div class="floating-circle" style="--delay: 2s; --size: 35px; --x: 40%; --y: 80%;"></div>
+            <div class="floating-circle" style="--delay: 1.5s; --size: 20px; --x: 65%; --y: 15%;"></div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">关于我们</h2>
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right" data-aos-delay="200">
+                    <p>深度实践是一家专注于AI智能协作领域的创新公司。我们致力于打造一个让创意者、开发者和企业能够无缝协作的智能平台，帮助用户将想法转化为现实。</p>
+                    <p>我们的团队由一群充满激情的AI专家、产品设计师和开发者组成，他们共同的目标是创造一个更高效、更智能的协作生态系统。</p>
+                </div>
+                <div class="about-image" data-aos="fade-left" data-aos-delay="400">
+                    <img src="images/about-us.svg" alt="关于我们" class="tilt-element">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术图标区域 -->
+    <div class="tech-icon-section">
+        <div class="container">
+            <div class="floating-tech-icons">
+                <div class="tech-icon" style="--rotate-x: 15deg; --rotate-y: -20deg; --translate-z: 20px;">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="tech-icon" style="--rotate-x: -10deg; --rotate-y: 15deg; --translate-z: 40px;">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="tech-icon" style="--rotate-x: 20deg; --rotate-y: 10deg; --translate-z: 30px;">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="tech-icon" style="--rotate-x: -15deg; --rotate-y: -15deg; --translate-z: 25px;">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="tech-icon" style="--rotate-x: 5deg; --rotate-y: 25deg; --translate-z: 35px;">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="platform" class="platform">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">AI智能协作平台</h2>
+            <div class="features">
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>智能Agent</h3>
+                    <p>我们的AI代理能够理解您的需求，自动完成复杂任务，让协作更加高效。</p>
+                    <div class="card-blob"></div>
+                </div>
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>深度学习</h3>
+                    <p>平台基于先进的深度学习技术，能够不断学习和适应各种工作流程。</p>
+                    <div class="card-blob"></div>
+                </div>
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>团队协作</h3>
+                    <p>无缝整合团队成员的工作，提供实时反馈和智能建议。</p>
+                    <div class="card-blob"></div>
+                </div>
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>项目管理</h3>
+                    <p>智能跟踪项目进度，自动分配任务，确保项目按时高质量完成。</p>
+                    <div class="card-blob"></div>
+                </div>
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>数据分析</h3>
+                    <p>深入挖掘团队协作数据，提供可视化分析报告，助您做出更明智的决策。</p>
+                    <div class="card-blob"></div>
+                </div>
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>开放集成</h3>
+                    <p>提供丰富的API接口，无缝对接您常用的工具和系统，构建完整的工作流。</p>
+                    <div class="card-blob"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 动态连接线 -->
+        <div class="connection-lines">
+            <canvas id="connectionCanvas"></canvas>
+        </div>
+    </section>
+
+    <section id="values" class="values">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">公司理念</h2>
+            <div class="values-container">
+                <div class="value-card" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="value-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>实践</h3>
+                    <p>只有在实践中才能发现真正的价值。我们鼓励用户不断尝试和实践，从中获取宝贵经验。</p>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="value-card" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>协作</h3>
+                    <p>高效的协作是创新的基础。通过AI智能分析团队成员的专长，促进团队间的无缝协作与沟通。</p>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="value-card" data-aos="zoom-in-up" data-aos-delay="300">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>创新</h3>
+                    <p>创新是我们的核心驱动力。我们不断探索新技术，为用户提供更智能、更高效的协作解决方案。</p>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3D视差效果区域 -->
+        <div class="parallax-container">
+            <div class="parallax-layer" data-depth="0.2">
+                <div class="circle-decoration"></div>
+            </div>
+            <div class="parallax-layer" data-depth="0.4">
+                <div class="square-decoration"></div>
+            </div>
+            <div class="parallax-layer" data-depth="0.6">
+                <div class="triangle-decoration"></div>
+            </div>
+            <div class="parallax-layer" data-depth="0.8">
+                <div class="dot-pattern"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">联系我们</h2>
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>7@deepracticex.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+86 192 3741 0938</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>长沙市雨花区复地星光天地6号楼</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form" data-aos="fade-left" data-aos-delay="300">
+                    <div class="form-group">
+                        <input type="text" placeholder="您的姓名" required>
+                        <span class="input-focus-effect"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="您的邮箱" required>
+                        <span class="input-focus-effect"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="主题">
+                        <span class="input-focus-effect"></span>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="您的留言" required></textarea>
+                        <span class="input-focus-effect"></span>
+                    </div>
+                    <button type="submit" class="btn primary pulse-effect">发送留言</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>实践·协作·创新</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>导航</h3>
+                        <ul>
+                            <li><a href="#home">首页</a></li>
+                            <li><a href="#about">关于我们</a></li>
+                            <li><a href="#platform">平台介绍</a></li>
+                            <li><a href="#values">公司理念</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>法律信息</h3>
+                        <ul>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">服务条款</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 长沙深度实践智能科技有限公司. 保留所有权利.</p>
+                <div class="footer-decoration"></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入第三方库 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+    
+    <!-- 主脚本 -->
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <style>
+    .bg { fill: #151c24; }
+    .accent { fill: #4dabf7; }
+    .accent-light { fill: #74b9ff; }
+    .text-dark { fill: #263747; }
+    .text-light { fill: #f8f9fa; }
+    .shadow { fill: rgba(0,0,0,0.3); }
+    .team-member { fill: #ff6b6b; }
+    .team-member-alt { fill: #ff8a65; }
+    .device { fill: #263747; }
+    .device-screen { fill: #1a2634; }
+    .device-detail { fill: #151c24; }
+    .code-line { fill: #4dabf7; }
+    .code-line-alt { fill: #40c057; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    .pulse { animation: pulse 3s infinite ease-in-out; }
+  </style>
+  
+  <!-- Background Shape -->
+  <rect class="bg" x="0" y="0" width="800" height="600" rx="20"/>
+  
+  <!-- Center Circle with Team -->
+  <circle class="accent-light" opacity="0.2" cx="400" cy="300" r="180"/>
+  <circle class="accent-light" opacity="0.3" cx="400" cy="300" r="120"/>
+  
+  <!-- Team Member Icons -->
+  <g class="pulse">
+    <!-- AI Expert -->
+    <circle class="accent" cx="400" cy="180" r="40"/>
+    <circle class="text-light" cx="400" cy="170" r="12"/>
+    <rect class="text-light" x="380" y="185" width="40" height="20" rx="10"/>
+    
+    <!-- Developer -->
+    <circle class="team-member" cx="520" cy="300" r="40"/>
+    <rect class="text-light" x="505" y="285" width="30" height="8" rx="2"/>
+    <rect class="text-light" x="505" y="300" width="30" height="8" rx="2"/>
+    <rect class="text-light" x="505" y="315" width="30" height="8" rx="2"/>
+    
+    <!-- Designer -->
+    <circle class="team-member-alt" cx="280" cy="300" r="40"/>
+    <circle class="text-light" cx="270" cy="290" r="10"/>
+    <circle class="text-light" cx="290" cy="290" r="10"/>
+    <path class="text-light" d="M265,310 Q280,325 295,310"/>
+    
+    <!-- Product Manager -->
+    <circle class="accent" cx="400" cy="420" r="40"/>
+    <rect class="text-light" x="380" y="405" width="40" height="30" rx="5"/>
+    <line x1="385" y1="415" x2="415" y2="415" stroke="#74b9ff" stroke-width="3"/>
+    <line x1="385" y1="425" x2="405" y2="425" stroke="#74b9ff" stroke-width="3"/>
+  </g>
+  
+  <!-- Connection Lines -->
+  <line x1="400" y1="220" x2="400" y2="260" stroke="#4dabf7" stroke-width="3" stroke-dasharray="5,5"/>
+  <line x1="400" y1="340" x2="400" y2="380" stroke="#4dabf7" stroke-width="3" stroke-dasharray="5,5"/>
+  <line x1="435" y1="300" x2="480" y2="300" stroke="#4dabf7" stroke-width="3" stroke-dasharray="5,5"/>
+  <line x1="320" y1="300" x2="365" y2="300" stroke="#4dabf7" stroke-width="3" stroke-dasharray="5,5"/>
+  
+  <!-- Devices -->
+  <!-- Laptop -->
+  <g transform="translate(150, 450)">
+    <rect class="device" x="0" y="0" width="120" height="80" rx="5"/>
+    <rect class="device-screen" x="5" y="5" width="110" height="70" rx="2"/>
+    <rect class="device-detail" x="40" y="80" width="40" height="5" rx="2"/>
+    
+    <!-- Code on Screen -->
+    <rect class="code-line" x="15" y="15" width="70" height="3" rx="1"/>
+    <rect class="code-line-alt" x="15" y="25" width="50" height="3" rx="1"/>
+    <rect class="code-line" x="15" y="35" width="60" height="3" rx="1"/>
+    <rect class="code-line-alt" x="15" y="45" width="40" height="3" rx="1"/>
+    <rect class="code-line" x="15" y="55" width="55" height="3" rx="1"/>
+  </g>
+  
+  <!-- Tablet -->
+  <g transform="translate(650, 450)">
+    <rect class="device" x="0" y="0" width="80" height="100" rx="8"/>
+    <rect class="device-screen" x="5" y="5" width="70" height="90" rx="5"/>
+    <circle class="device-detail" cx="40" cy="100" r="3"/>
+    
+    <!-- UI Design on Screen -->
+    <rect class="accent" x="15" y="15" width="50" height="15" rx="3"/>
+    <rect class="text-light" x="15" y="40" width="30" height="5" rx="1" opacity="0.7"/>
+    <rect class="text-light" x="15" y="50" width="50" height="5" rx="1" opacity="0.7"/>
+    <rect class="text-light" x="15" y="60" width="40" height="5" rx="1" opacity="0.7"/>
+    <rect class="accent-light" x="15" y="75" width="20" height="10" rx="5"/>
+  </g>
+  
+  <!-- Mobile -->
+  <g transform="translate(400, 520)">
+    <rect class="device" x="-15" y="-30" width="30" height="60" rx="5"/>
+    <rect class="device-screen" x="-12" y="-27" width="24" height="54" rx="3"/>
+    <circle class="device-detail" cx="0" cy="32" r="2"/>
+    
+    <!-- App Design on Screen -->
+    <rect class="accent" x="-8" y="-23" width="16" height="8" rx="2"/>
+    <rect class="text-light" x="-8" y="-12" width="16" height="3" rx="1" opacity="0.7"/>
+    <rect class="text-light" x="-8" y="-7" width="12" height="3" rx="1" opacity="0.7"/>
+    <rect class="text-light" x="-8" y="-2" width="14" height="3" rx="1" opacity="0.7"/>
+    <rect class="accent-light" x="-8" y="5" width="16" height="6" rx="3"/>
+    <rect class="text-light" x="-8" y="15" width="16" height="3" rx="1" opacity="0.7"/>
+    <rect class="text-light" x="-8" y="20" width="10" height="3" rx="1" opacity="0.7"/>
+  </g>
+</svg> 
