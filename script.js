@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 表单提交事件
     initFormSubmit();
+    
+    // 评估中心相关交互
+    initEvaluationInteractions();
 });
 
 // 粒子背景初始化
@@ -428,4 +431,58 @@ techIcons.forEach(icon => {
         
         this.style.transform = `rotateX(${rotateX}) rotateY(${rotateY}) translateZ(${translateZ})`;
     });
-}); 
+});
+
+// 评估中心相关交互
+function initEvaluationInteractions() {
+    // 标签切换
+    const tabs = document.querySelectorAll('.evaluation-tabs .tab');
+    if (tabs.length > 0) {
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    }
+    
+    // 测试用例悬停效果
+    const testCases = document.querySelectorAll('.test-case');
+    if (testCases.length > 0) {
+        testCases.forEach(testCase => {
+            testCase.addEventListener('mouseenter', function() {
+                this.style.borderColor = 'rgba(77, 171, 247, 0.5)';
+            });
+            
+            testCase.addEventListener('mouseleave', function() {
+                this.style.borderColor = 'rgba(77, 171, 247, 0.1)';
+            });
+        });
+    }
+    
+    // 圆形进度条动画
+    const circle = document.querySelector('.circular-chart .circle');
+    if (circle) {
+        setTimeout(() => {
+            const value = circle.getAttribute('stroke-dasharray').split(',')[0];
+            circle.style.strokeDasharray = '0, 100';
+            setTimeout(() => {
+                circle.style.transition = 'stroke-dasharray 1.5s ease-out';
+                circle.style.strokeDasharray = `${value}, 100`;
+            }, 100);
+        }, 500);
+    }
+    
+    // 指标条动画
+    const metricBars = document.querySelectorAll('.metric-bar');
+    if (metricBars.length > 0) {
+        metricBars.forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => {
+                bar.style.transition = 'width 1.5s ease-out';
+                bar.style.width = width;
+            }, 100);
+        });
+    }
+} 
