@@ -393,9 +393,9 @@ frontend-developer-assistant.prompt
 
 ## 可视化效果示例
 
-![图片](https://mmbiz.qpic.cn/sz_mmbiz_png/G9EbG9MtFahpknCia5tlRAEElHwvfNONWhd5Eexpxp3YFCJe8RaAibc4MPWGAenQ82xpibppp78ZbibGWsHf1qJPpw/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![图片](../images/blog/2025-04-02%20DPML/1.jpg)
 
-![图片](https://mmbiz.qpic.cn/sz_mmbiz_png/G9EbG9MtFahpknCia5tlRAEElHwvfNONWqt1XJ1ngFHYOIqYwBrmQBJiaZDQticCD4NmHhcUV6TrBNE2zH7vcAibfw/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![图片](../images/blog/2025-04-02%20DPML/2.jpg)
 
 ## 未来发展
 
