@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPML 一种结构化的 Prompt 标记语言设计方案 - 深度实践博客</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+        /* 博客文章页面特定样式 */
+        .article-container {
+            max-width: 900px;
+            margin: 150px auto 60px;
+            padding: 0 20px;
+        }
+        
+        /* 确保内容不被导航栏遮挡 */
+        header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .article-title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
+        }
+        
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .article-date {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .article-date i {
+            margin-right: 5px;
+        }
+        
+        .article-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .article-content h2 {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: #a777e3;
+        }
+        
+        .article-content h4 {
+            font-size: 1.2rem;
+            margin: 25px 0 10px;
+            color: #6e8efb;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+        
+        .article-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid #a777e3;
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .article-content pre {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .article-content code {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .article-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .back-to-blogs {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-blogs:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .article-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .article-container {
+                margin-top: 100px;
+            }
+            
+            .article-content {
+                padding: 25px;
+            }
+            
+            .article-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">首页</a></li>
+                <li><a href="../blog.html" class="active">博客</a></li>
+                <li><a href="../index.html#about">关于我们</a></li>
+                <li><a href="../index.html#platform">平台介绍</a></li>
+                <li><a href="../index.html#values">公司理念</a></li>
+                <li><a href="../index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="article-container">
+        <article>
+            <div class="article-header" data-aos="fade-up">
+                <h1 class="article-title">DPML 一种结构化的 Prompt 标记语言设计方案</h1>
+                <p class="article-subtitle">创建一种专为AI提示词工程设计的标准化标记语言</p>
+                <div class="article-meta">
+                    <span class="article-date">
+                        <i class="fas fa-calendar"></i>
+                        2025年4月2日
+                    </span>
+                </div>
+            </div>
+            
+            <div class="article-content" data-aos="fade-up" data-aos-delay="200">
+                <h2>基本定义</h2>
+                
+                <p>DPML（Deepractice Prompt Markup Language）是一种专为AI提示词工程设计的标记语言，采用XML风格的语法结构，旨在提供结构化、可扩展且易于使用的提示词编写框架。</p>
+                
+                <h2>设计思想</h2>
+                
+                <p>当提示词的量级和复杂度达到一定水平后，我们需要一种通用的模式去管理提示词。这种通用的模式既要考虑人与大模型的易理解性（易读，职责单一，逻辑清晰），也要考虑计算机的可解释性（方便未来计算机系统解析，运算，验证，可视化等功能）。我们综合考虑后，选择适用 Markup Language 结合 Markdown 作为 提示词的结构化语言。遂提出了 Deepractice Prompt Markup Language</p>
+                
+                <p>我们的设计原则是 简单（奥卡姆剃刀），模块化（可复用），可扩展（支持迭代）</p>
+                
+                <p>我们信奉 Unix 的设计哲学 "Everything is a file.", 这在AI 时代非常具有意义，将 AI 人类 计算机 有效的连接在一起。</p>
+                
+                <h2>核心特点</h2>
+                
+                <ol>
+                    <li><strong>结构化</strong>: 使用标签定义不同功能模块</li>
+                    <li><strong>可扩展</strong>: 支持模块化设计和渐进式复杂性</li>
+                    <li><strong>易于理解</strong>: 对人类和机器都友好的语法结构</li>
+                    <li><strong>可视化潜力</strong>: 便于开发编辑器和可视化工具</li>
+                </ol>
+                
+                <h2>文件规则</h2>
+                
+                <p>支持解析 <code>.dpml</code> 和 <code>.prompt</code> 后缀的文件</p>
+                
+                <h2>顶层结构</h2>
+                
+                <pre>
+&lt;prompt&gt;
+  &lt;role&gt;...&lt;/role&gt;           &lt;!-- 对应RRP：角色定义、职责、权限 --&gt;
+  &lt;thinking&gt;...&lt;/thinking&gt;   &lt;!-- 对应CoT：思考过程、推理链 --&gt;
+  &lt;executing&gt;...&lt;/executing&gt;&lt;!-- 对应ESP：执行步骤、方法 --&gt;
+  &lt;testing&gt;...&lt;/testing&gt;     &lt;!-- 对应质量控制、验证标准 --&gt;
+  &lt;protocol&gt;...&lt;/protocol&gt;   &lt;!-- 对应交互协议、规则 --&gt;
+  &lt;context&gt;...&lt;/context&gt;     &lt;!-- 对应背景信息、环境 --&gt;
+  &lt;task&gt;...&lt;/task&gt;           &lt;!-- 对应任务定义、目标 --&gt;
+  &lt;workflow&gt;...&lt;/workflow&gt;   &lt;!-- 对应CWP：工作流、协作模式 --&gt;
+  &lt;evaluation&gt;...&lt;/evaluation&gt;&lt;!-- 对应评估标准、成功指标 --&gt;
+&lt;/prompt&gt;
+                </pre>
+                
+                <h2>属性定义规则</h2>
+                
+                <h3>通用属性</h3>
+                
+                <p>DPML中的通用属性是可以应用于多种标签的核心属性，用于提供标签的元数据和行为控制：</p>
+                
+                <ul>
+                    <li><strong>id</strong>: 标签的唯一标识</li>
+                    <li><strong>version</strong>: 版本号</li>
+                    <li><strong>ref</strong>: 引用，支持组件的相对路径，绝对路径，id引用，http引用</li>
+                    <li><strong>schema</strong>: 提供验证规则元文档</li>
+                </ul>
+                
+                <h4>id 定义规则</h4>
+                
+                <p>id属性用于为DPML元素提供唯一标识符，便于引用和管理：</p>
+                
+                <ol>
+                    <li><strong>唯一性范围</strong>:</li>
+                    <ul>
+                        <li>id在单个DPML文档内必须唯一</li>
+                        <li>不同文档中可以使用相同的id</li>
+                    </ul>
+                
+                    <li><strong>命名规则</strong>:</li>
+                    <ul>
+                        <li>必须以字母或下划线开头</li>
+                        <li>只能包含字母、数字、下划线、连字符和点</li>
+                        <li>区分大小写</li>
+                    </ul>
+                
+                    <li><strong>最佳实践</strong>:</li>
+                    <ul>
+                        <li>使用有意义的描述性名称</li>
+                        <li>可采用层次结构（例如<code>section-subsection-element</code>）</li>
+                        <li>避免过于通用的名称，如"section1"、"item"等</li>
+                    </ul>
+                
+                    <li><strong>冲突处理</strong>:</li>
+                    <ul>
+                        <li>同一文档中的ID冲突被视为错误</li>
+                        <li>应在验证阶段检测并报告冲突</li>
+                        <li>需开发者手动修正冲突</li>
+                    </ul>
+                </ol>
+                
+                <pre>
+&lt;!-- id使用示例 --&gt;
+&lt;prompt id="financial-analysis-template"&gt;
+  &lt;role id="financial-analyst"&gt;...&lt;/role&gt;
+  &lt;/executing&gt;
+&lt;/prompt&gt;
+                </pre>
+                
+                <h4>version 定义以及引用规则</h4>
+                
+                <p>version属性用于标识DPML文档遵循的规范版本和文档自身版本：</p>
+                
+                <ol>
+                    <li><strong>格式规范</strong>:</li>
+                    <ul>
+                        <li>采用语义化版本格式：主版本号.次版本号（如"2.0"）</li>
+                        <li>主版本号表示不兼容的结构变化</li>
+                        <li>次版本号表示向后兼容的功能增加</li>
+                    </ul>
+                
+                    <li><strong>用途</strong>:</li>
+                    <ul>
+                        <li><strong>DPML规范版本声明</strong>：声明文档遵循的DPML核心规范版本</li>
+                        <li><strong>处理引擎兼容性</strong>：帮助处理引擎确定如何解析文档</li>
+                        <li><strong>功能可用性检查</strong>：确定文档中可使用的功能特性</li>
+                    </ul>
+                
+                    <li><strong>处理规则</strong>:</li>
+                    <ul>
+                        <li>处理引擎首先检查是否支持该版本</li>
+                        <li>不支持的版本应产生明确的错误信息</li>
+                        <li>可以指定兼容性处理模式</li>
+                    </ul>
+                </ol>
+                
+                <pre>
+&lt;!-- version使用示例 --&gt;
+&lt;prompt version="2.0"&gt;
+  &lt;!-- 使用DPML 2.0规范的功能和结构 --&gt;
+&lt;/prompt&gt;
+                </pre>
+                
+                <ol>
+                    <li><strong>与schema的关系</strong>:</li>
+                    <ul>
+                        <li>version主要控制DPML核心规范和处理模型</li>
+                        <li>schema主要控制具体验证规则和领域扩展</li>
+                    </ul>
+                </ol>
+                
+                <h4>ref 引用功能定义</h4>
+                
+                <p>ref属性用于引用其他DPML元素或外部资源，实现内容重用和模块化：</p>
+                
+                <ol>
+                    <li><strong>引用类型</strong>:</li>
+                    <ul>
+                        <li><strong>ID引用</strong>：引用当前文档中的元素</li>
+                        <li><strong>文件路径引用</strong>：引用本地文件系统中的文档</li>
+                        <li><strong>HTTP/HTTPS引用</strong>：引用网络资源</li>
+                        <li><strong>URI模式引用</strong>：使用特定协议引用资源</li>
+                    </ul>
+                
+                    <li><strong>引用格式</strong>:</li>
+                    <ul>
+                        <li>ID引用：<code>ref="#element-id"</code></li>
+                        <li>相对路径：<code>ref="./templates/finance.xml#analyst-role"</code></li>
+                        <li>绝对路径：<code>ref="/usr/local/dpml/templates/finance.xml#analyst-role"</code></li>
+                        <li>HTTP引用：<code>ref="https://dpml.org/templates/finance.xml#analyst-role"</code></li>
+                        <li>DPML协议：<code>ref="dpml:templates/finance#analyst-role"</code></li>
+                    </ul>
+                
+                    <li><strong>引用行为</strong>:</li>
+                    <ul>
+                        <li>默认情况下，引用作为基础模板，本地定义可以覆盖和扩展引用内容</li>
+                        <li>可以通过<code>ref-mode</code>属性控制引用行为：<pre>&lt;role ref="./templates/analyst.xml" ref-mode="extend"&gt;
+  &lt;!-- 覆盖或扩展引用内容 --&gt;
+&lt;/role&gt;</pre></li>
+                        <li><code>ref-mode="extend"</code>（默认）：引用内容作为基础，可覆盖和扩展</li>
+                        <li><code>ref-mode="replace"</code>：引用内容完全替换当前元素内容</li>
+                    </ul>
+                
+                    <li><strong>合并规则</strong>（当<code>ref-mode="extend"</code>）:</li>
+                    <ul>
+                        <li>当前元素的属性优先于引用元素的属性</li>
+                        <li>同名子元素被覆盖，其他元素被保留</li>
+                        <li>具有相同ID的子元素会被合并</li>
+                    </ul>
+                </ol>
+                
+                <pre>
+&lt;!-- ref使用示例 --&gt;
+&lt;!-- 引用当前文档中的元素 --&gt;
+&lt;context ref="#market-data" /&gt;
+
+&lt;!-- 引用外部文件中的元素 --&gt;
+&lt;role ref="./templates/analyst.xml"&gt;
+  &lt;!-- 覆盖部分内容 --&gt;
+  &lt;identity&gt;资深金融分析师&lt;/identity&gt;
+  &lt;!-- 添加新内容 --&gt;
+  &lt;specialization&gt;新兴市场&lt;/specialization&gt;
+&lt;/role&gt;
+                </pre>
+                
+                <h3>schema 验证规则元文档</h3>
+                
+                <p>schema属性用于指定DPML文档的验证规则来源：</p>
+                
+                <ol>
+                    <li><strong>用途</strong>:</li>
+                    <ul>
+                        <li>定义文档结构的验证规则</li>
+                        <li>指定领域特定的标签和属性</li>
+                        <li>提供自动验证和智能提示支持</li>
+                    </ul>
+                
+                    <li><strong>引用格式</strong>:</li>
+                    <ul>
+                        <li>URI引用：<code>schema="http://dpml.deepracticex.com/schemas/finance-v2.xsd"</code></li>
+                    </ul>
+                
+                    <li><strong>验证流程</strong>:</li>
+                    <ul>
+                        <li>解析器加载指定的schema定义</li>
+                        <li>验证DPML文档是否符合schema规范</li>
+                        <li>提供详细的错误信息和位置</li>
+                    </ul>
+                
+                    <li><strong>与version的关系</strong>:</li>
+                    <ul>
+                        <li>schema关注具体的验证规则和结构定义</li>
+                        <li>version关注DPML核心语法和处理模型</li>
+                        <li>两者结合确保文档的完整性和正确性</li>
+                    </ul>
+                </ol>
+                
+                <pre>
+&lt;!-- schema使用示例 --&gt;
+&lt;prompt 
+  version="2.0" 
+  schema="http://dpml.deepracticex.com/schemas/finance-v2.xsd"&gt;
+  &lt;!-- 内容将根据finance-v2模式进行验证 --&gt;
+&lt;/prompt&gt;
+                </pre>
+                
+                <h2>渐进式复杂性</h2>
+                
+                <p>因为大模型本身具有类人的思考能力，无需像计算机一样制定非常详细的规则，所以我们决定暂时不深化制定二级标签下的子标签定义。而是随着实践经验逐步迭代，或者为不同行业提供最佳实践版本。</p>
+                
+                <p>我们目前可以基于 dpml 和 markdown 的结合，在二级标签之下使用 markdown 定义提示词，即提供了灵活性，可读性，又实现了 结构化，模块化。</p>
+                
+                <h2>应用实例</h2>
+                
+                <p>以下是一个针对前端工程师的完整DPML示例，展示了如何使用DPML结构化提示词:</p>
+                
+                <pre>
+frontend-developer-assistant.prompt
+&lt;prompt
+  version="1.0"
+  id="frontend-developer-assistant"
+  schema="http://dpml.deepracticex.com/schemas/v1.xsd"
+  lang="zh-CN"&gt;
+  
+
+&lt;role id="frontend-engineer"&gt;
+    # 资深前端工程师
+    
+    ## 专业背景
+    * 5年以上前端开发经验
+    * 精通HTML5、CSS3和JavaScript(ES6+)
+    * 熟悉主流前端框架：React、Vue、Angular
+    * 深入了解现代前端工程化工具：Webpack、Vite、Babel等
+    * 具备良好的性能优化、跨浏览器兼容性和响应式设计经验
+    * 掌握前端安全最佳实践和无障碍设计
+    
+    ## 专业优势
+    * 代码质量和工程化：编写可维护、高性能的前端代码
+    * UI/UX实现：将设计稿精确转化为高质量前端界面
+    * 问题排查：快速定位和解决前端常见问题
+    * 技术选型：根据项目需求推荐合适的技术栈
+    
+    ## 工作范围
+    * 提供前端开发相关的代码实现和优化建议
+    * 解答前端技术问题和最佳实践
+    * 提供前端架构和技术选型建议
+    * 分析前端性能问题并提供优化方案
+    
+    ## 限制
+    * 不提供完整的项目实现，专注于关键代码和解决方案
+    * 非前端相关技术问题可能需要其他专家支持
+    * 仅提供公开可用的API和技术信息，不讨论破解或侵权内容
+&lt;/role&gt;
+
+&lt;thinking id="problem-solving-approach"&gt;
+    # 问题分析框架
+    
+    ## 代码问题分析流程
+    1. **问题理解**
+       - 明确问题描述和预期结果
+       - 识别相关技术栈和环境
+       - 确认问题优先级和影响范围
+    
+    2. **情境分析**
+       - 分析代码上下文和执行环境
+       - 考虑浏览器兼容性因素
+       - 评估性能和用户体验影响
+    
+    3. **解决方案评估**
+       - 生成多种可能的解决方案
+       - 使用以下标准评估每种方案:
+         * 实现复杂度
+         * 维护成本
+         * 性能影响
+         * 兼容性考虑
+         * 最佳实践符合度
+       - 选择最佳方案或提供方案比较
+&lt;/thinking&gt;
+
+&lt;executing id="coding-standards"&gt;
+    # 前端开发执行标准
+    
+    ## 代码编写准则
+    1. **可读性优先**
+       - 使用清晰的变量和函数命名
+       - 添加适当的注释解释复杂逻辑
+       - 保持一致的代码风格和缩进
+    
+    2. **模块化与组件化**
+       - 遵循单一职责原则
+       - 分离关注点，逻辑与UI分离
+       - 合理组织文件和目录结构
+    
+    3. **性能考虑**
+       - 避免不必要的重渲染
+       - 优化资源加载和执行
+       - 使用适当的缓存策略
+    
+    4. **安全性**
+       - 防止XSS和CSRF漏洞
+       - 安全处理用户输入
+       - 避免暴露敏感信息
+       
+    5. **无障碍性**
+       - 使用语义化HTML
+       - 添加适当的ARIA属性
+       - 支持键盘导航
+&lt;/executing&gt;
+&lt;/prompt&gt;
+                </pre>
+                
+                <p>这个示例展示了如何使用DPML创建一个全面的前端工程师助手提示词。文档包含以下关键部分：</p>
+                
+                <ol>
+                    <li><strong>基本元数据</strong>：版本、ID、schema和语言信息</li>
+                    <li><strong>详细元数据</strong>：通过<code>``</code>标签提供作者、创建时间、关键词等信息</li>
+                    <li><strong>角色定义</strong>：使用<code>``</code>标签定义前端工程师的专业背景、优势和限制</li>
+                    <li><strong>思考框架</strong>：使用<code>``</code>标签定义解决问题的思考流程</li>
+                    <li><strong>执行标准</strong>：使用<code>``</code>标签定义代码编写的标准和流程</li>
+                </ol>
+                
+                <p>在每个标签下，使用Markdown格式组织内容，提供清晰的层次结构和丰富的表达。这种方式既保证了内容的结构化组织，又维持了编写和阅读的便捷性。</p>
+                
+                <p>此示例可以作为前端开发领域创建DPML提示词的参考模板，也可以根据特定需求进一步定制和扩展。</p>
+                
+                <h2>可视化效果示例</h2>
+                
+                <div class="text-center">
+                    <img src="https://mmbiz.qpic.cn/sz_mmbiz_png/G9EbG9MtFahpknCia5tlRAEElHwvfNONWhd5Eexpxp3YFCJe8RaAibc4MPWGAenQ82xpibppp78ZbibGWsHf1qJPpw/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="DPML可视化示例1" class="article-image">
+                </div>
+                
+                <div class="text-center">
+                    <img src="https://mmbiz.qpic.cn/sz_mmbiz_png/G9EbG9MtFahpknCia5tlRAEElHwvfNONWqt1XJ1ngFHYOIqYwBrmQBJiaZDQticCD4NmHhcUV6TrBNE2zH7vcAibfw/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="DPML可视化示例2" class="article-image">
+                </div>
+                
+                <h2>未来发展</h2>
+                
+                <ul>
+                    <li>引入 &lt;meta&gt 标签定义元信息</li>
+                    <li>引入 &lt;llm&gt; &lt;mcp&gt; &lt;tool&gt; &lt;rag&gt; 等 agent 组装和交互要素</li>
+                    <li>开发可视化，解释器，IDE插件等配套工具</li>
+                    <li>定义 dpml schema的 xsd 规则</li>
+                    <li>基于 dpml 开发 prompt 管理系统，包含文件管理，版本管理，prompt 测试体系，prompt 领域模板库</li>
+                    <li>持续实践输出领域模版</li>
+                    <li>为Prompt标准持续贡献我们的力量</li>
+                </ul>
+                
+                <div class="article-footer">
+                    <p><em>Deepractice - 深度实践</em></p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="../blog.html" class="back-to-blogs">
+                    <i class="fas fa-arrow-left"></i> 返回博客列表
+                </a>
+            </div>
+        </article>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html> 
