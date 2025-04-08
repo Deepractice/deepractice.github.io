@@ -393,9 +393,9 @@ frontend-developer-assistant.prompt
 
 ## 可视化效果示例
 
-![图片](../images/blog/2025-04-02%20DPML/1.jpg)
+![图片](../../images/blog/2025-04-02%20DPML/1.jpg)
 
-![图片](../images/blog/2025-04-02%20DPML/2.jpg)
+![图片](../../images/blog/2025-04-02%20DPML/2.jpg)
 
 ## 未来发展
 
