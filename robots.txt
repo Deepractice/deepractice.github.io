@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Sitemap: https://deepracticex.com/sitemap.xml
+
+# 百度Spider
+User-agent: Baiduspider
+Allow: /
+
+# 谷歌Spider
+User-agent: Googlebot
+Allow: /
+
+# 图片、媒体文件允许访问
+User-agent: Googlebot-Image
+Allow: /images/
+
+User-agent: Baiduspider-image
+Allow: /images/ 
