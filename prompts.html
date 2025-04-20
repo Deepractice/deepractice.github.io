@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提示词库 - 深度实践 | DeepracticeX</title>
+    <meta name="description" content="深度实践提示词库收集了各种高质量AI提示词模板，帮助您更高效地使用AI工具。">
+    <meta name="keywords" content="深度实践,AI提示词,Prompt,AI模板,提示词库">
+    <meta name="author" content="深度实践">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="提示词库 - 深度实践">
+    <meta property="og:description" content="深度实践提示词库收集了各种高质量AI提示词模板，帮助您更高效地使用AI工具。">
+    <meta property="og:image" content="https://deepracticex.com/images/image.png">
+    <meta property="og:url" content="https://deepracticex.com/prompts.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://deepracticex.com/prompts.html">
+    <link rel="icon" href="images/image.png" type="image/x-icon">
+    <link rel="shortcut icon" href="images/image.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/image.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?68df9bb908cdb70728b045e41812449b";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <!-- 百度自动推送 -->
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+    <!-- JSON-LD 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "深度实践",
+        "url": "https://deepracticex.com",
+        "logo": "https://deepracticex.com/images/image.png",
+        "description": "专注于AI智能协作领域的创新平台，助力企业和个人将创意转化为现实的智能生态系统。",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "长沙市",
+            "addressRegion": "湖南省",
+            "streetAddress": "雨花区复地星光天地6号楼",
+            "addressCountry": "CN"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+86-192-3741-0938",
+            "contactType": "customer service",
+            "email": "7@deepracticex.com"
+        },
+        "sameAs": [
+            "https://github.com/Deepractice"
+        ]
+    }
+    </script>
+    <style>
+        /* 提示词库页面特有样式 */
+        .prompts-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 150px 0 20px;
+        }
+        
+        .search-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 1.5rem auto 1.5rem;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 18px 25px;
+            border-radius: 50px;
+            border: 3px solid var(--primary-color);
+            background: rgba(21, 28, 36, 0.8);
+            color: var(--text-color);
+            font-size: 1.3rem;
+            box-shadow: 0 0 25px rgba(77, 171, 247, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 30px rgba(77, 171, 247, 0.5);
+            border-color: #75bbf7;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0.5rem 0 2.5rem;
+            gap: 1rem;
+        }
+        
+        .category-filter {
+            padding: 10px 24px;
+            border-radius: 30px;
+            background: var(--medium-dark-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-color);
+            font-size: 1rem;
+        }
+        
+        .category-filter:hover, .category-filter.active {
+            background: var(--primary-color);
+            color: var(--dark-text);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(75, 192, 247, 0.5);
+        }
+        
+        .prompts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-top: 1.5rem;
+            padding: 0 15px;
+        }
+        
+        .prompt-card {
+            background: var(--medium-dark-color);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(77, 171, 247, 0.4);
+        }
+        
+        .prompt-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--primary-color);
+            z-index: 2;
+        }
+        
+        .prompt-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-title {
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
+            color: var(--light-text);
+            position: relative;
+            padding-left: 2.2rem;
+        }
+        
+        .prompt-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(77, 171, 247, 0.6);
+        }
+        
+        .prompt-category {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        .prompt-category i {
+            margin-right: 8px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .prompt-body {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+        
+        .prompt-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .prompt-footer {
+            padding: 1.5rem 2rem;
+            background: var(--light-dark-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .view-btn {
+            padding: 10px 30px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+            min-width: 140px;
+            text-align: center;
+        }
+        
+        .view-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(77, 171, 247, 0.5);
+        }
+        
+        .prompt-meta {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .prompt-meta i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        /* 提示词详情模态框样式修改 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 15, 22, 0.95);
+            z-index: 2000;
+            overflow-y: auto;
+            backdrop-filter: blur(15px);
+            padding: 30px;
+        }
+        
+        .modal-content {
+            background: var(--medium-dark-color);
+            max-width: 1100px;
+            margin: 30px auto;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(77, 171, 247, 0.3);
+            border: 1px solid rgba(77, 171, 247, 0.2);
+        }
+        
+        .modal-header {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--primary-color);
+        }
+        
+        .modal-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+        }
+        
+        .modal-category {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 3rem;
+        }
+        
+        #modal-description {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .prompt-content {
+            background: var(--dark-color);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            position: relative;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+            color: var(--text-color);
+            font-size: 1.05rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--light-color);
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copy-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(77, 171, 247, 0.4);
+        }
+        
+        .modal-footer {
+            padding: 2rem 3rem;
+            border-top: 1px solid var(--light-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(21, 28, 36, 0.3);
+        }
+        
+        .modal-meta {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        .modal-meta i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        #modal-download {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 30px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .modal-close:hover {
+            color: var(--primary-color);
+            transform: rotate(90deg);
+            background: rgba(21, 28, 36, 0.5);
+        }
+        
+        /* 加载动画 */
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(77, 171, 247, 0.2);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 更新响应式样式 */
+        @media screen and (max-width: 1200px) {
+            .prompts-container {
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+                padding: 0 1.5rem;
+            }
+            
+            .prompts-hero .section-title {
+                font-size: 3rem;
+            }
+            
+            .text-center {
+                font-size: 1.2rem;
+            }
+            
+            .modal-content {
+                max-width: 90%;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .prompts-hero {
+                padding: 200px 0 100px;
+            }
+            
+            .prompts-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+                padding: 0 1rem;
+            }
+            
+            .category-filters {
+                gap: 1rem;
+            }
+            
+            .category-filter {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .search-container {
+                margin: 4rem auto;
+            }
+            
+            .modal-content {
+                margin: 20px auto;
+            }
+            
+            .modal-header {
+                padding: 2rem;
+            }
+            
+            .modal-body {
+                padding: 2rem;
+            }
+            
+            .modal-footer {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .modal-meta {
+                margin-bottom: 0.5rem;
+            }
+            
+            .prompt-title {
+                font-size: 1.4rem;
+            }
+            
+            .modal-title {
+                font-size: 1.8rem;
+            }
+            
+            .search-input {
+                font-size: 1.1rem;
+                padding: 15px 20px;
+            }
+            
+            .prompts-hero .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 2.2rem;
+            }
+            
+            .text-center {
+                margin: 2rem 0;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .prompts-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .category-filters {
+                flex-direction: column;
+                align-items: center;
+                width: 80%;
+                margin: 1rem auto;
+            }
+            
+            .category-filter {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .modal-header, .modal-body, .modal-footer {
+                padding: 1.5rem;
+            }
+            
+            .prompt-content {
+                padding: 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .copy-btn {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* 添加文本居中样式 */
+        .text-center {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            max-width: 800px;
+            color: var(--text-secondary);
+        }
+        
+        /* 修改section的container样式 */
+        .prompts-section .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 修改页面标题样式 */
+        .prompts-hero .section-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.8rem;
+            text-shadow: 0 0 20px rgba(77, 171, 247, 0.4);
+        }
+        
+        /* 添加无结果样式 */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            background: rgba(21, 28, 36, 0.5);
+            border-radius: 15px;
+            border: 1px solid var(--light-color);
+        }
+        
+        /* 修复"查看详情"按钮样式以修复在某些窗口大小下的排版问题 */
+        @media screen and (max-width: 1600px) {
+            .prompt-card {
+                min-height: 300px;
+            }
+            
+            .prompt-footer {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+        
+        /* 添加错误提示样式 */
+        .error {
+            padding: 2rem;
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 1.1rem;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            margin: 1rem 0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .loading::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(77, 171, 247, 0.2);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .prompts-section {
+            padding-top: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">首页</a></li>
+                <li><a href="blog.html">博客</a></li>
+                <li><a href="prompts.html" class="active">提示词库</a></li>
+                <li><a href="index.html#about">关于我们</a></li>
+                <li><a href="index.html#platform">平台介绍</a></li>
+                <li><a href="index.html#values">公司理念</a></li>
+                <li><a href="index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="prompts-hero">
+        <div class="container">
+            <h1 class="section-title" data-aos="fade-up">提示词库</h1>
+            <p class="text-center" data-aos="fade-up" data-aos-delay="200">探索我们精心收集和编写的高质量AI提示词，助力您的AI创作之旅</p>
+            
+            <div class="search-container" data-aos="fade-up" data-aos-delay="300">
+                <input type="text" class="search-input" id="prompt-search" placeholder="搜索提示词...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+            <div class="category-filters" data-aos="fade-up" data-aos-delay="400">
+                <div class="category-filter active" data-category="all">全部</div>
+                <div class="category-filter" data-category="project">项目提示词</div>
+                <div class="category-filter" data-category="system">系统提示词</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="prompts-section">
+        <div class="container">
+            <div class="prompts-container" id="prompts-container">
+                <!-- 提示词卡片将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="loader" id="loader">
+                <div class="loader-spinner"></div>
+                <p>加载中...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>实践·协作·创新</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>导航</h3>
+                        <ul>
+                            <li><a href="index.html#home">首页</a></li>
+                            <li><a href="blog.html">博客</a></li>
+                            <li><a href="prompts.html">提示词库</a></li>
+                            <li><a href="index.html#about">关于我们</a></li>
+                            <li><a href="index.html#platform">平台介绍</a></li>
+                            <li><a href="index.html#values">公司理念</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>法律信息</h3>
+                        <ul>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">服务条款</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 长沙深度实践智能科技有限公司. 版权所有. <a href="https://beian.miit.gov.cn/" target="_blank" style="color: var(--text-secondary);">湘ICP备2025110834号</a></p>
+                <div class="footer-decoration"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // 初始化AOS动画库
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // 初始化粒子背景
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4dabf7"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4dabf7",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.8
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // 汉堡菜单
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            
+            burger.addEventListener('click', () => {
+                // 切换导航栏
+                nav.classList.toggle('nav-active');
+                
+                // 激活链接动画
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+                
+                // 汉堡菜单动画
+                burger.classList.toggle('toggle');
+            });
+        }
+        
+        navSlide();
+
+        // 提示词数据
+        const promptsData = [
+            // 项目提示词
+            {
+                id: 1,
+                title: "Scorpio Framework开发文档",
+                category: "project",
+                categoryLabel: "项目提示词",
+                description: "Scorpio Framework的核心开发文档，包含聚合根、数据处理、安全等多个模块的详细说明。",
+                path: "prompt-html/project-prompt/scorpio-framework-develop-spec.html",
+                icon: "fas fa-project-diagram"
+            },
+            {
+                id: 2,
+                title: "DDD开发规范",
+                category: "project",
+                categoryLabel: "项目提示词",
+                description: "领域驱动设计(DDD)项目开发规范，包含领域模型、聚合、仓储等DDD概念的实现指导。",
+                path: "prompt-html/project-prompt/ddd-develop-spec.html",
+                icon: "fas fa-project-diagram"
+            },
+            // 系统提示词
+            {
+                id: 9,
+                title: "Java开发助手",
+                category: "system",
+                categoryLabel: "系统提示词",
+                description: "Java开发助手提示词，帮助开发者解决Java编程问题、代码优化和最佳实践。",
+                path: "prompt-html/system-prompt/java-develop.html",
+                icon: "fab fa-java"
+            },
+            {
+                id: 10,
+                title: "前端开发助手",
+                category: "system",
+                categoryLabel: "系统提示词",
+                description: "前端开发助手提示词，帮助解决前端开发过程中的常见问题、代码优化和最佳实践。",
+                path: "prompt-html/system-prompt/front-develop.html",
+                icon: "fas fa-laptop-code"
+            }
+        ];
+
+        // 渲染提示词卡片
+        function renderPromptCards(prompts) {
+            const container = document.getElementById('prompts-container');
+            container.innerHTML = '';
+            
+            if (prompts.length === 0) {
+                container.innerHTML = '<div class="no-results">没有找到匹配的提示词</div>';
+                return;
+            }
+            
+            prompts.forEach(prompt => {
+                const card = document.createElement('div');
+                card.className = 'prompt-card';
+                card.setAttribute('data-id', prompt.id);
+                card.setAttribute('data-category', prompt.category);
+                
+                card.innerHTML = `
+                    <div class="prompt-header">
+                        <h3 class="prompt-title">${prompt.title}</h3>
+                        <div class="prompt-category">
+                            <i class="${prompt.icon}"></i>
+                            <span>${prompt.categoryLabel}</span>
+                        </div>
+                    </div>
+                    <div class="prompt-body">
+                        <p class="prompt-description">${prompt.description}</p>
+                    </div>
+                    <div class="prompt-footer">
+                        <a href="${prompt.path}" class="view-btn">查看详情</a>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // 分类过滤
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                // 更新活动状态
+                categoryFilters.forEach(f => f.classList.remove('active'));
+                filter.classList.add('active');
+                
+                const category = filter.getAttribute('data-category');
+                
+                // 过滤提示词
+                if (category === 'all') {
+                    renderPromptCards(promptsData);
+                } else {
+                    const filtered = promptsData.filter(prompt => prompt.category === category);
+                    renderPromptCards(filtered);
+                }
+            });
+        });
+
+        // 搜索功能
+        const searchInput = document.getElementById('prompt-search');
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                // 如果搜索框为空，显示当前选中分类的提示词
+                const activeCategory = document.querySelector('.category-filter.active').getAttribute('data-category');
+                if (activeCategory === 'all') {
+                    renderPromptCards(promptsData);
+                } else {
+                    const filtered = promptsData.filter(prompt => prompt.category === activeCategory);
+                    renderPromptCards(filtered);
+                }
+                return;
+            }
+            
+            // 搜索逻辑
+            const searchResults = promptsData.filter(prompt => {
+                return prompt.title.toLowerCase().includes(searchTerm) ||
+                       prompt.description.toLowerCase().includes(searchTerm) ||
+                       prompt.categoryLabel.toLowerCase().includes(searchTerm);
+            });
+            
+            renderPromptCards(searchResults);
+        });
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPromptCards(promptsData);
+        });
+    </script>
+</body>
+</html> 

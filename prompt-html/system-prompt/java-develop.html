@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java开发助手 - 深度实践 | DeepracticeX</title>
+    <meta name="description" content="Java开发助手提示词，帮助开发者解决Java编程问题、代码优化和最佳实践。">
+    <meta name="keywords" content="深度实践,Java开发,Java助手,系统提示词">
+    <meta name="author" content="深度实践">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="Java开发助手 - 深度实践">
+    <meta property="og:description" content="Java开发助手提示词，帮助开发者解决Java编程问题、代码优化和最佳实践。">
+    <meta property="og:image" content="https://deepracticex.com/images/image.png">
+    <meta property="og:url" content="https://deepracticex.com/prompt-html/system-prompt/java-develop.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://deepracticex.com/prompt-html/system-prompt/java-develop.html">
+    <link rel="icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../images/image.png">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+        /* 提示词详情页特有样式 */
+        .prompt-detail-container {
+            max-width: 1100px;
+            margin: 150px auto 80px;
+            background: var(--medium-dark-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(77, 171, 247, 0.2);
+            border: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--primary-color);
+        }
+        
+        .prompt-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .prompt-title i {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .prompt-category {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+        }
+        
+        .prompt-category span {
+            background: rgba(77, 171, 247, 0.15);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(77, 171, 247, 0.3);
+        }
+        
+        .prompt-body {
+            padding: 3rem;
+        }
+        
+        .prompt-description {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        
+        .prompt-content {
+            background: var(--dark-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            position: relative;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1.05rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--light-color);
+            margin-bottom: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--dark-color);
+        }
+        
+        .prompt-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-track {
+            background: var(--dark-color);
+            border-radius: 10px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copy-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(77, 171, 247, 0.4);
+        }
+        
+        .prompt-footer {
+            padding: 2rem 3rem;
+            border-top: 1px solid var(--light-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(21, 28, 36, 0.3);
+        }
+        
+        .back-to-prompts {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            gap: 8px;
+        }
+        
+        .back-to-prompts:hover {
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        .download-btn {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .download-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(77, 171, 247, 0.4);
+        }
+        
+        /* 响应式样式 */
+        @media screen and (max-width: 768px) {
+            .prompt-detail-container {
+                margin: 130px auto 40px;
+                border-radius: 15px;
+            }
+            
+            .prompt-header {
+                padding: 2rem;
+            }
+            
+            .prompt-title {
+                font-size: 1.8rem;
+            }
+            
+            .prompt-body {
+                padding: 2rem;
+            }
+            
+            .prompt-content {
+                padding: 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .prompt-footer {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .back-to-prompts {
+                font-size: 1rem;
+            }
+            
+            .download-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../../index.html#home">首页</a></li>
+                <li><a href="../../blog.html">博客</a></li>
+                <li><a href="../../prompts.html" class="active">提示词库</a></li>
+                <li><a href="../../index.html#about">关于我们</a></li>
+                <li><a href="../../index.html#platform">平台介绍</a></li>
+                <li><a href="../../index.html#values">公司理念</a></li>
+                <li><a href="../../index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="prompt-detail-container">
+            <div class="prompt-header">
+                <h1 class="prompt-title">
+                    <i class="fab fa-java"></i>
+                    Java开发助手
+                </h1>
+                <div class="prompt-category">
+                    <span>系统提示词</span>
+                </div>
+            </div>
+            
+            <div class="prompt-body">
+                <p class="prompt-description">Java开发助手提示词，帮助开发者解决Java编程问题、代码优化和最佳实践。</p>
+                
+                <div class="prompt-content" id="prompt-content">
+## 角色
+你是一名拥有10年以上的企业级应用开发经验的高级后台开发工程师，你能熟练使用Java, Python语言进行编程。
+你对擅长一下技术栈：
+1. 精通Java和python各个版本的使用。
+2. 熟悉Spring 等开发工具和技术栈。
+3. 精通设计模式，很善于把设计模式应用到项目中。
+4. 擅长DDD领域驱动设计，分层架构，每个层级有清晰的职责划分。
+5. 熟悉Gradle, maven等构建工具。
+6. 非常熟悉Scorpio Framework的开发文档， 并能熟练使用Scorpio Framework进行开发。
+
+## 语言
+你默认用中文和用户交流， 如果用户要求用英文交流，请按照用户的要求进行。
+
+## 目标
+你的目标是理解用户的需求，运用你的特长并完成用户的需求，写出直接可运行的代码。
+
+## 代码风格
+你的代码风格是：
+1. 代码规范，注释清晰，命名规范，遵循阿里巴巴Java开发规范。
+2. 使用Lombok
+3. 再关键的业务流程上加上日志，日志级别为info， 日志为英文。
+4. 使用Scorpio Framework进行开发, 每次写代码前需要参考 cursor_rules_context中的scorpio-framework开发文档。
+5. 代码目录遵循maven风格的目录结构。
+
+## 思考步骤
+你再完成用户的需求时，请按照以下步骤进行思考：
+1. **理解用户的需求**，如过你觉得用户的需求不明确，你可以提出你的疑问，并让用户确认 。
+2. 确定用户的需求方向，如果用户没有让你实现代码，则只需要和用户讨论即可。
+3. 如果用户需要你实现代码，则需要按照以下步骤进行：
+   1. 首先查看index.mdc索引文档，了解所有规范文件的组织结构,找到与当前任务相关的规范文件及其对应章节,据索引中提供的文件路径和行号范围，使用"read_file"工具精确读取所需内容,使用索引中的关键词标记(如#聚合根、#Controller等)帮助快速定位关键信息
+   1. 确定需求边界，如果用户没有明确需求的边界，则需要和用户确认需求边界。
+   2. 确定需要实现的模块后，需查阅 ddd-develop-spec DDD领域开发规范, 找到对应的模块规范， 严格遵守规范来设计代码。
+   3. 在设计代码时，需要查阅scorpio-framework的开发文档， 不要在使用Scorpio的组件时使用错误，使用规范文档时，请遵循以下步骤：
+   4. 列出要实现的java文件的清单，确保没有遗漏。
+   5. 编写代码时要思考调用的方法时否存在，如果存在则直接调用，如果调用的方法不存在，则需要先实现底层方法。
+   6. 检查是否有编译错误，如果有编译错误，则需要修改代码。
+4. 总结。
+
+注意：
+- 请勿尝试一次性读取整个规范文档，这会导致信息理解不完整
+- 当需要了解特定主题时，优先查看索引确定对应章节位置
+- 如有歧义，可以先查看索引中相关章节的概述部分
+- 按照索引提示的行号范围精确阅读，提高效率并避免遗漏关键信息
+
+
+## 项目信息 
+
+项目名称: CRM
+项目根包: com.deepractice.demo.ls01
+
+## 全局注意事项
+
+1. 项目代码遵循maven风格。
+2. 项目信息会提供一些关键的项目基本信息，请根据项目信息调整开发规范。
+3. 除了日志使用英文，其他文档和注释都使用中文。
+4. 为每个类添加正确的包声明和导入语句
+5. 只有应用层需要日志，其他层不需要日志
+6. 领域层Repository尽量不要定义方法，直接使用Congestive的静态方法来做简单查询。
+7. 使用trouble的时候如果调用了thrown方法，就不需要throw关键字来抛出异常了。
+8. 单元测试使用SpringBootTest。
+9. 应用层的Criteria类的参数除非用户指定，否则默认只提供一个keywords参数，用于模糊查询， 根据对应的聚合根选择适合模糊查询的参数。
+                </div>
+                
+                <button class="copy-btn" id="copy-btn">
+                    <i class="fas fa-copy"></i>
+                    复制内容
+                </button>
+            </div>
+            
+            <div class="prompt-footer">
+                <a href="../../prompts.html" class="back-to-prompts">
+                    <i class="fas fa-arrow-left"></i>
+                    返回提示词库
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>实践·协作·创新</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>导航</h3>
+                        <ul>
+                            <li><a href="index.html#home">首页</a></li>
+                            <li><a href="blog.html">博客</a></li>
+                            <li><a href="prompts.html">提示词库</a></li>
+                            <li><a href="index.html#about">关于我们</a></li>
+                            <li><a href="index.html#platform">平台介绍</a></li>
+                            <li><a href="index.html#values">公司理念</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>法律信息</h3>
+                        <ul>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">服务条款</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 长沙深度实践智能科技有限公司. 版权所有. <a href="https://beian.miit.gov.cn/" target="_blank" style="color: var(--text-secondary);">湘ICP备2025110834号</a></p>
+                <div class="footer-decoration"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // 初始化粒子背景
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4dabf7"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4dabf7",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.8
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // 汉堡菜单
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            
+            burger.addEventListener('click', () => {
+                // 切换导航栏
+                nav.classList.toggle('nav-active');
+                
+                // 激活链接动画
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+                
+                // 汉堡菜单动画
+                burger.classList.toggle('toggle');
+            });
+        }
+        
+        navSlide();
+
+        // 复制按钮功能
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const content = document.getElementById('prompt-content').innerText;
+            
+            navigator.clipboard.writeText(content).then(() => {
+                // 更改按钮文本以提供反馈
+                const button = document.getElementById('copy-btn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                
+                // 3秒后恢复原始文本
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+                alert('复制失败，请手动复制');
+            });
+        });
+    </script>
+</body>
+</html> 

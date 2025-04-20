@@ -22,6 +22,57 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?68df9bb908cdb70728b045e41812449b";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <!-- 百度自动推送 -->
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+    <!-- JSON-LD 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "深度实践",
+        "url": "https://deepracticex.com",
+        "logo": "https://deepracticex.com/images/image.png",
+        "description": "专注于AI智能协作领域的创新平台，助力企业和个人将创意转化为现实的智能生态系统。",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "长沙市",
+            "addressRegion": "湖南省",
+            "streetAddress": "雨花区复地星光天地6号楼",
+            "addressCountry": "CN"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+86-192-3741-0938",
+            "contactType": "customer service",
+            "email": "7@deepracticex.com"
+        },
+        "sameAs": [
+            "https://github.com/Deepractice"
+        ]
+    }
+    </script>
     <style>
         /* 博客页面特定样式 */
         .blog-section {
@@ -198,83 +249,8 @@
         
         .back-to-blogs {
             display: inline-block;
-            margin-top: 40px;
-            padding: 10px 25px;
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: white;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .back-to-blogs:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        @media (max-width: 768px) {
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .blog-detail {
-                padding: 25px;
-            }
-        }
-        
-        /* 确保内容不被导航栏遮挡 */
-        header {
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            top: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
         }
     </style>
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?68df9bb908cdb70728b045e41812449b";
-          var s = document.getElementsByTagName("script")[0]; 
-          s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-    <!-- 百度自动推送 -->
-    <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-    </script>
-    <!-- JSON-LD 结构化数据 -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Blog",
-        "name": "深度实践博客",
-        "url": "https://deepracticex.com/blog.html",
-        "description": "专注于AI智能协作领域的前沿思考与实践经验分享",
-        "publisher": {
-            "@type": "Organization",
-            "name": "深度实践",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://deepracticex.com/images/image.png"
-            }
-        }
-    }
-    </script>
 </head>
 <body>
     <!-- 粒子背景 -->
@@ -288,6 +264,7 @@
             <ul class="nav-links">
                 <li><a href="index.html#home">首页</a></li>
                 <li><a href="blog.html" class="active">博客</a></li>
+                <li><a href="prompts.html">提示词库</a></li>
                 <li><a href="index.html#about">关于我们</a></li>
                 <li><a href="index.html#platform">平台介绍</a></li>
                 <li><a href="index.html#values">公司理念</a></li>
@@ -418,6 +395,7 @@
                         <ul>
                             <li><a href="index.html#home">首页</a></li>
                             <li><a href="blog.html">博客</a></li>
+                            <li><a href="prompts.html">提示词库</a></li>
                             <li><a href="index.html#about">关于我们</a></li>
                             <li><a href="index.html#platform">平台介绍</a></li>
                             <li><a href="index.html#values">公司理念</a></li>
