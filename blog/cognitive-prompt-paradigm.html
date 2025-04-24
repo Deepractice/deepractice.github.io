@@ -403,7 +403,26 @@
                 <p>期待你应用Deepractice认知提示范式，创造出更多精彩的AI互动体验！</p>
                 
                 <div class="article-footer">
-                    <p>本文由Deepractice团队原创，专注于AI交互体验的提升与创新。欢迎关注我们的公众号，获取更多AI应用技巧与前沿资讯。</p>
+                    <blockquote>
+                        <h3>Deepractice</h3>
+                        <p>Deepractice 团队致力于探索AI与人类协作的最佳实践，专注于开发 AI 应用领域实用软件、框架和方法论，帮助个人和组织充分释放 AI 潜能。</p>
+                        
+                        <h4>继续探索我们的AI交互体验创新</h4>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li>🌐 <strong>官方网站</strong>：<a href="https://www.deepracticex.com">深度实践</a> - 了解我们的使命和服务</li>
+                            <li>📝 <strong>专业博客</strong>：<a href="https://www.deepracticex.com/blog.html">Deepractice博客</a> - 深度AI实践指南</li>
+                            <li>💬 <strong>微信公众号</strong>：<a href="#" class="wechat-link">AI深度实践</a> - 获取最新AI应用技巧</li>
+                            <li>🎙️ <strong>播客频道</strong>：<a href="https://www.xiaoyuzhoufm.com/podcast/67bc12b63347fd01f19109ab">DeepracticeX</a> - 收听AI实践者访谈</li>
+                            <li>💻 <strong>开源社区</strong>：<a href="https://github.com/Deepractice">GitHub</a> - 加入我们的开源项目</li>
+                        </ul>
+                        
+                        <h4>联系我们</h4>
+                        <p>sean@deepracticex.com | 微信：deepreacticex</p>
+                        
+                        <p><em>Deepractice 深度实践 — 实践，协作，创新</em></p>
+                    </blockquote>
+                    
+                    <p><em>© 2025 Deepractice团队版权所有 | 本文可在注明出处的情况下自由分享和应用</em></p>
                 </div>
             </div>
             
@@ -458,5 +477,115 @@
     
     <!-- 主脚本 -->
     <script src="../script.js"></script>
+    
+    <!-- 微信二维码模态框 -->
+    <div id="qrcode-modal" class="qrcode-modal">
+        <div class="qrcode-modal-content">
+            <span class="qrcode-close">&times;</span>
+            <h3>扫码关注我们的微信公众号</h3>
+            <img src="../images/qrcode-wechat.png" alt="AI深度实践 微信公众号二维码" class="qrcode-img">
+            <p>AI深度实践 - 获取最新AI应用技巧</p>
+        </div>
+    </div>
+    
+    <style>
+        /* 二维码模态框样式 */
+        .qrcode-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .qrcode-modal-content {
+            background: rgba(25, 25, 35, 0.95);
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            width: 350px;
+            max-width: 80%;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.4s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .qrcode-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .qrcode-close:hover {
+            color: white;
+        }
+        
+        .qrcode-img {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+        }
+        
+        .qrcode-modal-content h3 {
+            margin-top: 0;
+            color: white;
+        }
+        
+        .qrcode-modal-content p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 15px;
+        }
+    </style>
+    
+    <script>
+        // 微信二维码模态框功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const wechatLinks = document.querySelectorAll('.wechat-link');
+            const modal = document.getElementById('qrcode-modal');
+            const closeBtn = document.querySelector('.qrcode-close');
+            
+            // 给所有微信公众号链接添加点击事件
+            wechatLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // 防止背景滚动
+                });
+            });
+            
+            // 关闭按钮事件
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // 恢复滚动
+            });
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
 </body>
 </html> 
