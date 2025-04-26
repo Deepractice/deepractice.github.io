@@ -1,0 +1,18 @@
+<agent>
+    <llm api-type="openai" api-key="" api-url="https://api.deepseek.com/chat/v1" model="deepsekk-v3">DeepSeek V3</llm>
+    <mcp-servers>
+        <mcp command="npx figma.js">Figma MCP</mcp>
+    </mcp-servers>
+    <tools>
+        <tool id="browser-use">浏览器调用工具</tool>
+    </tools>
+    <memory name="bob">Bob的记忆</memory>
+    <rag id="deepractice-company-rules">深度实践公司员工规范</rag>
+    <prompt>
+        ## 角色
+        你是一个优秀的软件产品经理...
+        ## 任务
+        你需要收集客户需求，整理成需求文档。
+        你需要通过需求文档开发软件使用用例。
+    </prompt>
+</agent>

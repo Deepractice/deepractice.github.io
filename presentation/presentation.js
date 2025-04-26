@@ -40,6 +40,146 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // 获取现有元素
+    const slides = document.querySelectorAll('.slide');
+    const slideCounter = document.getElementById('slide-counter');
+    const prevSlideBtn = document.getElementById('prev-slide');
+    const nextSlideBtn = document.getElementById('next-slide');
+    const fullscreenBtn = document.getElementById('fullscreen');
+    const jumpInput = document.getElementById('jump-input');
+    const jumpBtn = document.getElementById('jump-btn');
+    const presentationContainer = document.querySelector('.presentation-container');
+    
+    // 代码弹窗元素
+    const viewCodeBtn = document.getElementById('viewCodeBtn');
+    const codeModal = document.getElementById('codeModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    
+    if (viewCodeBtn && codeModal && closeModalBtn) {
+        // 打开弹窗
+        viewCodeBtn.addEventListener('click', function() {
+            codeModal.classList.add('active');
+            // 防止幻灯片翻页事件影响弹窗
+            event.stopPropagation();
+        });
+        
+        // 关闭弹窗
+        closeModalBtn.addEventListener('click', function() {
+            codeModal.classList.remove('active');
+        });
+        
+        // 点击弹窗外部关闭
+        codeModal.addEventListener('click', function(event) {
+            if (event.target === codeModal) {
+                codeModal.classList.remove('active');
+            }
+        });
+        
+        // 阻止幻灯片内代码区域的点击事件冒泡，避免影响幻灯片导航
+        const codeModalContent = codeModal.querySelector('.code-modal-content');
+        if (codeModalContent) {
+            codeModalContent.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        }
+    }
+    
+    // 以下是现有的幻灯片控制代码
+    let currentSlide = 0;
+    
+    // 可见幻灯片类控制
+    function showSlide(index) {
+        // 移除所有幻灯片的active类
+        slides.forEach(slide => {
+            slide.classList.remove('active');
+        });
+        
+        // 添加active类到当前幻灯片
+        slides[index].classList.add('active');
+        
+        // 更新计数器
+        slideCounter.textContent = `${index + 1} / ${slides.length}`;
+        
+        // 更新当前索引
+        currentSlide = index;
+    }
+    
+    // 显示下一张幻灯片
+    function nextSlide() {
+        if (currentSlide < slides.length - 1) {
+            showSlide(currentSlide + 1);
+        }
+    }
+    
+    // 显示上一张幻灯片
+    function prevSlide() {
+        if (currentSlide > 0) {
+            showSlide(currentSlide - 1);
+        }
+    }
+    
+    // 全屏控制
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            presentationContainer.requestFullscreen().catch(err => {
+                console.error(`全屏出错: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    
+    // 跳转到指定幻灯片
+    function jumpToSlide() {
+        const slideNumber = parseInt(jumpInput.value);
+        if (slideNumber && slideNumber > 0 && slideNumber <= slides.length) {
+            showSlide(slideNumber - 1);
+            jumpInput.value = "";
+        }
+    }
+    
+    // 事件监听器
+    prevSlideBtn.addEventListener('click', prevSlide);
+    nextSlideBtn.addEventListener('click', nextSlide);
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    jumpBtn.addEventListener('click', jumpToSlide);
+    
+    // 键盘控制
+    document.addEventListener('keydown', function(e) {
+        // 如果弹窗打开，不处理键盘事件
+        if (codeModal && codeModal.classList.contains('active')) {
+            return;
+        }
+        
+        switch(e.key) {
+            case 'ArrowLeft':
+                prevSlide();
+                break;
+            case 'ArrowRight':
+                nextSlide();
+                break;
+            case 'f':
+            case 'F':
+                toggleFullscreen();
+                break;
+            case 'Enter':
+                if (document.activeElement === jumpInput) {
+                    jumpToSlide();
+                }
+                break;
+        }
+    });
+    
+    // 跳转输入回车支持
+    jumpInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            jumpToSlide();
+        }
+    });
+    
+    // 初始化第一张幻灯片
+    showSlide(0);
 });
 
 // 初始化粒子背景
