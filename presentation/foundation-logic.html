@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人、AI与计算机：AI时代的底层逻辑 | DeepracticeX</title>
+    <meta name="description" content="探索AI时代的底层逻辑，理解人类、AI和计算机的三角互补关系，以及抽象、具象与模式的认知框架。">
+    <meta name="keywords" content="人工智能,抽象,具象,模式,人机协作,AI,计算机">
+    <meta name="author" content="深度实践">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="presentation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../blog.html">博客</a></li>
+                <li><a href="../prompts.html">提示词库</a></li>
+                <li><a href="../index.html#about">关于我们</a></li>
+                <li><a href="#" class="active">演讲</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="presentation-container">
+        <!-- 控制栏 -->
+        <div class="presentation-controls">
+            <button id="prev-slide" class="control-btn"><i class="fas fa-chevron-left"></i></button>
+            <div id="slide-counter">1 / 19</div>
+            <button id="next-slide" class="control-btn"><i class="fas fa-chevron-right"></i></button>
+            <div class="jump-controls">
+                <input type="number" id="jump-input" min="1" max="19" placeholder="#" title="输入页码">
+                <button id="jump-btn" class="control-btn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <button id="fullscreen" class="control-btn"><i class="fas fa-expand"></i></button>
+        </div>
+
+        <!-- 幻灯片容器 -->
+        <div class="slides-container">
+            <!-- 幻灯片 1: 封面 -->
+            <div class="slide active" id="slide-1">
+                <div class="slide-content cover">
+                    <h1 class="glitch-text" data-text="人、AI与计算机">人、AI与计算机</h1>
+                    <h2>AI时代的<span class="highlight">底层逻辑</span></h2>
+                    <div class="decoration">
+                        <div class="triangle-decoration" style="--size: 80px; --top: 20%; --left: 10%; --rotation: 30deg;"></div>
+                        <div class="circle-decoration" style="--size: 60px; --top: 70%; --left: 85%; --rotation: 0deg;"></div>
+                        <div class="square-decoration" style="--size: 50px; --top: 80%; --left: 20%; --rotation: 45deg;"></div>
+                    </div>
+                    <div class="presenter">
+                        <p>深度实践</p>
+                        <p class="date">2025年</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 2: 引言 -->
+            <div class="slide" id="slide-2">
+                <div class="slide-content">
+                    <h2 class="slide-title">教AI学习专业知识</h2>
+                    <div class="question-box">
+                        <p>假设你需要将你的专业领域知识教给AI，让它理解和应用，你会怎么做？</p>
+                    </div>
+                    <div class="example-grid">
+                        <div class="example-item popup-trigger" data-popup="popup1">
+                            <i class="fas fa-code"></i>
+                            <p>如何让AI学会使用你的私有代码库？</p>
+                        </div>
+                        <div class="example-item popup-trigger" data-popup="popup2">
+                            <i class="fas fa-balance-scale"></i>
+                            <p>如何让AI理解你所在律所的案例库和法律解读方法？</p>
+                        </div>
+                        <div class="example-item popup-trigger" data-popup="popup3">
+                            <i class="fas fa-heartbeat"></i>
+                            <p>如何让AI掌握你医院的临床诊疗路径？</p>
+                        </div>
+                        <div class="example-item popup-trigger" data-popup="popup4">
+                            <i class="fas fa-chart-line"></i>
+                            <p>如何让AI学习你公司特有的投资分析框架？</p>
+                        </div>
+                    </div>
+                    <div class="challenge-box">
+                        <h3>传统方法的挑战</h3>
+                        <ul>
+                            <li>上下文窗口有限，不可能一次输入全部内容</li>
+                            <li>即使技术上可行，成本也会非常高昂</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 3: 人类学习方法 -->
+            <div class="slide" id="slide-3">
+                <div class="slide-content">
+                    <h2 class="slide-title">看看人类是如何做的</h2>
+                    <div class="comparison-box">
+                        <p>人类学习新知识时面临类似问题，但我们有更智能的方法：</p>
+                        <div class="comparison-item">
+                            <div class="icon-box"><i class="fas fa-book-open"></i></div>
+                            <p>学习框架时查看文档和API说明，而非阅读全部源代码</p>
+                        </div>
+                        <div class="comparison-item">
+                            <div class="icon-box"><i class="fas fa-procedures"></i></div>
+                            <p>医生学习诊疗指南而非记忆每个病例</p>
+                        </div>
+                        <div class="comparison-item">
+                            <div class="icon-box"><i class="fas fa-gavel"></i></div>
+                            <p>律师掌握法律原则而非记忆每个判例</p>
+                        </div>
+                    </div>
+                    <div class="conclusion-box">
+                        <p>这些文档本质上是从海量具体实例中提炼出的<span class="highlight">使用模式</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新增幻灯片：模式的来源 -->
+            <div class="slide" id="slide-3b">
+                <div class="slide-content">
+                    <h2 class="slide-title">模式是怎么来的？</h2>
+                    <div class="pattern-cards">
+                        <!-- 卡片1：复用已有模式 -->
+                        <div class="pattern-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <h3>复用已有模式</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>直接学习和借鉴已经被证实有效的模式，如程序员学习设计模式、医生学习诊疗指南</p>
+                            </div>
+                            <div class="card-examples">
+                                <div class="example-chip">
+                                    <i class="fas fa-code"></i>
+                                    <span>编程设计模式</span>
+                                </div>
+                                <div class="example-chip">
+                                    <i class="fas fa-building"></i>
+                                    <span>建筑设计模式</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 卡片2：实践经验总结 -->
+                        <div class="pattern-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <h3>实践经验总结</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>在日常实践过程中积累经验，观察成功案例的共同点，归纳提炼出可靠的行动模式</p>
+                            </div>
+                            <div class="card-examples">
+                                <div class="example-chip">
+                                    <i class="fas fa-tasks"></i>
+                                    <span>敏捷开发方法</span>
+                                </div>
+                                <div class="example-chip">
+                                    <i class="fas fa-heartbeat"></i>
+                                    <span>中医诊疗体系</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 卡片3：思维观点系统化 -->
+                        <div class="pattern-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h3>思维观点系统化</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>将头脑中模糊的直觉和概念进行系统性、结构化的整理，转化为可传递的显性知识</p>
+                            </div>
+                            <div class="card-examples">
+                                <div class="example-chip">
+                                    <i class="fas fa-book"></i>
+                                    <span>哲学思想体系</span>
+                                </div>
+                                <div class="example-chip">
+                                    <i class="fas fa-chart-pie"></i>
+                                    <span>商业模型画布</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <p>无论来源如何，优秀的模式都能在<span class="highlight">抽象</span>与<span class="highlight">具象</span>之间建立有效连接，既保持普适性又具备可操作性</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 4: 三角关系定义 -->
+            <div class="slide" id="slide-4">
+                <div class="slide-content">
+                    <h2 class="slide-title">三角关系的定义</h2>
+                    <div class="concept-comparison">
+                        <!-- 抽象 -->
+                        <div class="concept-section" id="abstract-section">
+                            <div class="concept-header">
+                                <i class="fas fa-lightbulb"></i>
+                            <h3>抽象</h3>
+                            </div>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>普适性</h4>
+                                        <p>可应用于多种情境而不受具体细节限制</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>"良好设计"是抽象概念，不同领域有不同表现</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>通用性</h4>
+                                        <p>可以跨越场景边界，适用于不同层次和领域</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>"可扩展性"原则适用于软件架构、组织结构和城市规划</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>简化复杂性</h4>
+                                        <p>通过忽略非关键细节，提炼出关键本质</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>数学模型简化了现实世界的复杂问题</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 模式 -->
+                        <div class="concept-section" id="pattern-section">
+                            <div class="concept-header">
+                                <i class="fas fa-puzzle-piece"></i>
+                                <h3>模式</h3>
+                            </div>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>可复用性</h4>
+                                        <p>可以在不同场景中重复应用的结构</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>设计模式如"单例模式"可用于多种编程语言</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>规律性</h4>
+                                        <p>遵循稳定的规则和模板，可被总结为固定形式</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>小说创作中的三幕剧结构提供了稳定的叙事框架</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>问题导向性</h4>
+                                        <p>针对特定类型问题提供解决方案框架</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>诊断决策树帮助医生系统性排查病因</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 具象 -->
+                        <div class="concept-section" id="concrete-section">
+                            <div class="concept-header">
+                                <i class="fas fa-code"></i>
+                                <h3>具象</h3>
+                            </div>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>复杂性</h4>
+                                        <p>包含完整的细节信息，信息密度高</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>一幅详细的建筑图纸包含了所有实施细节</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>特定性</h4>
+                                        <p>与特定情境和条件相关联</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>某个特定的会议纪要，包含具体人物和决策</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature">
+                                        <h4>实用性</h4>
+                                        <p>可以直接应用和实现的内容</p>
+                                    </div>
+                                    <div class="feature-example">
+                                        <span class="example-label">例如</span>
+                                        <p>一个完整的产品原型，可以实际操作和测试</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-relationship">
+                        <p>这三者形成一个动态流动的关系：抽象提供指导原则，模式提供可重复的结构，具象呈现实际应用</p>
+                        <div class="relationship-arrow top-arrow">
+                            <span>提炼</span>
+                            <i class="fas fa-long-arrow-alt-up"></i>
+                        </div>
+                        <div class="relationship-arrow bottom-arrow">
+                            <i class="fas fa-long-arrow-alt-down"></i>
+                            <span>应用</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 5: 三角关系视觉呈现 -->
+            <div class="slide" id="slide-5">
+                <div class="slide-content">
+                    <h2 class="slide-title">三角关系的视觉呈现</h2>
+                    <div class="visual-triangle">
+                        <svg width="500" height="350" viewBox="0 0 500 350" class="triangle-svg">
+                            <!-- 渐变定义 -->
+                            <defs>
+                                <linearGradient id="abstract-pattern-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4DABF7" />
+                                    <stop offset="100%" stop-color="#40C057" />
+                                </linearGradient>
+                                <linearGradient id="abstract-concrete-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4DABF7" />
+                                    <stop offset="100%" stop-color="#FF6B6B" />
+                                </linearGradient>
+                                <linearGradient id="pattern-concrete-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#40C057" />
+                                    <stop offset="100%" stop-color="#FF6B6B" />
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- 连线 -->
+                            <line x1="250" y1="70" x2="125" y2="280" class="triangle-line abstract-pattern-line" />
+                            <line x1="250" y1="70" x2="375" y2="280" class="triangle-line abstract-concrete-line" />
+                            <line x1="125" y1="280" x2="375" y2="280" class="triangle-line pattern-concrete-line" />
+                            
+                            <!-- 节点 -->
+                            <g class="triangle-node-group" id="abstract-node-group">
+                                <circle cx="250" cy="70" r="60" class="triangle-node abstract-node" />
+                                <text x="250" y="70" dy=".3em" class="node-text">抽象</text>
+                            </g>
+                            
+                            <g class="triangle-node-group" id="pattern-node-group">
+                                <circle cx="125" cy="280" r="60" class="triangle-node pattern-node" />
+                                <text x="125" y="280" dy=".3em" class="node-text">模式</text>
+                            </g>
+                            
+                            <g class="triangle-node-group" id="concrete-node-group">
+                                <circle cx="375" cy="280" r="60" class="triangle-node concrete-node" />
+                                <text x="375" y="280" dy=".3em" class="node-text">具象</text>
+                            </g>
+                        </svg>
+                    </div>
+                    
+                    <div class="flow-description">
+                        <h3>动态流动关系</h3>
+                        <div class="flow-item">
+                            <i class="fas fa-arrow-right"></i>
+                            <p><span class="highlight">具象→抽象</span>：通过归纳和提炼，从具体经验中提取抽象原则</p>
+                        </div>
+                        <div class="flow-item">
+                            <i class="fas fa-arrow-right"></i>
+                            <p><span class="highlight">抽象→模式</span>：通过结构化和系统化，将抽象想法转化为可用模式</p>
+                        </div>
+                        <div class="flow-item">
+                            <i class="fas fa-arrow-right"></i>
+                            <p><span class="highlight">模式→具象</span>：通过应用和实践，用模式指导具体行动</p>
+                        </div>
+                        <div class="flow-item">
+                            <i class="fas fa-arrow-right"></i>
+                            <p><span class="highlight">模式→抽象</span>：通过反思和提升，模式帮助完善抽象理解</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 6: 元提示词的设计原理 -->
+            <div class="slide" id="slide-6">
+                <div class="slide-content">
+                    <h2 class="slide-title">元提示词的设计原理</h2>
+                    <div class="principle-box">
+                        <p>元提示词的设计正是基于认知三角关系。传统提示工程关注编写具体提示词，而元提示词关注如何设计能够生成提示词的系统。</p>
+                    </div>
+                    <div class="process-flow">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>捕捉抽象原则</h3>
+                                <p>提炼领域的核心概念、特征和方法论</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>构建模式框架</h3>
+                                <p>设计可精确描述的系统化，结构化方法论</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>引导具象生成</h3>
+                                <p>根据特定需求，生成针对性的提示词</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="conclusion-box">
+                        <p>通过这种方式，我们不再需要为每个场景手工编写提示词，而是设计出一套能够生成大量高质量提示词的系统。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片7: 过渡弹框 -->
+            <div class="slide" id="slide-7">
+                <div class="slide-content transition-slide">
+                    <div class="question-popup">
+                        <div class="popup-question">
+                            <h2>那么，有没有一劳永逸的元元提示词吗？</h2>
+                            <div class="popup-answer">有的！</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 8: 过度抽象陷阱 -->
+            <div class="slide" id="slide-8">
+                <div class="slide-content">
+                    <h2 class="slide-title">过度抽象陷阱</h2>
+                    <div class="trap-container">
+                        <div class="trap-item">
+                            <div class="trap-icon"><i class="fas fa-eye-slash"></i></div>
+                            <h3>脱离现实</h3>
+                            <p>过度抽象忽略了太多细节，失去了对现实事务的描述能力，沦为纯粹的理论空想（唯心化）</p>
+                        </div>
+                        <div class="trap-item">
+                            <div class="trap-icon"><i class="fas fa-comments-alt-slash"></i></div>
+                            <h3>表达困境</h3>
+                            <p>过度抽象的概念往往无法用语言精确表达，导致理解困难、沟通障碍，难以有效传播</p>
+                        </div>
+                        <div class="trap-item">
+                            <div class="trap-icon"><i class="fas fa-cloud-sun"></i></div>
+                            <h3>理想主义</h3>
+                            <p>过度抽象常源于异想天开的完美主义，试图创造一劳永逸的万能解决方案</p>
+                        </div>
+                    </div>
+                    <div class="reality-box">
+                        <h3>现实是复杂的</h3>
+                        <p>现实世界中的矛盾是客观存在且相互对立的，问题永远不可能被一个简单的抽象框架全部解决</p>
+                    </div>
+                    <div class="conclusion-box">
+                        <div class="conclusion-icon"><i class="fas fa-balance-scale"></i></div>
+                        <p>具体问题具体分析，保持抽象与具象的平衡才是解决实际问题的正确途径</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片之间的过渡弹框 -->
+            <div class="slide" id="slide-9">
+                <div class="slide-content transition-slide">
+                    <div class="question-popup">
+                        <div class="popup-question">
+                            <h2>既然没有元元提示词一劳永逸的解决问题，那么是不是只要我们自己能搞定提示词，AI就能让我们高枕无忧了？</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 10: AI算数小实验 -->
+            <div class="slide" id="slide-10">
+                <div class="slide-content">
+                    <h2 class="slide-title">AI算数小实验</h2>
+                    <div class="experiment-box">
+                        <h3>小实验</h3>
+                        <p>请用手机打开一个大模型，询问一个简单的数学题：</p>
+                        <div class="question-highlight">
+                            <p>1234567 * 23467 = ?</p>
+                        </div>
+                        <div class="observation-trigger popup-trigger">
+                            <p>你观察到了什么？<i class="fas fa-chevron-down"></i></p>
+                        </div>
+                    </div>
+                    
+                    <div class="observation-popup" id="observation-popup">
+                        <div class="observation">
+                            <div class="popup-header">
+                                <h3>常见观察结果</h3>
+                                <span class="popup-close">&times;</span>
+                            </div>
+                            <div class="popup-body">
+                                <ul>
+                                    <li>有些模型可能会算错</li>
+                                    <li>有些需要思考很久</li>
+                                    <li>速度远不如普通计算器快</li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <p>这看似简单的现象背后，揭示了AI与传统计算机之间的本质区别。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 过渡hook问题 -->
+            <div class="slide" id="slide-11">
+                <div class="slide-content transition-slide">
+                    <div class="question-popup">
+                        <div class="popup-question">
+                            <h2>AI明明是计算机基于计算机之上的系统，为什么会出现这种情况呢？</h2>
+                            <div class="popup-answer skeptical">一定是泡沫！</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 12: 模型与实现的区别 -->
+            <div class="slide" id="slide-12">
+                <div class="slide-content">
+                    <h2 class="slide-title">模型与实现的区别</h2>
+                    <div class="question-box">
+                        <p>明明大模型底层就是计算机，为什么它们表现如此不同？</p>
+                    </div>
+                    
+                    <!-- 两列两行的布局结构 -->
+                    <div class="model-implementation-grid">
+                        <!-- 顶部行：模型类型 -->
+                        <div class="model-types-row">
+                            <!-- 概率模型 -->
+                            <div class="model-type-card" id="intelligence-model">
+                                <div class="model-icon"><i class="fas fa-brain"></i></div>
+                                <h3>概率模型</h3>
+                                <p>决定了功能边界和工作原理</p>
+                                <ul>
+                                    <li>基于统计规律和概率分布</li>
+                                    <li>擅长处理抽象概念和模糊情境</li>
+                                    <li>可生成创造性内容</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- 计算模型 -->
+                            <div class="model-type-card" id="computation-model">
+                                <div class="model-icon"><i class="fas fa-cogs"></i></div>
+                                <h3>计算模型</h3>
+                                <p>决定了功能边界和工作原理</p>
+                                <ul>
+                                    <li>基于确定性规则和精确算法</li>
+                                    <li>擅长处理具象运算和明确任务</li>
+                                    <li>结果可预测且稳定</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- 底部行：实现方式 -->
+                        <div class="implementation-row">
+                            <!-- 概率模型的实现 -->
+                            <div class="implementation-column">
+                                <h4>概率模型的实现</h4>
+                                <div class="implementation-items">
+                                    <div class="implementation-item">
+                                        <i class="fas fa-robot"></i>
+                                        <p>AI（电子计算机实现）</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 计算模型的实现 -->
+                            <div class="implementation-column">
+                                <h4>计算模型的实现</h4>
+                                <div class="implementation-items">
+                                    <div class="implementation-item">
+                                        <i class="fas fa-microchip"></i>
+                                        <p>电子计算机</p>
+                                    </div>
+                                    <div class="implementation-item popup-trigger" data-popup="mechanical-computer-popup">
+                                        <i class="fas fa-cog"></i>
+                                        <p>机械计算机 <span class="view-hint">(点击查看图片)</span></p>
+                                    </div>
+                                    <div class="implementation-item">
+                                        <i class="fas fa-calculator"></i>
+                                        <p>算盘</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="conclusion-box">
+                        <p>不同的<span class="highlight">模型</span>决定系统的能力范围和特性，而不同的<span class="highlight">实现</span>方式决定系统的运行效率和物理形式</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 13: 两种根本不同的模型 -->
+            <div class="slide" id="slide-13">
+                <div class="slide-content">
+                    <h2 class="slide-title">两种根本不同的模型</h2>
+                    <div class="model-comparison">
+                        <div class="model-type" id="probabilistic-model">
+                            <h3>概率模型（大模型AI）</h3>
+                            <ul>
+                                <li><i class="fas fa-chart-line"></i> 基于统计规律：通过学习大量数据中的模式和规律工作</li>
+                                <li><i class="fas fa-cloud"></i> 模糊输出：同一个输入可能产生多种不同但合理的输出</li>
+                                <li><i class="fas fa-lightbulb"></i> 擅长抽象概念：能处理语言、艺术、创意等抽象内容</li>
+                                <li><i class="fas fa-sitemap"></i> 上下文敏感：输出会受到环境和上下文的影响</li>
+                                <li><i class="fas fa-puzzle-piece"></i> 善于模式识别：能从混乱数据中识别出模式和关联</li>
+                            </ul>
+                        </div>
+                        <div class="model-type" id="computational-model">
+                            <h3>计算模型（传统计算机）</h3>
+                            <ul>
+                                <li><i class="fas fa-cogs"></i> 基于确定性规则：通过执行明确定义的算法和指令工作</li>
+                                <li><i class="fas fa-equals"></i> 精确输出：同一个输入总是产生相同的确定性结果</li>
+                                <li><i class="fas fa-calculator"></i> 擅长具象运算：能高效处理数学计算、数据排序等具体任务</li>
+                                <li><i class="fas fa-cube"></i> 上下文无关：计算结果不受环境影响，始终如一</li>
+                                <li><i class="fas fa-tasks"></i> 善于精确执行：能完美执行预定义的规则和流程</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <p><i class="fas fa-brain"></i> <strong>合理猜测：</strong>人类的大脑与大模型AI有如此多相似之处，都能灵活处理语言、识别模式、适应上下文，甚至能直接交流（这一点有些人与人之间都难以做到），人类的大脑很可能也是一种基于概率模型的生物实现，而非基于计算模型。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 14: 人类认知与概率模型 -->
+            <div class="slide" id="slide-14">
+                <div class="slide-content">
+                    <h2 class="slide-title">人类认知与概率模型</h2>
+                    <div class="observation-box">
+                        <p>大模型能做的事情与人类的能力表现出惊人的相似性：</p>
+                        <div class="skill-grid">
+                            <div class="skill-item">
+                                <i class="fas fa-comments"></i>
+                                <p>理解和生成语言</p>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-image"></i>
+                                <p>识别图像中的内容和模式</p>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-paint-brush"></i>
+                                <p>创作艺术和故事</p>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-question-circle"></i>
+                                <p>整合知识并回答开放性问题</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insight-box">
+                        <p>这种相似性揭示了一个重要事实：人类的大脑极有可能也是一个概率模型的产物，只不过是通过生物神经系统实现的。</p>
+                    </div>
+                    <div class="conclusion-box">
+                        <p>人类认知系统可能是一个混合模型——主体是概率模型，但包含了专门处理计算和逻辑的子系统。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 过渡问题页面 -->
+            <div class="slide" id="slide-14-5">
+                <div class="slide-content transition-slide">
+                    <div class="question-popup">
+                        <div class="popup-question">
+                            <h2>那么，人类和大模型AI有什么区别呢？</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 15: 大模型与人类的本质区别 -->
+            <div class="slide" id="slide-15">
+                <div class="slide-content">
+                    <h2 class="slide-title">大模型与人类的本质区别</h2>
+                    <div class="difference-container">
+                        <div class="difference-item">
+                            <div class="difference-header">
+                                <div class="difference-icon"><i class="fas fa-eye"></i></div>
+                                <blockquote class="philosophy-quote">实践出真知</blockquote>
+                            </div>
+                            <h3>感官与实践的缺失</h3>
+                            <p>大模型没有感官，无法直接体验物理世界。它们的'知识'完全来自于对人类已有知识的模式拟合，而非自身的实践体验。</p>
+                            <p class="implication">这意味着大模型无法像人类那样从实践中发现和总结新模式，无法真正'创造'全新知识。</p>
+                        </div>
+                        <div class="difference-item">
+                            <div class="difference-header">
+                                <div class="difference-icon"><i class="fas fa-lightbulb"></i></div>
+                                <blockquote class="philosophy-quote">我思故我在</blockquote>
+                            </div>
+                            <h3>意识与自驱动的缺失</h3>
+                            <p>大模型没有连续的意识流，它们的'思考'是被动触发的，而非主动持续的。人类即使在没有外部刺激时，意识仍在持续运作，能够自我反思和设定目标。</p>
+                            <p class="implication">而大模型完全依赖人类提供目标和方向，无法自我驱动。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 16: 人类的核心优势 -->
+            <div class="slide" id="slide-16">
+                <div class="slide-content">
+                    <h2 class="slide-title">人类的核心优势</h2>
+                    <div class="advantage-container">
+                        <div class="advantage-item">
+                            <div class="advantage-icon"><i class="fas fa-flask"></i></div>
+                            <h3>通过实践创造新知识的能力</h3>
+                            <p>人类可以直接感知世界，进行实验和探索，从而发现全新的模式和规律。我们不只是整合已知信息，而是能够超越已知边界，创造前所未有的知识。</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon"><i class="fas fa-compass"></i></div>
+                            <h3>通过意识自驱动创新的能力</h3>
+                            <p>人类有内在动力和好奇心，能够自主设定目标，提出'为什么'和'应该做什么'的问题。这种自我驱动的意识是创新和突破的根本来源。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-thought">
+                        <i class="fas fa-comment-dots"></i>
+                        <p>哦哦，原来小时候老师让我多思考，勤实践，其实是早就预料到了有一天AI会替代我啊！</p>
+                    </div>
+                    
+                    <div class="conclusion-box">
+                        <p>这正是人类在AI时代不可替代的价值所在。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 17: 人类、AI与计算机的三角互补关系 -->
+            <div class="slide" id="slide-17">
+                <div class="slide-content">
+                    <h2 class="slide-title">人类、AI与计算机的三角互补关系</h2>
+                    <div class="triangle-relationship">
+                        <div class="relationship-node human">
+                            <i class="fas fa-user"></i>
+                            <h3>人类</h3>
+                            <p>负责提供真实世界的经验与反馈，具备意识、创造力和价值观</p>
+                            <p class="role">抽象层 (Abstract)</p>
+                            <p class="focus">概念形成、价值引导、目标设定</p>
+                        </div>
+                        
+                        <div class="relationship-node ai">
+                            <i class="fas fa-brain"></i>
+                            <h3>AI大模型</h3>
+                            <p>基于大量数据提取模式，能够理解文本、生成内容，但缺乏实践体验</p>
+                            <p class="role">模式层 (Pattern)</p>
+                            <p class="focus">模式识别、知识整合、创意生成</p>
+                        </div>
+                        
+                        <div class="relationship-node computer">
+                            <i class="fas fa-laptop-code"></i>
+                            <h3>计算机</h3>
+                            <p>执行具体的计算任务，提供精确的数据处理能力和持久化存储</p>
+                            <p class="role">具体层 (Concrete)</p>
+                            <p class="focus">数据处理、精确计算、规则执行</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 18: AI时代的未来展望 -->
+            <div class="slide" id="slide-18">
+                <div class="slide-content">
+                    <h2 class="slide-title">AI时代的未来展望</h2>
+                    <h3 class="slide-subtitle">底层逻辑为我们带来的指导意义</h3>
+                    
+                    <div class="guidance-container">
+                        <div class="guidance-item">
+                            <div class="guidance-icon"><i class="fas fa-microchip"></i></div>
+                            <h4>技术发展路径指导</h4>
+                            <p>理解抽象-模式-具象三角关系可以帮助指导AI技术的下一步发展，从模式识别向更深入的抽象理解和具象实践方向拓展。</p>
+                        </div>
+                        
+                        <div class="guidance-item">
+                            <div class="guidance-icon"><i class="fas fa-handshake"></i></div>
+                            <h4>人机协作新模式</h4>
+                            <p>明确人类和AI的本质区别后，可以构建基于互补而非替代的协作模式，重新定义人类与技术的关系。</p>
+                        </div>
+                        
+                        <div class="guidance-item">
+                            <div class="guidance-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <h4>教育体系重构</h4>
+                            <p>引导教育重点从知识记忆转向培养人类独有的实践创新能力和自驱动意识。</p>
+                        </div>
+                        
+                        <div class="guidance-item">
+                            <div class="guidance-icon"><i class="fas fa-exchange-alt"></i></div>
+                            <h4>专业领域知识传递</h4>
+                            <p>元提示词方法论可以更高效地传递专业领域的知识结构和思维模式。</p>
+                        </div>
+                        
+                        <div class="guidance-item">
+                            <div class="guidance-icon"><i class="fas fa-brain"></i></div>
+                            <h4>认知工具发展</h4>
+                            <p>启发开发新型认知工具，增强人类抽象思维与具象实践的连接能力。</p>
+                        </div>
+                        
+                        <div class="guidance-item">
+                            <div class="guidance-icon"><i class="fas fa-sitemap"></i></div>
+                            <h4>企业组织优化</h4>
+                            <p>指导企业如何重组工作流程，结合人类创造力和AI效率。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="thank-you">
+                        <h3>谢谢</h3>
+                        <p>深度实践</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗容器 -->
+    <div class="popup-container" id="popup1">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>如何让AI学会使用你的私有代码库？</h3>
+                <span class="popup-close">&times;</span>
+            </div>
+            <div class="popup-body">
+                <p><i class="fas fa-lightbulb"></i> 常见方法：将所有代码一次性输入给AI</p>
+                <p class="popup-insight">这种方法会受到上下文长度限制，且每次查询都需要重新输入，成本高昂。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-container" id="popup2">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>如何让AI理解你所在律所的案例库和法律解读方法？</h3>
+                <span class="popup-close">&times;</span>
+            </div>
+            <div class="popup-body">
+                <p><i class="fas fa-lightbulb"></i> 常见方法：输入所有案例和解读文档</p>
+                <p class="popup-insight">法律文档繁多且专业性强，完整输入既不现实也很难保持上下文连贯性。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-container" id="popup3">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>如何让AI掌握你医院的临床诊疗路径？</h3>
+                <span class="popup-close">&times;</span>
+            </div>
+            <div class="popup-body">
+                <p><i class="fas fa-lightbulb"></i> 常见方法：上传全部医疗案例和诊疗指南</p>
+                <p class="popup-insight">医疗信息涉及隐私且极为复杂，通过大量案例输入难以让AI理解背后的诊疗思路。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-container" id="popup4">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>如何让AI学习你公司特有的投资分析框架？</h3>
+                <span class="popup-close">&times;</span>
+            </div>
+            <div class="popup-body">
+                <p><i class="fas fa-lightbulb"></i> 常见方法：提供所有历史分析报告和框架文档</p>
+                <p class="popup-insight">投资分析包含大量专业知识和内部模型，简单提供文档难以让AI真正掌握分析框架的精髓。</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popup-container" id="mechanical-computer-popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>机械计算机</h3>
+                <span class="popup-close">&times;</span>
+            </div>
+            <div class="popup-body">
+                <img src="images/computer.webp" alt="机械计算机" class="popup-image">
+                <p class="popup-caption">机械计算机是一种通过机械装置执行计算的设备，如巴贝奇的差分机和分析机</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="presentation.js"></script>
+</body>
+</html> 
