@@ -16,6 +16,12 @@
     --transition: all 0.3s ease;
     --glow-effect: 0 0 15px var(--primary-color);
     --neon-effect: 0 0 10px rgba(77, 171, 247, 0.6);
+    --background-color: #0f172a;
+    --background-light: #1e293b;
+    --highlight-color: #64ffda;
+    --highlight-color-rgb: 100, 255, 218; /* RGB值对应#64ffda */
+    --border-color: rgba(148, 163, 184, 0.2);
+    --card-bg: rgba(30, 41, 59, 0.7);
 }
 
 * {
@@ -1816,5 +1822,102 @@ footer {
     }
     50% {
         transform: translate(10px, -15px) rotate(calc(var(--rotate) + 5deg));
+    }
+}
+
+/* 导航栏下拉菜单样式 */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-toggle i {
+    margin-left: 5px;
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-toggle i {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text-color);
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.dropdown-menu li a:hover {
+    background-color: rgba(var(--highlight-color-rgb), 0.1);
+    color: var(--highlight-color);
+    transform: translateX(5px);
+}
+
+/* 响应式设计中的下拉菜单 */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: static;
+        background-color: rgba(0, 0, 0, 0.1);
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    
+    .dropdown.active .dropdown-menu {
+        max-height: 500px;
+        padding: 10px 0;
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .dropdown-menu li a {
+        padding: 10px 30px;
+    }
+    
+    .dropdown-toggle {
+        width: 100%;
+        justify-content: space-between;
     }
 } 

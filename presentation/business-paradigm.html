@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI时代商业组织的新范式 | DeepracticeX</title>
+    <meta name="description" content="探索AI时代商业组织的新范式，了解从产品中心到人中心的转变，以及开源战略如何成为影响力扩张的关键。">
+    <meta name="keywords" content="商业组织,AI,开源战略,影响力经济,人中心组织,网状结构">
+    <meta name="author" content="深度实践">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="presentation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <a href="../index.html" class="exit-button">
+            <i class="fas fa-arrow-left"></i> 退出演示
+        </a>
+    </header>
+
+    <div class="presentation-container">
+        <!-- 控制栏 -->
+        <div class="presentation-controls">
+            <button id="prev-slide" class="control-btn"><i class="fas fa-chevron-left"></i></button>
+            <div id="slide-counter">1 / 17</div>
+            <button id="next-slide" class="control-btn"><i class="fas fa-chevron-right"></i></button>
+            <div class="jump-controls">
+                <input type="number" id="jump-input" min="1" max="17" placeholder="#" title="输入页码">
+                <button id="jump-btn" class="control-btn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <button id="fullscreen" class="control-btn"><i class="fas fa-expand"></i></button>
+        </div>
+
+        <!-- 幻灯片容器 -->
+        <div class="slides-container">
+            <!-- 幻灯片 1: 封面 -->
+            <div class="slide active" id="slide-1">
+                <div class="slide-content cover">
+                    <h1 class="glitch-text" data-text="AI时代商业组织的新范式">AI时代商业组织的新范式</h1>
+                    <h2>从产品中心到<span class="highlight">人中心</span></h2>
+                    <div class="decoration">
+                        <div class="triangle-decoration" style="--size: 80px; --top: 20%; --left: 10%; --rotation: 30deg;"></div>
+                        <div class="circle-decoration" style="--size: 60px; --top: 70%; --left: 85%; --rotation: 0deg;"></div>
+                        <div class="square-decoration" style="--size: 50px; --top: 80%; --left: 20%; --rotation: 45deg;"></div>
+                    </div>
+                    <div class="presenter">
+                        <p>深度实践</p>
+                        <p class="date">2025年</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 2: 开场 -->
+            <div class="slide" id="slide-2">
+                <div class="slide-content">
+                    <h2 class="slide-title">开源的悖论</h2>
+                    <div class="question-box">
+                        <p>为什么我们选择开源策略？一家刚刚成立的公司，难道不应该首先考虑如何通过技术赚钱吗？</p>
+                    </div>
+                    <div class="insight-box">
+                        <p>这看似一个违反商业直觉的决策，却恰恰体现了AI时代商业逻辑的根本转变。</p>
+                    </div>
+                    <div class="decoration">
+                        <div class="triangle-decoration" style="--size: 80px; --top: 20%; --right: 10%; --rotation: 30deg;"></div>
+                        <div class="circle-decoration" style="--size: 60px; --bottom: 15%; --left: 15%; --rotation: 0deg;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 3: 技术差距的压缩 -->
+            <div class="slide" id="slide-3">
+                <div class="slide-content">
+                    <h2 class="slide-title">技术差距的压缩</h2>
+                    <div class="insight-box">
+                        <p>在AI时代，技术这种具象的、执行层面的价值差距已经被极度压缩。</p>
+                    </div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                            <div class="feature-content">
+                                <h4>技术门槛降低</h4>
+                                <p>AI工具使个人或小团队也能完成过去需要专业团队才能做的工作</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-share-alt"></i></div>
+                            <div class="feature-content">
+                                <h4>资源民主化</h4>
+                                <p>高质量模型和工具的普及使得技术资源不再是壁垒</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="feature-content">
+                                <h4>执行速度提升</h4>
+                                <p>从创意到产品的转化速度加快，缩小了大小组织间的效率差距</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-box">
+                        <p>如果技术不再是区分性优势，那么什么将成为新的商业竞争核心？</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 4: 影响力的崛起 -->
+            <div class="slide" id="slide-4">
+                <div class="slide-content transition-slide">
+                    <div class="question-popup">
+                        <div class="popup-question">
+                            <h2>在AI时代，商业成功的关键因素正在从技术能力转向影响力</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 5: 影响力的形式 -->
+            <div class="slide" id="slide-5">
+                <div class="slide-content">
+                    <h2 class="slide-title">影响力的形式</h2>
+                    <div class="content-grid">
+                        <div class="influence-grid">
+                            <div class="influence-item">
+                                <div class="influence-icon"><i class="fas fa-lightbulb"></i></div>
+                                <div class="influence-content">
+                                    <h4>思想影响力</h4>
+                                    <p>产生有感染力的理念</p>
+                                </div>
+                            </div>
+                            <div class="influence-item">
+                                <div class="influence-icon"><i class="fas fa-network-wired"></i></div>
+                                <div class="influence-content">
+                                    <h4>关系影响力</h4>
+                                    <p>建立强连接的信任网络</p>
+                                </div>
+                            </div>
+                            <div class="influence-item">
+                                <div class="influence-icon"><i class="fas fa-users"></i></div>
+                                <div class="influence-content">
+                                    <h4>社群影响力</h4>
+                                    <p>凝聚共同愿景的团体</p>
+                                </div>
+                            </div>
+                            <div class="influence-item">
+                                <div class="influence-icon"><i class="fas fa-seedling"></i></div>
+                                <div class="influence-content">
+                                    <h4>环境影响力</h4>
+                                    <p>创造促进创新的场域</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="sub-title">新型资本形式</h3>
+                    <div class="capital-types">
+                        <div class="capital-item">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>影响力资本</p>
+                            <span>思想领导力和注意力占有率</span>
+                        </div>
+                        <div class="capital-item">
+                            <i class="fas fa-handshake"></i>
+                            <p>信任资本</p>
+                            <span>透明度和一致性</span>
+                        </div>
+                        <div class="capital-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <p>关系资本</p>
+                            <span>深度理解和连接能力</span>
+                        </div>
+                        <div class="capital-item">
+                            <i class="fas fa-compass"></i>
+                            <p>意义资本</p>
+                            <span>创造目的感的能力</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 6: 人类注意力的稀缺性 -->
+            <div class="slide" id="slide-6">
+                <div class="slide-content">
+                    <h2 class="slide-title">人类注意力的稀缺性</h2>
+                    <div class="insight-box">
+                        <p>未来社会生产力会发生质的改变，但不变的是人类注意力的总量。</p>
+                    </div>
+                    <div class="comparison-box">
+                        <div class="comparison-item">
+                            <div class="icon-box"><i class="fas fa-clock"></i></div>
+                            <h3>注意力总量恒定</h3>
+                            <p>每人每天活跃时间有限，无法通过技术扩展</p>
+                        </div>
+                        <div class="comparison-item">
+                            <div class="icon-box"><i class="fas fa-brain"></i></div>
+                            <h3>信息处理带宽有限</h3>
+                            <p>人类同时只能真正关注有限的信息源</p>
+                        </div>
+                        <div class="comparison-item">
+                            <div class="icon-box"><i class="fas fa-heart"></i></div>
+                            <h3>信任建立需要时间</h3>
+                            <p>建立深度连接仍然需要一致性和时间积累</p>
+                        </div>
+                    </div>
+                    <div class="conclusion-box">
+                        <p>谁能获得并保持人们的注意力和信任，谁就能在商业上取得成功。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 7: 注意力经济的放大 -->
+            <div class="slide" id="slide-7">
+                <div class="slide-content">
+                    <h2 class="slide-title">注意力经济的放大</h2>
+                    <div class="content-grid">
+                        <div class="left-column">
+                            <div class="amplification-image">
+                                <i class="fas fa-bullseye fa-5x" style="color: var(--highlight-color); opacity: 0.7;"></i>
+                            </div>
+                        </div>
+                        <div class="right-column">
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature-icon"><i class="fas fa-comment-dots"></i></div>
+                                    <div class="feature-content">
+                                        <h4>内容过剩</h4>
+                                        <p>内容生产门槛进一步降低，信息过载更严重</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon"><i class="fas fa-filter"></i></div>
+                                    <div class="feature-content">
+                                        <h4>筛选困难</h4>
+                                        <p>人们更难分辨高质量内容，需要依赖可信任的信息源</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon"><i class="fas fa-balance-scale"></i></div>
+                                    <div class="feature-content">
+                                        <h4>注意力稀缺</h4>
+                                        <p>有限的注意力面对几乎无限的内容选择</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insight-box">
+                        <p>互联网时代已经验证了注意力经济的价值，而AI时代将进一步放大这种效应。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 8: 从产品中心到人中心 -->
+            <div class="slide" id="slide-8">
+                <div class="slide-content transition-slide">
+                    <div class="question-popup">
+                        <div class="popup-question">
+                            <h2>从"产品中心"到"人中心"的根本转变</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 9: 人中心转变 -->
+            <div class="slide" id="slide-9">
+                <div class="slide-content">
+                    <h2 class="slide-title">人中心的商业模式</h2>
+                    <div class="insight-box">
+                        <p>传统商业模式以生产力、以产品为中心，而未来则是以人为中心，因为人是价值创造的根源，人的注意力是最宝贵资源。</p>
+                    </div>
+                    <div class="comparison-container">
+                        <div class="comparison-column">
+                            <div class="comparison-header">
+                                <i class="fas fa-industry"></i>
+                                <h3>传统商业模式</h3>
+                            </div>
+                            <div class="comparison-body">
+                                <h4>产品中心</h4>
+                                <div class="comparison-point">
+                                    <i class="fas fa-user-cog"></i>
+                                    <p>人服务于产品</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-cogs"></i>
+                                    <p>优化生产线</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-sitemap"></i>
+                                    <p>按产品划分部门</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comparison-vs">→</div>
+                        <div class="comparison-column highlight-column">
+                            <div class="comparison-header">
+                                <i class="fas fa-user-friends"></i>
+                                <h3>AI时代商业模式</h3>
+                            </div>
+                            <div class="comparison-body">
+                                <h4>人中心</h4>
+                                <div class="comparison-point">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <p>产品服务于人的创造力</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-brain"></i>
+                                    <p>优化人的创新环境</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <p>网状组织结构</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="practice-examples">
+                        <div class="practice-item">
+                            <i class="fas fa-handshake"></i>
+                            <p>关系价值高于交易价值</p>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-users"></i>
+                            <p>社区归属感成为核心价值主张</p>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-link"></i>
+                            <p>追求连接深度而非简单的用户数量</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 10: 网状组织结构 -->
+            <div class="slide" id="slide-10">
+                <div class="slide-content">
+                    <h2 class="slide-title">网状组织结构</h2>
+                    <div class="insight-box">
+                        <p>我们提出了一种适应AI时代的组织结构，即每个成员都是一个中心，成员充分发挥主观能动性，利用实践能力和思维能力进行创新，而所有的生产工作都交给AI去执行。</p>
+                    </div>
+                    <div class="network-structure">
+                        <div class="network-node central">
+                            <i class="fas fa-user"></i>
+                            <span>成员</span>
+                        </div>
+                        <div class="network-paths">
+                            <div class="network-path innovation">
+                                <span>创新路径</span>
+                                <div class="network-node">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>问题定义</span>
+                                </div>
+                                <div class="network-node">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>跨界连接</span>
+                                </div>
+                                <div class="network-node">
+                                    <i class="fas fa-star"></i>
+                                    <span>意义创造</span>
+                                </div>
+                                <div class="network-node">
+                                    <i class="fas fa-robot"></i>
+                                    <span>AI协作</span>
+                                </div>
+                            </div>
+                            <div class="network-path influence">
+                                <span>影响力路径</span>
+                                <div class="network-node">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>思想影响</span>
+                                </div>
+                                <div class="network-node">
+                                    <i class="fas fa-handshake"></i>
+                                    <span>关系影响</span>
+                                </div>
+                                <div class="network-node">
+                                    <i class="fas fa-users"></i>
+                                    <span>社群影响</span>
+                                </div>
+                                <div class="network-node">
+                                    <i class="fas fa-seedling"></i>
+                                    <span>环境影响</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="balance-box">
+                        <div class="balance-item">
+                            <i class="fas fa-door-closed"></i>
+                            <p>只创新不传播 → 闭门造车，价值无法放大</p>
+                        </div>
+                        <div class="balance-item">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>只传播不创新 → 成为"大忽悠"，失去实质内容</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 11: 有机生长模式 -->
+            <div class="slide" id="slide-11">
+                <div class="slide-content">
+                    <h2 class="slide-title">有机生长模式</h2>
+                    <div class="insight-box">
+                        <p>这种以人为中心的十字结构可以通过影响力获取新的成员，新的成员又会在不同的领域发展创新力和影响力，相互作用，最终形成网状结构。</p>
+                    </div>
+                    <div class="growth-animation">
+                        <div class="network-visualization">
+                            <!-- 这里可以放置网络结构可视化 -->
+                            <i class="fas fa-project-diagram fa-5x" style="color: var(--highlight-color); opacity: 0.7;"></i>
+                        </div>
+                    </div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-magnet"></i></div>
+                            <div class="feature-content">
+                                <h4>磁场效应</h4>
+                                <p>每个人的影响力成为吸引新节点的磁场</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-cubes"></i></div>
+                            <div class="feature-content">
+                                <h4>多元视角</h4>
+                                <p>新加入的成员带来新的创新视角和新的影响力网络</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                            <div class="feature-content">
+                                <h4>价值连接</h4>
+                                <p>连接基于共同愿景、能力互补和信任关系</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-bezier-curve"></i></div>
+                            <div class="feature-content">
+                                <h4>分形结构</h4>
+                                <p>整体呈现分形结构，可以无限扩展同时保持高凝聚力</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 12: 开源的战略再定位 -->
+            <div class="slide" id="slide-12">
+                <div class="slide-content transition-slide">
+                    <div class="question-popup">
+                        <div class="popup-question">
+                            <h2>开源从技术策略上升为影响力战略</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 13: 开源的必然性 -->
+            <div class="slide" id="slide-13">
+                <div class="slide-content">
+                    <h2 class="slide-title">开源的必然性</h2>
+                    <div class="insight-box">
+                        <p>技术力相比于创新力和影响力，在未来起到的作用会降低很多，影响力作用占比增大。那么技术开源则是一个顺其自然的事情。</p>
+                    </div>
+                    <div class="comparison-container">
+                        <div class="comparison-column">
+                            <div class="comparison-header">
+                                <i class="fas fa-code-branch"></i>
+                                <h3>传统开源策略</h3>
+                            </div>
+                            <div class="comparison-body">
+                                <div class="comparison-point">
+                                    <i class="fas fa-tools"></i>
+                                    <p>技术共享</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <p>成本降低</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-check-circle"></i>
+                                    <p>技术验证</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comparison-vs">→</div>
+                        <div class="comparison-column highlight-column">
+                            <div class="comparison-header">
+                                <i class="fas fa-globe"></i>
+                                <h3>AI时代开源策略</h3>
+                            </div>
+                            <div class="comparison-body">
+                                <div class="comparison-point">
+                                    <i class="fas fa-bullhorn"></i>
+                                    <p>影响力扩张</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-seedling"></i>
+                                    <p>生态构建</p>
+                                </div>
+                                <div class="comparison-point">
+                                    <i class="fas fa-handshake"></i>
+                                    <p>信任建立</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 14: 开源的三重效应 -->
+            <div class="slide" id="slide-14">
+                <div class="slide-content">
+                    <h2 class="slide-title">开源的三重效应</h2>
+                    <div class="triple-effect">
+                        <div class="effect-item">
+                            <div class="effect-icon"><i class="fas fa-broadcast-tower"></i></div>
+                            <h3>影响力放大器</h3>
+                            <p>扩大思想和产品的传播范围和速度</p>
+                        </div>
+                        <div class="effect-item">
+                            <div class="effect-icon"><i class="fas fa-handshake"></i></div>
+                            <h3>信任催化剂</h3>
+                            <p>透明度建立初始信任，降低客户进入门槛</p>
+                        </div>
+                        <div class="effect-item">
+                            <div class="effect-icon"><i class="fas fa-magnet"></i></div>
+                            <h3>人才磁石</h3>
+                            <p>吸引共鸣于组织理念的人才，形成自我强化的创新循环</p>
+                        </div>
+                    </div>
+                    <div class="business-model">
+                        <h3>新商业模式</h3>
+                        <div class="model-flow">
+                            <div class="model-step">
+                                <i class="fas fa-code-branch"></i>
+                                <p>通过开源获取影响力</p>
+                            </div>
+                            <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="model-step">
+                                <i class="fas fa-eye"></i>
+                                <p>通过影响力获取客户注意力</p>
+                            </div>
+                            <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="model-step">
+                                <i class="fas fa-user-cog"></i>
+                                <p>通过定制化服务创收</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 15: 从销售产品到提供会员资格 -->
+            <div class="slide" id="slide-15">
+                <div class="slide-content">
+                    <h2 class="slide-title">从"销售产品"到"提供会员资格"</h2>
+                    <div class="transformation-grid">
+                        <div class="transformation-item">
+                            <div class="before-state">
+                                <i class="fas fa-shopping-cart"></i>
+                                <p>单次交易</p>
+                            </div>
+                            <div class="arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+                            <div class="after-state">
+                                <i class="fas fa-handshake"></i>
+                                <p>关系价值</p>
+                            </div>
+                        </div>
+                        <div class="transformation-item">
+                            <div class="before-state">
+                                <i class="fas fa-box"></i>
+                                <p>产品购买</p>
+                            </div>
+                            <div class="arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+                            <div class="after-state">
+                                <i class="fas fa-route"></i>
+                                <p>长期参与感</p>
+                            </div>
+                        </div>
+                        <div class="transformation-item">
+                            <div class="before-state">
+                                <i class="fas fa-user"></i>
+                                <p>个体客户</p>
+                            </div>
+                            <div class="arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+                            <div class="after-state">
+                                <i class="fas fa-users"></i>
+                                <p>社区归属感</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <h3>模式案例</h3>
+                        <div class="example-items">
+                            <div class="example-item">
+                                <i class="fas fa-code"></i>
+                                <p>开源核心技术</p>
+                            </div>
+                            <div class="example-item">
+                                <i class="fas fa-plus"></i>
+                                <p>高价值专业服务</p>
+                            </div>
+                            <div class="example-item">
+                                <i class="fas fa-equals"></i>
+                                <p>可持续商业模式</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 16: 结语 -->
+            <div class="slide" id="slide-16">
+                <div class="slide-content">
+                    <h2 class="slide-title">AI时代商业组织的新范式</h2>
+                    <div class="summary-box">
+                        <p>AI时代的商业组织将经历从"产品中心"到"人中心"的根本转变。</p>
+                    </div>
+                    <div class="key-points">
+                        <div class="key-point">
+                            <i class="fas fa-compress-arrows-alt"></i>
+                            <p>技术差距被极度压缩，影响力成为关键竞争力</p>
+                        </div>
+                        <div class="key-point">
+                            <i class="fas fa-eye"></i>
+                            <p>人类注意力的恒定性使其成为最宝贵资源</p>
+                        </div>
+                        <div class="key-point">
+                            <i class="fas fa-project-diagram"></i>
+                            <p>组织结构从金字塔变为以人为节点的网状结构</p>
+                        </div>
+                        <div class="key-point">
+                            <i class="fas fa-code-branch"></i>
+                            <p>开源从技术策略上升为影响力战略</p>
+                        </div>
+                    </div>
+                    <div class="conclusion-box">
+                        <p>未来的商业领导者需要掌握这种新范式，在<span class="highlight">人类创造力</span>、<span class="highlight">影响力</span>和<span class="highlight">技术能力</span>之间找到最佳平衡点，构建既有创新活力又有执行效率的组织形态。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻灯片 17: 谢谢 -->
+            <div class="slide" id="slide-17">
+                <div class="slide-content">
+                    <div class="thank-you">
+                        <h2>谢谢</h2>
+                        <p>深度实践</p>
+                        <div class="decoration">
+                            <div class="triangle-decoration" style="--size: 80px; --top: 20%; --left: 10%; --rotation: 30deg;"></div>
+                            <div class="circle-decoration" style="--size: 60px; --top: 70%; --left: 85%; --rotation: 0deg;"></div>
+                            <div class="square-decoration" style="--size: 50px; --top: 80%; --left: 20%; --rotation: 45deg;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="presentation.js"></script>
+</body>
+</html> 

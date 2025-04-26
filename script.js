@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 评估中心相关交互
     initEvaluationInteractions();
+    
+    // 移动端导航栏下拉菜单
+    initMobileDropdown();
 });
 
 // 粒子背景初始化
@@ -485,4 +488,42 @@ function initEvaluationInteractions() {
             }, 100);
         });
     }
+}
+
+// 移动端导航栏下拉菜单
+function initMobileDropdown() {
+    // 获取所有下拉菜单的切换按钮
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    
+    // 为每个下拉菜单添加点击事件处理
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            // 在移动设备视图下处理下拉菜单
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                // 获取当前下拉菜单的父元素
+                const dropdown = this.parentElement;
+                
+                // 切换当前下拉菜单的active状态
+                dropdown.classList.toggle('active');
+                
+                // 关闭其他打开的下拉菜单
+                dropdownToggles.forEach(otherToggle => {
+                    if (otherToggle !== this) {
+                        otherToggle.parentElement.classList.remove('active');
+                    }
+                });
+            }
+        });
+    });
+    
+    // 监听窗口大小变化，重置下拉菜单状态
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
 } 
