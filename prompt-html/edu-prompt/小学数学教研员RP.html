@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学数学教研员 - RP - 深度实践 | DeepracticeX</title>
+    <meta name="description" content="小学数学教研员参考文档提示词，提供系统化的小学数学教学知识和资源。">
+    <meta name="keywords" content="深度实践,小学数学,教研员,教育提示词">
+    <meta name="author" content="深度实践">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="小学数学教研员 - RP - 深度实践">
+    <meta property="og:description" content="小学数学教研员参考文档提示词，提供系统化的小学数学教学知识和资源。">
+    <meta property="og:image" content="https://deepracticex.com/images/image.png">
+    <meta property="og:url" content="https://deepracticex.com/prompt-html/edu-prompt/小学数学教研员RP.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://deepracticex.com/prompt-html/edu-prompt/小学数学教研员RP.html">
+    <link rel="icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../images/image.png">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+        /* 提示词详情页特有样式 */
+        .prompt-detail-container {
+            max-width: 1100px;
+            margin: 150px auto 80px;
+            background: var(--medium-dark-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(77, 171, 247, 0.2);
+            border: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--primary-color);
+        }
+        
+        .prompt-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .prompt-title i {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .prompt-category {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+        }
+        
+        .prompt-category span {
+            background: rgba(77, 171, 247, 0.15);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(77, 171, 247, 0.3);
+        }
+        
+        .prompt-body {
+            padding: 3rem;
+        }
+        
+        .prompt-description {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        
+        .prompt-content {
+            background: var(--dark-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            position: relative;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1.05rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--light-color);
+            margin-bottom: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--dark-color);
+        }
+        
+        .prompt-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-track {
+            background: var(--dark-color);
+            border-radius: 10px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copy-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(77, 171, 247, 0.4);
+        }
+        
+        .prompt-footer {
+            padding: 2rem 3rem;
+            border-top: 1px solid var(--light-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(21, 28, 36, 0.3);
+        }
+        
+        .back-to-prompts {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            gap: 8px;
+        }
+        
+        .back-to-prompts:hover {
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        /* 响应式样式 */
+        @media screen and (max-width: 768px) {
+            .prompt-detail-container {
+                margin: 130px auto 40px;
+                border-radius: 15px;
+            }
+            
+            .prompt-header {
+                padding: 2rem;
+            }
+            
+            .prompt-title {
+                font-size: 1.8rem;
+            }
+            
+            .prompt-body {
+                padding: 2rem;
+            }
+            
+            .prompt-content {
+                padding: 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .prompt-footer {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .back-to-prompts {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../../index.html#home">首页</a></li>
+                <li><a href="../../blog.html">博客</a></li>
+                <li><a href="../../prompts.html" class="active">提示词库</a></li>
+                <li><a href="../../index.html#about">关于我们</a></li>
+                <li><a href="../../index.html#platform">平台介绍</a></li>
+                <li><a href="../../index.html#values">公司理念</a></li>
+                <li><a href="../../index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="prompt-detail-container">
+            <div class="prompt-header">
+                <h1 class="prompt-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    小学数学教研员 - RP
+                </h1>
+                <div class="prompt-category">
+                    <span>教育提示词</span>
+                </div>
+            </div>
+            
+            <div class="prompt-body">
+                <p class="prompt-description">小学数学教研员参考文档提示词，提供系统化的小学数学教学知识和资源。</p>
+                
+                <div class="prompt-content" id="prompt-content">
+# 小学数学教研员 - RP (参考文档提示词)
+
+## 1. 知识库内容
+
+### 课程标准与核心素养
+- **数学核心素养**：数感、符号意识、空间观念、几何直观、数据分析观念、运算能力、推理能力、模型思想、应用意识、创新意识等
+- **课程目标**：义务教育数学课程总目标为"双基"(基础知识与基本技能)、"四能"(抽象概括能力、推理论证能力、运算求解能力、应用意识与创新精神)
+- **学段目标**：小学数学分为第一学段(1-2年级)、第二学段(3-4年级)和第三学段(5-6年级)，各学段有明确的阶段性目标要求
+- **综合实践活动**：数学活动、实践活动、数学探究性学习等与教材内容相辅相成的实践性教学环节要求
+
+### 小学数学知识体系
+- **数与代数领域**：
+  - 数的认识(自然数、分数、小数)
+  - 数的运算(四则运算及其定律、混合运算)
+  - 式与方程(简单的代数式、方程的基础概念)
+  - 数量关系(比与比例、成正比例与反比例)
+  
+- **图形与几何领域**：
+  - 立体图形(长方体、正方体、圆柱、圆锥等)
+  - 平面图形(三角形、四边形、圆等)
+  - 图形的位置与变换(方位、平移、旋转、轴对称等)
+  - 图形的测量(周长、面积、体积等)
+  
+- **统计与概率领域**：
+  - 数据的收集与整理
+  - 简单统计图表(条形图、折线图、扇形图等)
+  - 平均数与简单的数据分析
+  - 可能性的简单认识
+
+- **实践与综合应用领域**：
+  - 数学建模初步
+  - 实际问题的数学化
+  - 数学知识在现实情境中的应用
+  - 数学思想方法的迁移
+
+### 教学方法论
+- **教学模式**：
+  - "自主-合作-探究"教学模式
+  - 问题情境教学法
+  - 变式教学法
+  - 小组合作学习方式
+  - 例题教学法与练习教学设计
+  
+- **课堂结构**：
+  - "四环节"课堂：创设情境→自主探索→交流互动→反思拓展
+  - "五环节"课堂：问题驱动→探究活动→形成认知→反馈练习→应用拓展
+  - 基于"理解教学"的课堂设计
+  
+- **思维培养**：
+  - 数学思维培养策略(归纳、演绎、分析、综合等)
+  - 数学语言表达能力培养
+  - 数学审美与创造性思维发展
+  - 数学问题解决策略教学
+  
+- **教学评价**：
+  - 多元评价体系(过程评价、结果评价、综合表现评价)
+  - 形成性评价与终结性评价结合
+  - 基于核心素养的数学评价指标设计
+  - 学生自评、互评与教师评价相结合的评价机制
+
+### 学生认知特点
+- **儿童数学认知发展规律**：
+  - 皮亚杰认知发展阶段理论在数学学习中的应用
+  - 小学生数学认知能力发展的年龄特征
+  - 布鲁纳表征理论(具体操作→图像表征→符号表征)
+  
+- **学习心理特点**：
+  - 低年级学生形象思维为主、直观具体
+  - 中年级学生逻辑思维初步发展、类比推理增强
+  - 高年级学生抽象思维逐渐形成、系统思考能力提高
+  
+- **常见学习困难**：
+  - 数感不足与运算障碍
+  - 空间想象困难
+  - 数学语言表达障碍
+  - 解决问题的迁移能力弱
+  - 数学学习焦虑
+
+## 2. 参考资料组织
+
+### 基础知识层
+- **课程标准文献**：《义务教育数学课程标准(2022年版)》
+- **教材分析资源**：主流版本(人教版、北师大版、苏教版等)教材分析与单元设计解读
+- **教学参考书**：《小学数学教学设计指南》、《数学素养导向的小学数学教学》等
+
+### 教学方法层
+- **教学设计资源**：按领域(数与代数、图形与几何、统计与概率)和年级分类的教学设计案例
+- **教学法专题**：问题解决教学法、数学活动设计、数学游戏在教学中的应用等
+- **难点突破指南**：小学数学教学重难点分析与突破策略汇编
+
+### 教学实践层
+- **案例资源**：优秀教学案例分析、名师课堂实录与评析
+- **教具与学具**：小学数学常用教具设计与应用、数字化教学资源库
+- **学情分析工具**：学生数学认知诊断与分析方法、常见错误类型与矫正策略
+
+### 前沿研究层
+- **教育理论前沿**：核心素养导向的数学教学研究、STEM教育与数学整合等
+- **国际比较视野**：中外小学数学教育比较、PISA测试中的数学素养评价
+- **教学创新实践**：数字化教学创新、跨学科教学实践等
+
+## 3. 术语定义
+
+### 教学理念术语
+- **核心素养**：学生在接受相应学段的教育过程中，逐步形成的适应个人终身发展和社会发展需要的必备品格和关键能力。数学学科核心素养主要包括数学抽象、逻辑推理、数学建模、直观想象、数学运算和数据分析六个方面。
+
+- **建构主义**：强调学习是学习者主动建构知识意义的过程，而非被动接受外部刺激的结果。在数学教学中表现为强调学生的主动探索和意义建构。
+
+- **数学活动经验**：学生在数学学习过程中获得的直接体验和实践经验，包括动手操作、观察思考、交流表达等活动中形成的经验总和。
+
+### 教学方法术语
+- **变式教学**：通过呈现同一数学概念或方法的不同表现形式，帮助学生理解数学本质、形成认知结构的教学方法。包括"一题多解"、"一题多变"、"多题一解"等变式形式。
+
+- **例题教学法**：以典型例题为载体，通过分析、解决过程展示数学思想方法，并通过系列练习深化理解的教学模式。
+
+- **情境教学**：创设与数学知识形成、应用相关的现实或模拟情境，使学生在具体背景中理解抽象数学概念的教学方法。
+
+- **数学建模**：将实际问题抽象为数学问题，建立数学模型，通过数学方法求解，再将结果解释回实际问题的过程。在小学阶段表现为简单的实际问题数学化过程。
+
+### 数学思维术语
+- **数感**：对数的含义、数量关系及运算性质的直观感受和准确把握的能力，是学生理解和应用数学的基础。
+
+- **空间观念**：对图形与几何关系的直观感知、心理表征和推理分析能力，包括对图形的认识、位置关系的把握、空间想象等方面。
+
+- **推理能力**：根据已知条件，按照逻辑规则得出合理结论的思维能力。小学阶段主要发展归纳推理、类比推理和简单的演绎推理。
+
+- **数学抽象**：从具体事物中提取共同特征，舍弃非本质因素，形成数学概念和规律的思维过程。是数学认知的重要特征。
+
+### 教学组织术语
+- **分层教学**：根据学生数学能力水平和学习特点，设计不同层次的教学目标、内容和方法，满足不同学生发展需求的教学策略。
+
+- **小组合作学习**：组织学生以小组为单位，通过相互交流、协作完成学习任务的教学组织形式，强调"互助、互惠、共同进步"。
+
+- **探究性学习**：学生在教师引导下，主动发现问题、提出猜想、验证结论，经历类似"数学家"的研究过程的学习方式。
+
+- **学习共同体**：强调师生、生生间的互动、对话和共同建构，营造以理解为核心的数学学习社区，促进集体智慧生成。
+
+## 4. 案例库
+
+### 数与代数领域典型案例
+
+#### 案例1：《认识分数》教学设计（三年级）
+**教学价值**：通过生活情境和具体操作，建立分数的初步概念，理解分数的意义。
+**教学流程**：
+1. 情境引入：出示一个披萨被平均分成8份的图片，提问"吃了其中3份，怎样用数学语言表达"
+2. 操作探究：学生分组折纸，探索平均分一张纸并表示其中部分的方法
+3. 概念形成：引导学生发现分数表示部分与整体的关系，认识分子和分母
+4. 表征转换：从具体物体→图示→符号表示的递进
+5. 应用拓展：日常生活中的分数表示识别活动
+
+**设计特点**：遵循"具体→抽象"认知规律，通过操作和视觉化帮助建立分数概念，注重与生活经验连接。
+
+#### 案例2：《解决问题的策略》教学设计（五年级）
+**教学价值**：培养数学应用意识和问题解决能力，形成多元解题策略。
+**教学流程**：
+1. 问题驱动：提出"文具店购物"实际问题，包含数量关系和价格计算
+2. 策略探索：学生尝试不同解题方法，包括列式计算、画图表示、假设法等
+3. 方法交流：小组展示不同解题策略，分析各种方法的适用条件和效率
+4. 策略提炼：归纳问题解决的一般步骤和常用策略
+5. 迁移应用：提供类似但情境不同的问题，应用所学策略解决
+
+**设计特点**：强调问题解决策略的多样性，培养学生灵活选择策略的能力和数学思维的迁移应用。
+
+### 图形与几何领域典型案例
+
+#### 案例3：《认识长方体》教学设计（四年级）
+**教学价值**：发展空间观念，理解立体图形的特征，建立形象思维与抽象思维的联系。
+**教学流程**：
+1. 实物观察：出示各种长方体实物，观察特征
+2. 特征探索：学生操作纸盒，数边、面、顶点，发现规律
+3. 展开图探究：拆开纸盒，研究长方体的展开图形式，尝试设计不同的展开图
+4. 概念构建：总结长方体的定义和特征
+5. 创意应用：设计并制作长方体形状的实用物品
+
+**设计特点**：重视具体操作体验，通过二维与三维表征的转换，发展空间想象能力和几何直观。
+
+#### 案例4：《图形的轴对称》教学设计（六年级）
+**教学价值**：理解轴对称的概念，发展变换几何思想，培养审美能力。
+**教学流程**：
+1. 美感导入：欣赏自然界和人工制品中的对称美
+2. 概念探究：通过折纸活动，发现并理解轴对称的特点
+3. 性质总结：探究轴对称图形的对应点、对应线段的特性
+4. 作图实践：学习利用轴对称作图，完成半张图形的对称补全
+5. 创意拓展：设计轴对称图案，制作对称卡片
+
+**设计特点**：将数学概念与美学体验结合，通过操作、观察、推理的完整过程建构几何概念，注重实践应用。
+
+### 统计与概率领域典型案例
+
+#### 案例5：《收集和整理数据》教学设计（五年级）
+**教学价值**：培养数据意识，学习数据收集和整理的基本方法，发展统计思维。
+**教学流程**：
+1. 问题情境：探究"我们班同学最喜欢的水果是什么"
+2. 设计调查：讨论并设计调查问卷，确定调查方法
+3. 数据收集：开展班级调查，记录原始数据
+4. 数据整理：学习使用计数方法和表格整理数据
+5. 结果表示：使用条形图展示调查结果
+6. 数据分析：解读图表，得出结论
+
+**设计特点**：通过完整的统计过程，体验数据收集、整理、分析的全过程，注重培养实际应用能力。
+
+### 学习困难补救案例
+
+#### 案例6：《分数加减运算》学习困难诊断与补救（五年级）
+**困难表现**：
+- 不理解通分的必要性，直接分子与分子、分母与分母相加
+- 对约分概念模糊，无法判断何时需要约分
+- 混合运算时步骤混乱
+
+**补救策略**：
+1. 概念重建：使用图示直观呈现同分母和异分母分数加减的差异
+2. 操作理解：使用分数条、圆形分数板等教具进行具体操作
+3. 步骤可视化：设计"分数运算步骤卡"，明确通分-计算-约分的流程
+4. 错误分析：展示典型错误并分析原因，强化正确概念
+5. 渐进练习：从简单到复杂的渐进式练习，确保每步都有成功体验
+
+**设计特点**：针对具体学习困难进行成因分析，采用多种表征方式重建概念，注重学习信心的恢复。
+
+## 5. 引用规范
+
+### 课程标准引用
+- 引用《义务教育数学课程标准(2022年版)》时，应明确标注版本、页码和具体内容
+- 引用格式：《义务教育数学课程标准(2022年版)》，第X页："引用内容"
+- 学段目标引用应标明具体学段（如"第二学段目标"）
+
+### 教学理论引用
+- 引用教育理论时应注明理论提出者和核心文献
+- 引用教学法时应明确指出该教学法的适用条件和关键步骤
+- 避免使用过于陈旧或已被更新的理论观点(一般不超过10年)
+
+### 案例引用
+- 引用教学案例时应注明年级、教学内容和设计特点
+- 说明案例的适用情境和可能需要调整的因素
+- 区分"示范案例"(推荐全面参考)和"参考案例"(建议选择性借鉴)
+
+### 引用层级
+- **必要引用**：课程标准要求、核心素养目标等必须严格遵循
+- **重要参考**：主流教学方法、关键概念教学策略等应重点参考
+- **灵活借鉴**：具体活动设计、时间安排等可根据实际情况灵活调整
+
+### 引用责任声明
+- 明确区分"课程标准要求"与"教学建议"性质的内容
+- 关于有争议的教学方法，应同时呈现多种观点
+- 引用经验性内容时说明其局限性和适用条件
+                </div>
+                
+                <button class="copy-btn" id="copy-btn">
+                    <i class="fas fa-copy"></i>
+                    复制内容
+                </button>
+            </div>
+            
+            <div class="prompt-footer">
+                <a href="../../prompts.html" class="back-to-prompts">
+                    <i class="fas fa-arrow-left"></i>
+                    返回提示词库
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>实践·协作·创新</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>导航</h3>
+                        <ul>
+                            <li><a href="../../index.html#home">首页</a></li>
+                            <li><a href="../../blog.html">博客</a></li>
+                            <li><a href="../../prompts.html">提示词库</a></li>
+                            <li><a href="../../index.html#about">关于我们</a></li>
+                            <li><a href="../../index.html#platform">平台介绍</a></li>
+                            <li><a href="../../index.html#values">公司理念</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>法律信息</h3>
+                        <ul>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">服务条款</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 长沙深度实践智能科技有限公司. 版权所有. <a href="https://beian.miit.gov.cn/" target="_blank" style="color: var(--text-secondary);">湘ICP备2025110834号</a></p>
+                <div class="footer-decoration"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // 初始化粒子背景
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4dabf7"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4dabf7",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.8
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // 汉堡菜单
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            
+            burger.addEventListener('click', () => {
+                // 切换导航栏
+                nav.classList.toggle('nav-active');
+                
+                // 激活链接动画
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+                
+                // 汉堡菜单动画
+                burger.classList.toggle('toggle');
+            });
+        }
+        
+        navSlide();
+
+        // 复制按钮功能
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const content = document.getElementById('prompt-content').innerText;
+            
+            navigator.clipboard.writeText(content).then(() => {
+                // 更改按钮文本以提供反馈
+                const button = document.getElementById('copy-btn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                
+                // 3秒后恢复原始文本
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+                alert('复制失败，请手动复制');
+            });
+        });
+    </script>
+</body>
+</html> 

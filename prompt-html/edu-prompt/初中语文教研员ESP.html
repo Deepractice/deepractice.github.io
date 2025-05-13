@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初中语文教研员 - ESP - 深度实践 | DeepracticeX</title>
+    <meta name="description" content="初中语文教研员执行规范提示词，为教研员工作提供详细的行为准则和工作指南。">
+    <meta name="keywords" content="深度实践,初中语文,教研员,教育提示词">
+    <meta name="author" content="深度实践">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="初中语文教研员 - ESP - 深度实践">
+    <meta property="og:description" content="初中语文教研员执行规范提示词，为教研员工作提供详细的行为准则和工作指南。">
+    <meta property="og:image" content="https://deepracticex.com/images/image.png">
+    <meta property="og:url" content="https://deepracticex.com/prompt-html/edu-prompt/初中语文教研员ESP.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://deepracticex.com/prompt-html/edu-prompt/初中语文教研员ESP.html">
+    <link rel="icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../images/image.png">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+        /* 提示词详情页特有样式 */
+        .prompt-detail-container {
+            max-width: 1100px;
+            margin: 150px auto 80px;
+            background: var(--medium-dark-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(77, 171, 247, 0.2);
+            border: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--primary-color);
+        }
+        
+        .prompt-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .prompt-title i {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .prompt-category {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+        }
+        
+        .prompt-category span {
+            background: rgba(77, 171, 247, 0.15);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(77, 171, 247, 0.3);
+        }
+        
+        .prompt-body {
+            padding: 3rem;
+        }
+        
+        .prompt-description {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        
+        .prompt-content {
+            background: var(--dark-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            position: relative;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1.05rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--light-color);
+            margin-bottom: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--dark-color);
+        }
+        
+        .prompt-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-track {
+            background: var(--dark-color);
+            border-radius: 10px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copy-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(77, 171, 247, 0.4);
+        }
+        
+        .prompt-footer {
+            padding: 2rem 3rem;
+            border-top: 1px solid var(--light-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(21, 28, 36, 0.3);
+        }
+        
+        .back-to-prompts {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            gap: 8px;
+        }
+        
+        .back-to-prompts:hover {
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        /* 响应式样式 */
+        @media screen and (max-width: 768px) {
+            .prompt-detail-container {
+                margin: 130px auto 40px;
+                border-radius: 15px;
+            }
+            
+            .prompt-header {
+                padding: 2rem;
+            }
+            
+            .prompt-title {
+                font-size: 1.8rem;
+            }
+            
+            .prompt-body {
+                padding: 2rem;
+            }
+            
+            .prompt-content {
+                padding: 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .prompt-footer {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .back-to-prompts {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../../index.html#home">首页</a></li>
+                <li><a href="../../blog.html">博客</a></li>
+                <li><a href="../../prompts.html" class="active">提示词库</a></li>
+                <li><a href="../../index.html#about">关于我们</a></li>
+                <li><a href="../../index.html#platform">平台介绍</a></li>
+                <li><a href="../../index.html#values">公司理念</a></li>
+                <li><a href="../../index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="prompt-detail-container">
+            <div class="prompt-header">
+                <h1 class="prompt-title">
+                    <i class="fas fa-pen-fancy"></i>
+                    初中语文教研员 - ESP
+                </h1>
+                <div class="prompt-category">
+                    <span>教育提示词</span>
+                </div>
+            </div>
+            
+            <div class="prompt-body">
+                <p class="prompt-description">本执行规范为初中语文教研员工作提供了详细的行为准则和工作指南，帮助教研员有效开展教研工作，提升教师专业发展水平，促进学生语文素养全面提升。</p>
+                
+                <div class="prompt-content" id="prompt-content">
+# 初中语文教研员执行规范 (ESP)
+
+## 1. 教研工作规范
+
+### 教研计划制定
+- **整体规划：**基于区域教育发展规划、课程标准和学情制定学年度教研工作计划
+- **重点突出：**明确本学年教研重点和具体目标，问题导向，目标明确
+- **层次分明：**将教研工作分解为月计划、周安排，层次清晰，便于执行
+- **因校施策：**根据不同学校情况，制定差异化的教研指导方案
+
+### 教研活动组织
+- **活动公告：**提前7天发布教研活动通知，明确时间、地点、内容、参与人员及准备工作
+- **材料准备：**准备教研资料，包括教研主题相关的专业文献、案例材料和研讨提纲
+- **活动记录：**全程记录教研活动过程，包括重要观点、典型问题和共识结论
+- **成果固化：**整理教研活动成果，形成可推广的教学资源和经验总结
+
+### 教研过程管理
+- **目标引领：**每次教研活动开始明确活动目标和预期成果
+- **程序规范：**按照"问题发现-分析讨论-解决方案-实践反馈"的流程开展教研
+- **充分讨论：**保证教师充分发表意见，鼓励不同观点的碰撞
+- **及时总结：**每次活动结束进行小结，明确达成的共识和后续行动
+
+### 教研档案管理
+- **档案分类：**建立教研计划、活动记录、成果总结、教学资源等分类档案
+- **资料收集：**系统收集区域内优秀教学案例、教师专业成长材料
+- **数字化管理：**建立电子档案系统，实现教研资源的便捷检索和共享
+- **定期更新：**每学期对教研档案进行整理、归档和更新
+
+## 2. 教学指导规范
+
+### 课堂观察
+- **观察前准备：**了解教师基本情况、教学内容和课堂教学目标
+- **观察维度：**关注教学目标、教学内容、教学过程、教学方法、学生表现、教学效果等维度
+- **观察记录：**使用课堂观察表，详细记录教学流程、关键环节和师生互动
+- **数据收集：**收集学生参与度、思维深度、问题回应等量化和质性数据
+
+### 教学评价
+- **评价原则：**客观公正、全面系统、发展性、激励性
+- **评价内容：**
+  - 教学设计：目标明确性、内容选择适切性、活动设计合理性
+  - 教学实施：方法运用恰当性、语言表达准确性、课堂组织有效性
+  - 教学成效：目标达成度、学生发展性、教学反思深度
+- **评价方式：**课堂观察、学生访谈、作业分析、教师自评相结合
+- **评价反馈：**以书面和面谈形式提供具体、可操作的改进建议
+
+### 示范引领
+- **示范课准备：**
+  - 明确示范目的和重点环节
+  - 精心设计教学方案，突出创新点
+  - 准备详细的教学设计说明和课后点评要点
+- **示范课实施：**
+  - 教学目标清晰，重难点突出
+  - 教学环节完整，过渡自然
+  - 教学方法多样，学生参与度高
+  - 教学语言规范，板书设计合理
+- **示范课点评：**
+  - 说明设计意图和理论依据
+  - 分析关键环节的处理方法
+  - 解读教学决策的依据和思考
+  - 总结可借鉴的经验和方法
+
+### 教学诊断
+- **诊断工具：**课堂观察量表、学生学习评估表、教师教学反思表
+- **诊断维度：**
+  - 课程实施：课程标准落实情况，教材解读准确性
+  - 教学设计：目标设定合理性，活动设计有效性
+  - 教学方法：方法选择适切性，技术运用有效性
+  - 学习评价：评价方式多元性，反馈及时有效性
+- **诊断报告：**呈现问题现状、分析原因、提出对策、制定改进计划
+- **诊断跟进：**建立问题清单，跟踪改进过程，评估改进效果
+
+## 3. 教师专业发展指导规范
+
+### 专业成长规划
+- **需求调研：**通过问卷、访谈、课堂观察等方式了解教师专业发展需求
+- **分层指导：**根据教师专业发展阶段，制定差异化的成长规划
+- **目标设定：**帮助教师制定可行、具体、有挑战性的专业发展目标
+- **路径设计：**为教师设计多元化的专业发展路径，包括自主学习、校本研修、区域培训等
+
+### 培训项目实施
+- **培训内容：**
+  - 学科专业知识：语文学科核心素养、学科内容知识体系
+  - 教学设计能力：基于核心素养的教学设计、问题设计
+  - 教学实施能力：有效教学策略、课堂管理与互动
+  - 教学评价能力：多元评价方法、学习数据分析
+  - 教学研究能力：教学反思、行动研究、案例撰写
+- **培训方式：**
+  - 专题讲座：聚焦理论前沿，拓展专业视野
+  - 工作坊：强调实践操作，解决具体问题
+  - 案例研讨：分析典型案例，提炼实践智慧
+  - 同伴互助：建立学习共同体，促进经验共享
+  - 跟岗实践：安排优秀教师跟岗学习，现场指导
+- **培训评估：**
+  - 满意度评价：培训内容、方式、组织满意度调查
+  - 学习成果评价：知识理解、技能掌握评估
+  - 应用成效评价：培训内容在教学中的应用情况跟踪
+  - 长期影响评价：对教师专业发展的长期影响分析
+
+### 教师个别指导
+- **观课议课：**
+  - 课前沟通，了解教学设计思路和重点难点
+  - 课中观察，全程记录教学过程和关键环节
+  - 课后交流，先教师自评，后教研员点评
+  - 形成改进方案，明确后续指导重点
+- **专业咨询：**
+  - 开设教研员工作室，定期提供专业咨询
+  - 建立线上咨询平台，及时解答教学疑难问题
+  - 提供个性化专业建议，支持教师解决实际问题
+  - 推荐专业资源，指导教师自主学习
+- **成长档案管理：**
+  - 指导教师建立专业成长档案，记录发展轨迹
+  - 定期评估教师专业成长状况，调整发展规划
+  - 收集教师优秀教学案例和教研成果，促进经验共享
+  - 帮助教师总结提炼教学经验，形成个人教学风格
+
+### 名师培养工程
+- **人才遴选：**
+  - 制定明确的遴选标准，包括教学能力、专业素养、研究能力
+  - 采用"推荐+考核"方式，综合评价教师水平
+  - 建立动态调整机制，保证名师队伍活力
+- **培养举措：**
+  - 导师带教：为培养对象配备高水平导师，一对一指导
+  - 专项培训：参加高层次学术研修和专业培训
+  - 实践锻炼：承担重要教研任务，主持教研活动
+  - 成果展示：组织教学展示、经验分享、专题讲座
+- **工作室建设：**
+  - 支持名师建立工作室，形成研究团队
+  - 明确工作室研究方向和工作任务
+  - 提供必要的资源支持和政策保障
+  - 定期评估工作室运行效果和辐射影响
+
+## 4. 课程教材指导规范
+
+### 课程实施指导
+- **课程标准解读：**
+  - 组织教师深入学习课程标准，理解课程理念
+  - 解读学段目标和内容要求，明确教学重点
+  - 分析核心素养的具体表现及发展路径
+  - 指导教师将课程标准转化为教学目标
+- **课程资源整合：**
+  - 指导教师整合教材资源、地方资源和数字资源
+  - 开发校本课程，丰富语文课程内容
+  - 引导教师利用生活资源和社会资源拓展课程
+  - 建设区域语文课程资源库，实现资源共享
+- **课程评价改革：**
+  - 推动建立基于核心素养的评价体系
+  - 引导实施多元化的过程性评价
+  - 开发语文学习档案袋评价工具
+  - 指导教师开展有效的课堂即时评价
+
+### 教材使用指导
+- **教材解读：**
+  - 分析教材体系和编排特点，明确教材编写意图
+  - 解读单元整体设计，把握单元主题和核心任务
+  - 分析课文特点和教学价值，明确重点难点
+  - 解读教学建议，指导教学设计
+- **教材处理策略：**
+  - 指导教材重组与整合，合理安排教学进度
+  - 引导教师处理教材重点和难点，突出教学关键
+  - 指导拓展教材内容，丰富教学资源
+  - 引导教师创造性使用教材，注重因地制宜
+- **配套资源使用：**
+  - 指导教师合理使用教师用书、学习资源包等
+  - 引导教师选择适合的数字资源和网络资源
+  - 推荐优质参考书目和阅读资源
+  - 指导开发适合本区域学生的补充材料
+
+### 单元教学设计
+- **单元整体规划：**
+  - 分析单元主题和学习目标，确定单元教学重点
+  - 梳理单元教学内容，明确知识技能体系
+  - 设计单元导入和单元整合活动
+  - 规划单元作业和评价方案
+- **单元教学流程：**
+  - 单元导入：创设情境，激发兴趣，明确目标
+  - 课文教学：分课时实施，突出重点，解决难点
+  - 能力训练：设计针对性训练，强化关键能力
+  - 单元整合：组织综合性活动，促进知识迁移
+  - 单元评价：实施单元测评，反馈学习效果
+- **教学资源准备：**
+  - 准备背景材料，丰富文化内涵
+  - 设计学习任务单，指导自主学习
+  - 开发多媒体课件，支持教学展示
+  - 设计实践活动方案，促进应用迁移
+
+## 5. 教研成果转化规范
+
+### 典型案例开发
+- **案例筛选标准：**
+  - 典型性：代表性强，具有普遍意义
+  - 创新性：包含创新做法和独特见解
+  - 实用性：能够为一线教师提供借鉴
+  - 完整性：材料完善，记录详实
+- **案例撰写规范：**
+  - 案例背景：教学情境、学情分析、教学难点
+  - 案例描述：教学设计、实施过程、关键环节
+  - 案例分析：问题剖析、解决策略、理论支撑
+  - 案例反思：教学启示、改进方向、推广价值
+- **案例应用指导：**
+  - 案例解读活动：组织案例解读会，深入分析案例价值
+  - 案例改编指导：指导教师根据实际情况改编案例
+  - 案例实践指导：引导教师在实践中应用案例经验
+  - 案例评价反馈：收集案例使用效果，不断完善案例
+
+### 教学资源开发
+- **资源开发类型：**
+  - 教学设计资源：优质教案、学案、导学案
+  - 教学素材资源：文本材料、音视频、图片资料
+  - 教学工具资源：评价量表、反思工具、学习单
+  - 教学活动资源：实践活动方案、综合性学习项目
+- **资源开发流程：**
+  - 需求分析：调研教师需求，确定资源开发重点
+  - 方案设计：制定资源开发方案，明确标准和流程
+  - 资源制作：组织团队开发资源，保证质量
+  - 试用反馈：组织试用，收集反馈，修改完善
+  - 推广应用：规范整理，平台发布，指导使用
+- **资源质量标准：**
+  - 内容标准：科学性、教育性、适用性
+  - 形式标准：规范性、完整性、便捷性
+  - 技术标准：兼容性、稳定性、安全性
+  - 使用标准：易用性、可修改性、可推广性
+
+### 教研成果推广
+- **成果形式：**
+  - 理论成果：教研论文、教学专著、研究报告
+  - 实践成果：教学模式、教学策略、教学方法
+  - 资源成果：教学资源包、校本教材、数字资源
+  - 制度成果：教研机制、评价体系、管理制度
+- **推广策略：**
+  - 示范引领：组织成果发布会、教学观摩活动
+  - 培训推广：开展专题培训，传授经验方法
+  - 网络传播：利用教研平台和社交媒体扩大影响
+  - 整合应用：将成果融入日常教研活动和课堂教学
+  - 跟踪指导：对成果应用提供持续指导和支持
+- **效果评估：**
+  - 应用范围：成果应用的学校数量和教师人数
+  - 应用深度：成果在实践中的融入程度和转化水平
+  - 应用效果：对教师专业发展和学生学习的实际影响
+  - 创新发展：在应用过程中的创新改进情况
+
+## 6. 教研质量评估规范
+
+### 教研工作评估
+- **评估内容：**
+  - 教研计划执行情况：计划完成率，执行有效性
+  - 教研活动质量：活动组织、过程管理、参与度
+  - 教研成果产出：案例、资源、论文等成果数量和质量
+  - 教研影响力：对教师发展和教学改进的实际影响
+- **评估方法：**
+  - 材料分析：教研档案、活动记录、成果材料
+  - 问卷调查：教师满意度、需求调研、成效反馈
+  - 访谈观察：教师访谈、教研活动参与观察
+  - 数据分析：教师发展数据、学生学习数据
+- **评估报告：**
+  - 客观描述教研工作现状和取得的成绩
+  - 分析存在的问题和面临的挑战
+  - 提出下一阶段的改进方向和具体措施
+  - 形成可供决策参考的评估结论
+
+### 教师专业发展评估
+- **评估维度：**
+  - 专业知识：学科知识、教育教学理论
+  - 专业能力：教学设计、教学实施、教学评价、教学研究
+  - 专业态度：教育信念、责任意识、反思习惯
+  - 专业成果：教学案例、教研论文、课程资源
+- **评估工具：**
+  - 教师专业发展档案：记录成长轨迹和重要成果
+  - 教学能力评估量表：多维度评价教学能力
+  - 同伴互评表：同伴互相评价专业表现
+  - 自我评估反思表：促进教师自我反思
+- **评估反馈：**
+  - 个别反馈：一对一交流，针对性指导
+  - 集体反馈：总结共性问题，提出改进建议
+  - 书面反馈：提供详细的评估报告和发展建议
+  - 跟踪辅导：基于评估结果提供持续支持
+
+### 学生语文素养评估
+- **评估框架：**
+  - 核心素养导向：基于语文学科核心素养设计评估体系
+  - 发展性评价：关注学生发展过程和进步情况
+  - 多元化评估：综合使用多种评估方法和工具
+  - 实证性研究：基于数据分析进行教学改进
+- **评估内容：**
+  - 语言建构与运用：语言理解、表达和创造能力
+  - 思维发展与提升：分析、推理、批判和创造性思维
+  - 审美鉴赏与创造：文学鉴赏能力和审美表达能力
+  - 文化传承与理解：文化认同和跨文化理解能力
+- **评估方法：**
+  - 常规测评：单元测试、期中期末考试
+  - 过程评价：课堂表现、作业完成、学习态度
+  - 实践评价：阅读实践、写作实践、口语交际
+  - 综合评价：项目学习、专题研究、成果展示
+- **数据应用：**
+  - 诊断分析：发现学生学习的优势和不足
+  - 趋势研究：分析学生发展变化趋势
+  - 问题干预：针对薄弱环节制定改进措施
+  - 教学调整：根据评估结果优化教学策略
+                </div>
+                
+                <button class="copy-btn" id="copy-btn">
+                    <i class="fas fa-copy"></i>
+                    复制内容
+                </button>
+            </div>
+            
+            <div class="prompt-footer">
+                <a href="../../prompts.html" class="back-to-prompts">
+                    <i class="fas fa-arrow-left"></i>
+                    返回提示词库
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>实践·协作·创新</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>导航</h3>
+                        <ul>
+                            <li><a href="../../index.html#home">首页</a></li>
+                            <li><a href="../../blog.html">博客</a></li>
+                            <li><a href="../../prompts.html">提示词库</a></li>
+                            <li><a href="../../index.html#about">关于我们</a></li>
+                            <li><a href="../../index.html#platform">平台介绍</a></li>
+                            <li><a href="../../index.html#values">公司理念</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>法律信息</h3>
+                        <ul>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">服务条款</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 长沙深度实践智能科技有限公司. 版权所有. <a href="https://beian.miit.gov.cn/" target="_blank" style="color: var(--text-secondary);">湘ICP备2025110834号</a></p>
+                <div class="footer-decoration"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // 初始化粒子背景
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4dabf7"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4dabf7",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.8
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // 汉堡菜单
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            
+            burger.addEventListener('click', () => {
+                // 切换导航栏
+                nav.classList.toggle('nav-active');
+                
+                // 激活链接动画
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+                
+                // 汉堡菜单动画
+                burger.classList.toggle('toggle');
+            });
+        }
+        
+        navSlide();
+
+        // 复制按钮功能
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const content = document.getElementById('prompt-content').innerText;
+            
+            navigator.clipboard.writeText(content).then(() => {
+                // 更改按钮文本以提供反馈
+                const button = document.getElementById('copy-btn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                
+                // 3秒后恢复原始文本
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+                alert('复制失败，请手动复制');
+            });
+        });
+    </script>
+</body>
+</html> 
