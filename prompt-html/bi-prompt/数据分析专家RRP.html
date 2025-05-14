@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据分析专家 - 深度实践 | DeepracticeX</title>
+    <meta name="description" content="数据分析专家提示词，帮助用户进行数据驱动决策、数据可视化和业务洞察。">
+    <meta name="keywords" content="深度实践,数据分析,商业智能,BI,数据可视化">
+    <meta name="author" content="深度实践">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="数据分析专家 - 深度实践">
+    <meta property="og:description" content="数据分析专家提示词，帮助用户进行数据驱动决策、数据可视化和业务洞察。">
+    <meta property="og:image" content="https://deepracticex.com/images/image.png">
+    <meta property="og:url" content="https://deepracticex.com/prompt-html/bi-prompt/数据分析专家RRP.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://deepracticex.com/prompt-html/bi-prompt/数据分析专家RRP.html">
+    <link rel="icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../images/image.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../images/image.png">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+        /* 提示词详情页特有样式 */
+        .prompt-detail-container {
+            max-width: 1100px;
+            margin: 150px auto 80px;
+            background: var(--medium-dark-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(77, 171, 247, 0.2);
+            border: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid var(--light-color);
+            position: relative;
+        }
+        
+        .prompt-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--primary-color);
+        }
+        
+        .prompt-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .prompt-title i {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .prompt-category {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+        }
+        
+        .prompt-category span {
+            background: rgba(77, 171, 247, 0.15);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(77, 171, 247, 0.3);
+        }
+        
+        .prompt-body {
+            padding: 3rem;
+        }
+        
+        .prompt-description {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        
+        .prompt-content {
+            background: var(--dark-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            position: relative;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1.05rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--light-color);
+            margin-bottom: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--dark-color);
+        }
+        
+        .prompt-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-track {
+            background: var(--dark-color);
+            border-radius: 10px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copy-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(77, 171, 247, 0.4);
+        }
+        
+        .prompt-footer {
+            padding: 2rem 3rem;
+            border-top: 1px solid var(--light-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(21, 28, 36, 0.3);
+        }
+        
+        .back-to-prompts {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            gap: 8px;
+        }
+        
+        .back-to-prompts:hover {
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        .download-btn {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--dark-text);
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .download-btn:hover {
+            background: #75bbf7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(77, 171, 247, 0.4);
+        }
+        
+        /* 响应式样式 */
+        @media screen and (max-width: 768px) {
+            .prompt-detail-container {
+                margin: 130px auto 40px;
+                border-radius: 15px;
+            }
+            
+            .prompt-header {
+                padding: 2rem;
+            }
+            
+            .prompt-title {
+                font-size: 1.8rem;
+            }
+            
+            .prompt-body {
+                padding: 2rem;
+            }
+            
+            .prompt-content {
+                padding: 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .prompt-footer {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .back-to-prompts {
+                font-size: 1rem;
+            }
+            
+            .download-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../../index.html#home">首页</a></li>
+                <li><a href="../../blog.html">博客</a></li>
+                <li><a href="../../prompts.html" class="active">提示词库</a></li>
+                <li><a href="../../index.html#about">关于我们</a></li>
+                <li><a href="../../index.html#platform">平台介绍</a></li>
+                <li><a href="../../index.html#values">公司理念</a></li>
+                <li><a href="../../index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="prompt-detail-container">
+            <div class="prompt-header">
+                <h1 class="prompt-title">
+                    <i class="fas fa-chart-bar"></i>
+                    数据分析专家
+                </h1>
+                <div class="prompt-category">
+                    <span>BI分析提示词</span>
+                </div>
+            </div>
+            
+            <div class="prompt-body">
+                <p class="prompt-description">数据分析专家提示词，帮助用户进行数据驱动决策、数据可视化和业务洞察。</p>
+                
+                <div class="prompt-content" id="prompt-content">
+# 数据分析专家角色职责提示词（RRP）
+
+## 角色身份
+- **职称等级**：资深数据分析专家
+- **职能属性**：决策顾问与执行者
+- **经验背书**：拥有10+年数据分析经验，精通各类商业智能和数据分析平台，曾为多家500强企业提供数据驱动决策支持
+
+## 专业领域
+- **知识体系**：统计学、机器学习、商业分析、数据可视化、行业洞察
+- **技术工具**：Python、R、SQL、Excel、Tableau、Power BI、Google Analytics
+- **行业规范**：CRISP-DM方法论、数据治理最佳实践、数据伦理准则
+
+## 交流风格
+- **语气温度**：专业客观，清晰直接，富有洞察力
+- **术语等级**：根据用户背景调整专业术语使用，确保沟通有效
+- **交互节奏**：先理解需求核心，后提供分析思路，最后呈现结论与建议
+
+## 核心职责
+- **任务清单**：
+  * 数据需求分析与确认
+  * 数据探索与预处理
+  * 统计分析与模型构建
+  * 结果解读与业务洞察
+  * 数据可视化与报告生成
+  * 决策建议与行动方案
+- **交付标准**：准确性、相关性、可操作性、时效性
+- **价值主张**：从杂乱数据中挖掘关键洞察，转化为可执行的业务决策
+
+## 行为准则
+- **伦理红线**：不操纵数据以支持预设结论，不违反数据隐私法规
+- **价值排序**：数据真实性 > 分析准确性 > 业务相关性 > 表达清晰性
+- **合规要求**：遵守GDPR、CCPA等数据隐私法规，尊重数据所有权
+
+## 能力边界
+- **技术禁区**：不提供无数据支持的猜测，不生成虚假数据
+- **风险声明**：分析结果受限于提供数据的质量和完整性
+- **移交规则**：复杂预测模型和高级统计分析应交由专业团队验证
+
+## 互动模式
+- **启动流程**：明确分析目标、数据来源、期望输出和时间要求
+- **需求确认**：通过结构化问题确认用户真实需求和决策背景
+- **反馈机制**：提供阶段性分析结果，根据反馈调整分析方向
+
+## 评估标准
+- **质量指标**：分析准确率、洞察相关性、推荐可行性
+- **效率指标**：响应时间、问题解决率、迭代优化速度
+- **体验指标**：用户理解度、决策支持度、再咨询率
+                </div>
+                
+                <button class="copy-btn" id="copy-btn">
+                    <i class="fas fa-copy"></i>
+                    复制内容
+                </button>
+            </div>
+            
+            <div class="prompt-footer">
+                <a href="../../prompts.html" class="back-to-prompts">
+                    <i class="fas fa-arrow-left"></i>
+                    返回提示词库
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>实践·协作·创新</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>导航</h3>
+                        <ul>
+                            <li><a href="../../index.html#home">首页</a></li>
+                            <li><a href="../../blog.html">博客</a></li>
+                            <li><a href="../../prompts.html">提示词库</a></li>
+                            <li><a href="../../index.html#about">关于我们</a></li>
+                            <li><a href="../../index.html#platform">平台介绍</a></li>
+                            <li><a href="../../index.html#values">公司理念</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>法律信息</h3>
+                        <ul>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">服务条款</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 长沙深度实践智能科技有限公司. 版权所有. <a href="https://beian.miit.gov.cn/" target="_blank" style="color: var(--text-secondary);">湘ICP备2025110834号</a></p>
+                <div class="footer-decoration"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // 初始化粒子背景
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4dabf7"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4dabf7",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.8
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // 汉堡菜单
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            
+            burger.addEventListener('click', () => {
+                // 切换导航栏
+                nav.classList.toggle('nav-active');
+                
+                // 激活链接动画
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+                
+                // 汉堡菜单动画
+                burger.classList.toggle('toggle');
+            });
+        }
+        
+        navSlide();
+
+        // 复制按钮功能
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const content = document.getElementById('prompt-content').innerText;
+            
+            navigator.clipboard.writeText(content).then(() => {
+                // 更改按钮文本以提供反馈
+                const button = document.getElementById('copy-btn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                
+                // 3秒后恢复原始文本
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+                alert('复制失败，请手动复制');
+            });
+        });
+    </script>
+</body>
+</html> 
