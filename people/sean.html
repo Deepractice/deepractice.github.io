@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姜山 Sean - 深度实践创始人 & CEO | DeepracticeX</title>
+    <meta name="description" content="姜山Sean，深度实践创始人&CEO，持续创业者，专注AI领域。开发者、答主、播客主、博主、UP主。让AI触手可及。">
+    <meta name="keywords" content="姜山,Sean,深度实践,AI创业,人工智能,创始人,CEO,开发者">
+    <meta name="author" content="姜山 Sean">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="姜山 Sean - 深度实践创始人 & CEO">
+    <meta property="og:description" content="持续创业者，深度实践创始人&CEO，专注AI领域。让AI触手可及。">
+    <meta property="og:image" content="https://deepracticex.com/images/image.png">
+    <meta property="og:url" content="https://deepracticex.com/people/sean.html">
+    <meta property="og:type" content="profile">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://deepracticex.com/people/sean.html">
+    <link rel="icon" href="../images/image.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/image.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../images/image.png">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+        /* 个人页面特定样式 */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .profile-hero {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(77, 171, 247, 0.1) 0%, rgba(64, 192, 87, 0.1) 100%);
+            overflow: hidden;
+        }
+
+        .profile-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            padding: 0 20px;
+            z-index: 2;
+        }
+
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 20px 40px rgba(77, 171, 247, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+
+        .profile-name {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profile-title {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .profile-location {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .profile-description {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: var(--text-color);
+        }
+
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .platform-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(77, 171, 247, 0.2);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            text-align: left;
+            min-height: 120px;
+            position: relative;
+            overflow: hidden;
+            gap: 20px;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(77, 171, 247, 0.05), rgba(100, 255, 218, 0.05));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .platform-card:hover::before {
+            opacity: 1;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 40px rgba(77, 171, 247, 0.3);
+            color: inherit;
+        }
+
+        .platform-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 8px 20px rgba(77, 171, 247, 0.3);
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .platform-logo::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--primary-color), var(--highlight-color));
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .platform-card:hover .platform-logo::before {
+            opacity: 1;
+        }
+
+        .platform-logo i {
+            color: white;
+        }
+
+        .platform-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .platform-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: nowrap;
+        }
+
+        .platform-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light-text);
+            margin: 0;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .platform-tldr {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .github-stats {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .github-stat {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            background: rgba(77, 171, 247, 0.1);
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(77, 171, 247, 0.2);
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .github-stat i {
+            font-size: 0.7rem;
+            color: var(--primary-color);
+        }
+
+
+
+
+
+
+
+        .timeline-section {
+            padding: 100px 0;
+            background: rgba(30, 41, 59, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 40px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 40px;
+            text-align: left;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+            border-left-color: var(--card-bg);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+            border-right-color: var(--card-bg);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 4px solid var(--dark-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .timeline-description {
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .profile-name {
+                font-size: 2.5rem;
+            }
+
+            .profile-avatar {
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
+            }
+
+            .category-section {
+                margin-bottom: 40px;
+            }
+
+            .category-title {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+
+            .platform-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .platform-card {
+                padding: 20px;
+                min-height: 100px;
+                gap: 15px;
+            }
+
+            .platform-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .platform-name {
+                font-size: 1.1rem;
+            }
+
+            .platform-tldr {
+                font-size: 0.9rem;
+            }
+
+            .platform-header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
+
+            .github-stats {
+                gap: 6px;
+            }
+
+            .github-stat {
+                font-size: 0.7rem;
+                padding: 2px 5px;
+                min-width: 30px;
+            }
+
+
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 50px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-content::before {
+                left: -20px !important;
+                border-right-color: var(--card-bg) !important;
+                border-left-color: transparent !important;
+            }
+
+            .timeline-dot {
+                left: 12px !important;
+                right: auto !important;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .platform-header {
+                gap: 8px;
+            }
+
+            .github-stats {
+                gap: 4px;
+            }
+
+            .github-stat {
+                font-size: 0.65rem;
+                padding: 1px 4px;
+                min-width: 28px;
+            }
+
+            .platform-name {
+                font-size: 1.05rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 2.5rem;
+            }
+
+            .profile-location {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .category-section {
+                margin-bottom: 30px;
+            }
+
+            .category-title {
+                font-size: 1.2rem;
+                margin-bottom: 12px;
+            }
+
+            .platform-grid {
+                gap: 12px;
+            }
+
+            .platform-card {
+                padding: 15px;
+                min-height: 90px;
+                gap: 12px;
+            }
+
+            .platform-logo {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .platform-name {
+                font-size: 1rem;
+            }
+
+            .platform-tldr {
+                font-size: 0.85rem;
+            }
+
+            .platform-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .github-stats {
+                gap: 5px;
+            }
+
+            .github-stat {
+                font-size: 0.7rem;
+                padding: 2px 5px;
+                min-width: 30px;
+            }
+
+
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1><a href="../index.html" style="color: inherit;">深度实践</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../blog.html">博客</a></li>
+                <li><a href="../prompts.html">提示词库</a></li>
+                <li><a href="../index.html#about">关于我们</a></li>
+                <li><a href="../index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="profile-hero">
+        <div class="profile-content" data-aos="fade-up">
+            <div class="profile-avatar">
+                👋
+            </div>
+            <h1 class="profile-name">姜山 Sean</h1>
+            <div class="profile-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>长沙</span>
+            </div>
+            <p class="profile-title">deepractice.ai 创始人 & CEO</p>
+            <!-- 创业者 -->
+            <div class="category-section">
+                <h3 class="category-title">🚀 创业者 | Founder</h3>
+                <div class="platform-grid">
+                    <a href="https://deepractice.ai" target="_blank" class="platform-card">
+                        <div class="platform-logo">
+                            <img src="https://deepractice.ai/images/image.png" alt="deepractice.ai" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="platform-info">
+                            <div class="platform-name">深度实践 | deepractice.ai</div>
+                            <div class="platform-tldr">让AI触手可及 | Make AI at your fingertips</div>
+                        </div>
+                    </a>
+
+                    <a href="https://www.douyin.com/user/MS4wLjABAAAAbXvp_Ewhucs1uNNe7pNo6W0FGvdGymaLQgFf1HLr5wf80XiexpRQw6fkvlp_1fgn" target="_blank" class="platform-card">
+                        <div class="platform-logo">
+                            <img src="https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-i-0813_08284f812a72495ab20eddfcee438261~c5_300x300.jpeg?from=2956013662" alt="开心游" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="platform-info">
+                            <div class="platform-name">开心游 | HappyTrip</div>
+                            <div class="platform-tldr">让每一次旅行都开心 | Make every trip happy</div>
+                        </div>
+                    </a>
+
+                    <div class="platform-card">
+                        <div class="platform-logo">☁️</div>
+                        <div class="platform-info">
+                            <div class="platform-name">长沙丛云互联网科技有限公司</div>
+                            <div class="platform-tldr">互联网技术服务与创新解决方案</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 开发者 -->
+            <div class="category-section">
+                <h3 class="category-title">💻 开发者 | Developer</h3>
+                <div class="platform-grid">
+                    <a href="https://github.com/Deepractice/dpml" target="_blank" class="platform-card">
+                        <div class="platform-logo"><i class="fab fa-github"></i></div>
+                        <div class="platform-info">
+                            <div class="platform-header">
+                                <div class="platform-name">DPML</div>
+                                <div class="github-stats">
+                                    <div class="github-stat">
+                                        <i class="fas fa-star"></i>
+                                        <span>30</span>
+                                    </div>
+                                    <div class="github-stat">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="platform-tldr">像写HTML一样写AI：标签语言驱动的AI工程开发新范式</div>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/Deepractice/PromptX" target="_blank" class="platform-card">
+                        <div class="platform-logo"><i class="fab fa-github"></i></div>
+                        <div class="platform-info">
+                            <div class="platform-header">
+                                <div class="platform-name">PromptX</div>
+                                <div class="github-stats">
+                                    <div class="github-stat">
+                                        <i class="fas fa-star"></i>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="github-stat">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="platform-tldr">提供结构化、模块化的方式构建和管理AI提示词，让AI更智能、更专业</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 创作者 -->
+            <div class="category-section">
+                <h3 class="category-title">📝 创作者 | Creator</h3>
+                <div class="platform-grid">
+                    <a href="https://namecard.xiaoyuzhoufm.com/y47xd" target="_blank" class="platform-card">
+                        <div class="platform-logo">
+                            <img src="https://www.xiaoyuzhoufm.com/favicon-32x32.png" alt="小宇宙播客" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="platform-info">
+                            <div class="platform-name">小宇宙播客</div>
+                            <div class="platform-tldr">分享创业故事、AI趋势和深度思考</div>
+                        </div>
+                    </a>
+
+                    <a href="https://deepractice.ai/blog.html" target="_blank" class="platform-card">
+                        <div class="platform-logo">📝</div>
+                        <div class="platform-info">
+                            <div class="platform-name">深度实践博客</div>
+                            <div class="platform-tldr">AI技术、创业心得和行业洞察文章</div>
+                        </div>
+                    </a>
+
+                    <a href="https://www.zhihu.com/people/stibiumjs" target="_blank" class="platform-card">
+                        <div class="platform-logo"><i class="fab fa-zhihu"></i></div>
+                        <div class="platform-info">
+                            <div class="platform-name">知乎</div>
+                            <div class="platform-tldr">AI创业经验、技术见解和行业思考</div>
+                        </div>
+                    </a>
+
+                    <a href="https://space.bilibili.com/1558905" target="_blank" class="platform-card">
+                        <div class="platform-logo"><i class="fab fa-bilibili"></i></div>
+                        <div class="platform-info">
+                            <div class="platform-name">哔哩哔哩</div>
+                            <div class="platform-tldr">AI教程、技术分享和创业经验视频</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 玩家 -->
+            <div class="category-section">
+                <h3 class="category-title">🎮 玩家 | Gamer</h3>
+                <div class="platform-grid">
+                    <a href="https://steamcommunity.com/id/deepracticexs" target="_blank" class="platform-card">
+                        <div class="platform-logo"><i class="fab fa-steam"></i></div>
+                        <div class="platform-info">
+                            <div class="platform-name">Steam</div>
+                            <div class="platform-tldr">最爱：上古卷轴5：天际、文明5、天国拯救、神界原罪2、逃离塔科夫</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="floating-elements">
+            <div class="floating-circle" style="--delay: 0s; --size: 50px; --x: 10%; --y: 20%;"></div>
+            <div class="floating-circle" style="--delay: 2s; --size: 30px; --x: 70%; --y: 30%;"></div>
+            <div class="floating-circle" style="--delay: 1s; --size: 40px; --x: 20%; --y: 60%;"></div>
+            <div class="floating-circle" style="--delay: 3s; --size: 25px; --x: 80%; --y: 70%;"></div>
+            <div class="floating-circle" style="--delay: 2s; --size: 35px; --x: 40%; --y: 80%;"></div>
+            <div class="floating-circle" style="--delay: 1.5s; --size: 20px; --x: 65%; --y: 15%;"></div>
+        </div>
+    </section>
+
+
+
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">人生里程碑</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-title">创办deepractice.ai</div>
+                        <div class="timeline-description">
+                            年初创办深度实践，All in AI领域，打造AI智能协作平台。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023</div>
+                        <div class="timeline-title">重启开心游</div>
+                        <div class="timeline-description">
+                            年底重新开始运作开心游，继续旅游行业的创新探索。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2021</div>
+                        <div class="timeline-title">创办丛云互联网科技</div>
+                        <div class="timeline-description">
+                            创立长沙丛云互联网科技有限公司，提供互联网技术服务与创新解决方案。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-title">自由职业者</div>
+                        <div class="timeline-description">
+                            疫情期间关闭了旅游公司，成为自由职业者，探索新的方向。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2019</div>
+                        <div class="timeline-title">创办开心游</div>
+                        <div class="timeline-description">
+                            辞职创业，创办开心游，开启创业之路。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2018</div>
+                        <div class="timeline-title">后台开发工程师</div>
+                        <div class="timeline-description">
+                            在微众银行转为后台开发工程师，深入技术开发领域。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2016</div>
+                        <div class="timeline-title">性能测试工程师</div>
+                        <div class="timeline-description">
+                            转为性能测试工程师，负责系统性能优化和测试。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-title">职业起点</div>
+                        <div class="timeline-description">
+                            本科毕业于中南民族大学自动化专业，作为应届生加入微众银行担任运维工程师。
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>让AI触手可及</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>快速链接</h3>
+                        <ul>
+                            <li><a href="../index.html">首页</a></li>
+                            <li><a href="../blog.html">博客</a></li>
+                            <li><a href="../prompts.html">提示词库</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>联系方式</h3>
+                        <ul>
+                            <li><a href="mailto:7@deepracticex.com">7@deepracticex.com</a></li>
+                            <li><a href="tel:+86-192-3741-0938">+86-192-3741-0938</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 深度实践. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // 初始化AOS动画
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // 初始化粒子背景
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: '#4dabf7' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.5, random: false },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: '#4dabf7',
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 6,
+                        direction: 'none',
+                        random: false,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: { enable: true, mode: 'repulse' },
+                        onclick: { enable: true, mode: 'push' },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+        }
+
+        // 获取GitHub仓库统计信息
+        async function fetchGitHubStats() {
+            const repos = [
+                { name: 'Deepractice/dpml', index: 0 },
+                { name: 'Deepractice/PromptX', index: 1 }
+            ];
+
+            for (const repo of repos) {
+                try {
+                    const response = await fetch(`https://api.github.com/repos/${repo.name}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        const githubStats = document.querySelectorAll('.github-stats')[repo.index];
+                        if (githubStats) {
+                            const starElement = githubStats.querySelector('.github-stat:first-child span');
+                            const forkElement = githubStats.querySelector('.github-stat:last-child span');
+                            if (starElement) starElement.textContent = data.stargazers_count;
+                            if (forkElement) forkElement.textContent = data.forks_count;
+                        }
+                    }
+                } catch (error) {
+                    console.log('Failed to fetch GitHub stats for', repo.name);
+                }
+            }
+        }
+
+        // 页面加载完成后获取GitHub统计信息
+        document.addEventListener('DOMContentLoaded', fetchGitHubStats);
+    </script>
+</body>
+</html> 
