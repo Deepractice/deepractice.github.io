@@ -11,8 +11,43 @@ import glob
 import sys
 import argparse
 
-# Cloudflare Web Analytics 代码
-CLOUDFLARE_ANALYTICS_CODE = '''<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dcaad93d0ed547e79576def350e16df7"}'></script><!-- End Cloudflare Web Analytics -->'''
+# Cloudflare Web Analytics 代码 - 带错误处理
+# 版本: v2.0 - 添加try-catch错误处理，确保兼容微信浏览器
+CLOUDFLARE_ANALYTICS_CODE = '''<!-- Cloudflare Web Analytics v2.0 -->
+<script>
+(function() {
+    try {
+        // 检查是否支持defer属性和必要的API
+        if (typeof document !== 'undefined' && document.createElement) {
+            var script = document.createElement('script');
+            script.defer = true;
+            script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+            script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
+            
+            // 添加错误处理
+            script.onerror = function() {
+                console.debug('Cloudflare Analytics script failed to load');
+            };
+            
+            // 确保在DOM准备好后添加脚本
+            if (document.head) {
+                document.head.appendChild(script);
+            } else {
+                // 备用方案：等待DOM加载
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (document.head) {
+                        document.head.appendChild(script);
+                    }
+                });
+            }
+        }
+    } catch (e) {
+        // 静默处理错误，不影响页面正常功能
+        console.debug('Cloudflare Analytics initialization failed:', e);
+    }
+})();
+</script>
+<!-- End Cloudflare Web Analytics v2.0 -->'''
 
 def find_html_files(root_dir=".."):
     """查找所有HTML文件"""
@@ -27,7 +62,24 @@ def has_cloudflare_analytics(content):
     """检查是否已经包含Cloudflare Analytics代码"""
     return ("cloudflareinsights.com" in content or 
             "dcaad93d0ed547e79576def350e16df7" in content or
-            "data-cf-beacon" in content)
+            "data-cf-beacon" in content or
+            "Cloudflare Analytics" in content)
+
+def has_latest_version(content):
+    """检查是否已经是最新版本 (v2.0)"""
+    return "Cloudflare Web Analytics v2.0" in content
+
+def remove_old_analytics_code(content):
+    """移除旧版本的Analytics代码"""
+    # 移除旧的单行版本
+    old_pattern1 = r'<!-- Cloudflare Web Analytics --><script defer src=\'https://static\.cloudflareinsights\.com/beacon\.min\.js\' data-cf-beacon=\'[^\']+\'></script><!-- End Cloudflare Web Analytics -->'
+    content = re.sub(old_pattern1, '', content)
+    
+    # 移除可能的多行版本
+    old_pattern2 = r'<!-- Cloudflare Web Analytics -->.*?<!-- End Cloudflare Web Analytics -->'
+    content = re.sub(old_pattern2, '', content, flags=re.DOTALL)
+    
+    return content.strip()
 
 def add_cloudflare_analytics(file_path):
     """为HTML文件添加Cloudflare Analytics代码"""
@@ -35,8 +87,16 @@ def add_cloudflare_analytics(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        if has_cloudflare_analytics(content):
+        # 检查是否已经是最新版本
+        if has_latest_version(content):
             return "skip"
+        
+        # 如果有旧版本，先移除
+        if has_cloudflare_analytics(content):
+            content = remove_old_analytics_code(content)
+            action = "updated"
+        else:
+            action = "added"
         
         # 查找 </body> 标签
         body_match = re.search(r'</body>', content, re.IGNORECASE)
@@ -51,7 +111,7 @@ def add_cloudflare_analytics(file_path):
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(new_content)
             
-            return "added"
+            return action
         else:
             return "no_body_tag"
             
@@ -103,6 +163,7 @@ def main():
     success_count = 0
     skip_count = 0
     error_count = 0
+    update_count = 0
     
     # 处理每个HTML文件
     for file_path in html_files:
@@ -114,10 +175,16 @@ def main():
                 print(f"✅ 已添加到 {file_path}")
             elif ci_mode:
                 print(f"✅ {file_path}")
+        elif result == "updated":
+            update_count += 1
+            if verbose:
+                print(f"🔄 已更新 {file_path} - 升级到v2.0版本")
+            elif ci_mode:
+                print(f"🔄 {file_path}")
         elif result == "skip":
             skip_count += 1
             if verbose:
-                print(f"⏭️  跳过 {file_path} - 已存在Cloudflare Analytics代码")
+                print(f"⏭️  跳过 {file_path} - 已是最新版本")
         elif result == "no_body_tag":
             error_count += 1
             if verbose:
@@ -135,24 +202,26 @@ def main():
     if verbose:
         print("-" * 60)
         print("📊 安装统计:")
-        print(f"   ✅ 成功添加: {success_count} 个文件")
-        print(f"   ⏭️  已存在跳过: {skip_count} 个文件") 
+        print(f"   ✅ 新添加: {success_count} 个文件")
+        print(f"   🔄 已更新: {update_count} 个文件")
+        print(f"   ⏭️  已是最新: {skip_count} 个文件") 
         print(f"   ❌ 处理失败: {error_count} 个文件")
         print("-" * 60)
     else:
-        print(f"📊 结果: ✅{success_count} ⏭️{skip_count} ❌{error_count}")
+        print(f"📊 结果: ✅{success_count} 🔄{update_count} ⏭️{skip_count} ❌{error_count}")
     
     # 成功信息
-    if success_count > 0:
+    total_processed = success_count + update_count
+    if total_processed > 0:
         if verbose:
-            print("🎉 Cloudflare Web Analytics 安装完成！")
+            print("🎉 Cloudflare Web Analytics v2.0 安装/更新完成！")
         else:
-            print("🎉 Analytics代码安装完成!")
+            print("🎉 Analytics代码已更新到v2.0!")
     elif not verbose:
         # CI模式下简洁提示
         pass
     else:
-        print("ℹ️  所有文件都已包含 Cloudflare Analytics 或处理失败")
+        print("ℹ️  所有文件都已是最新版本或处理失败")
     
     # 如果有错误，以非零状态码退出
     if error_count > 0:
