@@ -11,43 +11,64 @@ import glob
 import sys
 import argparse
 
-# Cloudflare Web Analytics 代码 - 带错误处理
-# 版本: v2.0 - 添加try-catch错误处理，确保兼容微信浏览器
-CLOUDFLARE_ANALYTICS_CODE = '''<!-- Cloudflare Web Analytics v2.0 -->
+# 统一Analytics代码 - 百度统计 + Cloudflare Analytics
+# 版本: v3.0 - 双统计系统，完美兼容微信浏览器
+CLOUDFLARE_ANALYTICS_CODE = '''<!-- 统一Analytics v3.0 - 百度统计 + Cloudflare Analytics -->
 <script>
 (function() {
     try {
-        // 检查是否支持defer属性和必要的API
-        if (typeof document !== 'undefined' && document.createElement) {
-            var script = document.createElement('script');
-            script.defer = true;
-            script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-            script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
-            
-            // 添加错误处理
-            script.onerror = function() {
-                console.debug('Cloudflare Analytics script failed to load');
-            };
-            
-            // 确保在DOM准备好后添加脚本
-            if (document.head) {
-                document.head.appendChild(script);
-            } else {
-                // 备用方案：等待DOM加载
-                document.addEventListener('DOMContentLoaded', function() {
+        // 百度统计
+        var _hmt = _hmt || [];
+        (function() {
+            try {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            } catch (e) {
+                console.debug('百度统计加载失败:', e);
+            }
+        })();
+
+        // Cloudflare Analytics
+        (function() {
+            try {
+                // 检查是否支持defer属性和必要的API
+                if (typeof document !== 'undefined' && document.createElement) {
+                    var script = document.createElement('script');
+                    script.defer = true;
+                    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
+                    
+                    // 添加错误处理
+                    script.onerror = function() {
+                        console.debug('Cloudflare Analytics脚本加载失败');
+                    };
+                    
+                    // 确保在DOM准备好后添加脚本
                     if (document.head) {
                         document.head.appendChild(script);
+                    } else {
+                        // 备用方案：等待DOM加载
+                        document.addEventListener('DOMContentLoaded', function() {
+                            if (document.head) {
+                                document.head.appendChild(script);
+                            }
+                        });
                     }
-                });
+                }
+            } catch (e) {
+                console.debug('Cloudflare Analytics初始化失败:', e);
             }
-        }
+        })();
+
     } catch (e) {
-        // 静默处理错误，不影响页面正常功能
-        console.debug('Cloudflare Analytics initialization failed:', e);
+        // 全局错误处理，确保不影响页面正常功能
+        console.debug('Analytics系统初始化失败:', e);
     }
 })();
 </script>
-<!-- End Cloudflare Web Analytics v2.0 -->'''
+<!-- End 统一Analytics v3.0 -->'''
 
 def find_html_files(root_dir=".."):
     """查找所有HTML文件"""
@@ -59,25 +80,38 @@ def find_html_files(root_dir=".."):
     return html_files
 
 def has_cloudflare_analytics(content):
-    """检查是否已经包含Cloudflare Analytics代码"""
+    """检查是否已经包含Analytics代码"""
     return ("cloudflareinsights.com" in content or 
             "dcaad93d0ed547e79576def350e16df7" in content or
             "data-cf-beacon" in content or
-            "Cloudflare Analytics" in content)
+            "Cloudflare Analytics" in content or
+            "hm.baidu.com" in content or
+            "统一Analytics" in content)
 
 def has_latest_version(content):
-    """检查是否已经是最新版本 (v2.0)"""
-    return "Cloudflare Web Analytics v2.0" in content
+    """检查是否已经是最新版本 (v3.0)"""
+    return "统一Analytics v3.0" in content
 
 def remove_old_analytics_code(content):
     """移除旧版本的Analytics代码"""
-    # 移除旧的单行版本
+    # 移除旧的Cloudflare Analytics单行版本
     old_pattern1 = r'<!-- Cloudflare Web Analytics --><script defer src=\'https://static\.cloudflareinsights\.com/beacon\.min\.js\' data-cf-beacon=\'[^\']+\'></script><!-- End Cloudflare Web Analytics -->'
     content = re.sub(old_pattern1, '', content)
     
-    # 移除可能的多行版本
-    old_pattern2 = r'<!-- Cloudflare Web Analytics -->.*?<!-- End Cloudflare Web Analytics -->'
+    # 移除v2.0版本的Cloudflare Analytics
+    old_pattern2 = r'<!-- Cloudflare Web Analytics v2\.0 -->.*?<!-- End Cloudflare Web Analytics v2\.0 -->'
     content = re.sub(old_pattern2, '', content, flags=re.DOTALL)
+    
+    # 移除独立的百度统计代码
+    baidu_pattern = r'<script>\s*var _hmt = _hmt \|\| \[\];.*?</script>'
+    content = re.sub(baidu_pattern, '', content, flags=re.DOTALL)
+    
+    # 移除百度自动推送代码
+    baidu_push_pattern = r'<!-- 百度自动推送 -->.*?</script>'
+    content = re.sub(baidu_push_pattern, '', content, flags=re.DOTALL)
+    
+    # 清理多余的空行
+    content = re.sub(r'\n\s*\n\s*\n', '\n\n', content)
     
     return content.strip()
 
@@ -131,9 +165,9 @@ def main():
     
     # 输出标题
     if ci_mode:
-        print("🔧 Cloudflare Analytics Auto-Install (CI/CD Mode)")
+        print("🔧 统一Analytics Auto-Install (CI/CD Mode)")
     else:
-        print("🚀 开始安装 Cloudflare Web Analytics...")
+        print("🚀 开始安装统一Analytics系统（百度统计 + Cloudflare Analytics）...")
         print("=" * 60)
     
     # 检查目录
@@ -178,7 +212,7 @@ def main():
         elif result == "updated":
             update_count += 1
             if verbose:
-                print(f"🔄 已更新 {file_path} - 升级到v2.0版本")
+                print(f"🔄 已更新 {file_path} - 升级到v3.0版本")
             elif ci_mode:
                 print(f"🔄 {file_path}")
         elif result == "skip":
@@ -214,9 +248,9 @@ def main():
     total_processed = success_count + update_count
     if total_processed > 0:
         if verbose:
-            print("🎉 Cloudflare Web Analytics v2.0 安装/更新完成！")
+            print("🎉 统一Analytics v3.0（百度统计 + Cloudflare Analytics）安装/更新完成！")
         else:
-            print("🎉 Analytics代码已更新到v2.0!")
+            print("🎉 双统计系统已更新到v3.0!")
     elif not verbose:
         # CI模式下简洁提示
         pass

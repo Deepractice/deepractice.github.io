@@ -293,12 +293,6 @@
             color: var(--primary-color);
         }
 
-
-
-
-
-
-
         .timeline-section {
             padding: 100px 0;
             background: rgba(30, 41, 59, 0.3);
@@ -467,8 +461,6 @@
                 min-width: 30px;
             }
 
-
-
             .timeline::before {
                 left: 20px;
             }
@@ -577,7 +569,6 @@
                 padding: 2px 5px;
                 min-width: 30px;
             }
-
 
         }
     </style>
@@ -761,8 +752,6 @@
             <div class="floating-circle" style="--delay: 1.5s; --size: 20px; --x: 65%; --y: 15%;"></div>
         </div>
     </section>
-
-
 
     <section class="timeline-section">
         <div class="container">
@@ -970,40 +959,61 @@
         document.addEventListener('DOMContentLoaded', fetchGitHubStats);
     </script>
 
-<!-- Cloudflare Web Analytics v2.0 -->
+<!-- 统一Analytics v3.0 - 百度统计 + Cloudflare Analytics -->
 <script>
 (function() {
     try {
-        // 检查是否支持defer属性和必要的API
-        if (typeof document !== 'undefined' && document.createElement) {
-            var script = document.createElement('script');
-            script.defer = true;
-            script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-            script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
-            
-            // 添加错误处理
-            script.onerror = function() {
-                console.debug('Cloudflare Analytics script failed to load');
-            };
-            
-            // 确保在DOM准备好后添加脚本
-            if (document.head) {
-                document.head.appendChild(script);
-            } else {
-                // 备用方案：等待DOM加载
-                document.addEventListener('DOMContentLoaded', function() {
+        // 百度统计
+        var _hmt = _hmt || [];
+        (function() {
+            try {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            } catch (e) {
+                console.debug('百度统计加载失败:', e);
+            }
+        })();
+
+        // Cloudflare Analytics
+        (function() {
+            try {
+                // 检查是否支持defer属性和必要的API
+                if (typeof document !== 'undefined' && document.createElement) {
+                    var script = document.createElement('script');
+                    script.defer = true;
+                    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
+                    
+                    // 添加错误处理
+                    script.onerror = function() {
+                        console.debug('Cloudflare Analytics脚本加载失败');
+                    };
+                    
+                    // 确保在DOM准备好后添加脚本
                     if (document.head) {
                         document.head.appendChild(script);
+                    } else {
+                        // 备用方案：等待DOM加载
+                        document.addEventListener('DOMContentLoaded', function() {
+                            if (document.head) {
+                                document.head.appendChild(script);
+                            }
+                        });
                     }
-                });
+                }
+            } catch (e) {
+                console.debug('Cloudflare Analytics初始化失败:', e);
             }
-        }
+        })();
+
     } catch (e) {
-        // 静默处理错误，不影响页面正常功能
-        console.debug('Cloudflare Analytics initialization failed:', e);
+        // 全局错误处理，确保不影响页面正常功能
+        console.debug('Analytics系统初始化失败:', e);
     }
 })();
 </script>
-<!-- End Cloudflare Web Analytics v2.0 -->
+<!-- End 统一Analytics v3.0 -->
 </body>
 </html>
