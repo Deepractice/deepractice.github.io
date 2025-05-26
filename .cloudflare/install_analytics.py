@@ -11,64 +11,68 @@ import glob
 import sys
 import argparse
 
+# 版本信息
+ANALYTICS_VERSION = "v3.1"
+ANALYTICS_DESCRIPTION = "双统计系统，完美兼容微信浏览器，统一版本管理"
+ANALYTICS_FULL_NAME = "统一Analytics"
+
 # 统一Analytics代码 - 百度统计 + Cloudflare Analytics
-# 版本: v3.0 - 双统计系统，完美兼容微信浏览器
-CLOUDFLARE_ANALYTICS_CODE = '''<!-- 统一Analytics v3.0 - 百度统计 + Cloudflare Analytics -->
+CLOUDFLARE_ANALYTICS_CODE = f'''<!-- {ANALYTICS_FULL_NAME} {ANALYTICS_VERSION} - 百度统计 + Cloudflare Analytics -->
 <script>
-(function() {
-    try {
+(function() {{
+    try {{
         // 百度统计
         var _hmt = _hmt || [];
-        (function() {
-            try {
+        (function() {{
+            try {{
                 var hm = document.createElement("script");
                 hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
                 var s = document.getElementsByTagName("script")[0]; 
                 s.parentNode.insertBefore(hm, s);
-            } catch (e) {
+            }} catch (e) {{
                 console.debug('百度统计加载失败:', e);
-            }
-        })();
+            }}
+        }})();
 
         // Cloudflare Analytics
-        (function() {
-            try {
+        (function() {{
+            try {{
                 // 检查是否支持defer属性和必要的API
-                if (typeof document !== 'undefined' && document.createElement) {
+                if (typeof document !== 'undefined' && document.createElement) {{
                     var script = document.createElement('script');
                     script.defer = true;
                     script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
+                    script.setAttribute('data-cf-beacon', '{{"token": "dcaad93d0ed547e79576def350e16df7"}}');
                     
                     // 添加错误处理
-                    script.onerror = function() {
+                    script.onerror = function() {{
                         console.debug('Cloudflare Analytics脚本加载失败');
-                    };
+                    }};
                     
                     // 确保在DOM准备好后添加脚本
-                    if (document.head) {
+                    if (document.head) {{
                         document.head.appendChild(script);
-                    } else {
+                    }} else {{
                         // 备用方案：等待DOM加载
-                        document.addEventListener('DOMContentLoaded', function() {
-                            if (document.head) {
+                        document.addEventListener('DOMContentLoaded', function() {{
+                            if (document.head) {{
                                 document.head.appendChild(script);
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
+                            }}
+                        }});
+                    }}
+                }}
+            }} catch (e) {{
                 console.debug('Cloudflare Analytics初始化失败:', e);
-            }
-        })();
+            }}
+        }})();
 
-    } catch (e) {
+    }} catch (e) {{
         // 全局错误处理，确保不影响页面正常功能
         console.debug('Analytics系统初始化失败:', e);
-    }
-})();
+    }}
+}})();
 </script>
-<!-- End 统一Analytics v3.0 -->'''
+<!-- End {ANALYTICS_FULL_NAME} {ANALYTICS_VERSION} -->'''
 
 def find_html_files(root_dir=".."):
     """查找所有HTML文件"""
@@ -89,8 +93,8 @@ def has_cloudflare_analytics(content):
             "统一Analytics" in content)
 
 def has_latest_version(content):
-    """检查是否已经是最新版本 (v3.0)"""
-    return "统一Analytics v3.0" in content
+    """检查是否已经是最新版本"""
+    return f"{ANALYTICS_FULL_NAME} {ANALYTICS_VERSION}" in content
 
 def remove_old_analytics_code(content):
     """移除旧版本的Analytics代码"""
@@ -165,9 +169,9 @@ def main():
     
     # 输出标题
     if ci_mode:
-        print("🔧 统一Analytics Auto-Install (CI/CD Mode)")
+        print(f"🔧 {ANALYTICS_FULL_NAME} Auto-Install (CI/CD Mode)")
     else:
-        print("🚀 开始安装统一Analytics系统（百度统计 + Cloudflare Analytics）...")
+        print(f"🚀 开始安装{ANALYTICS_FULL_NAME}系统（百度统计 + Cloudflare Analytics）...")
         print("=" * 60)
     
     # 检查目录
@@ -212,7 +216,7 @@ def main():
         elif result == "updated":
             update_count += 1
             if verbose:
-                print(f"🔄 已更新 {file_path} - 升级到v3.0版本")
+                print(f"🔄 已更新 {file_path} - 升级到{ANALYTICS_VERSION}版本")
             elif ci_mode:
                 print(f"🔄 {file_path}")
         elif result == "skip":
@@ -248,9 +252,9 @@ def main():
     total_processed = success_count + update_count
     if total_processed > 0:
         if verbose:
-            print("🎉 统一Analytics v3.0（百度统计 + Cloudflare Analytics）安装/更新完成！")
+            print(f"🎉 {ANALYTICS_FULL_NAME} {ANALYTICS_VERSION}（百度统计 + Cloudflare Analytics）安装/更新完成！")
         else:
-            print("🎉 双统计系统已更新到v3.0!")
+            print(f"🎉 双统计系统已更新到{ANALYTICS_VERSION}!")
     elif not verbose:
         # CI模式下简洁提示
         pass
