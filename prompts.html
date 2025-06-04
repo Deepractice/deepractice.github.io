@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <script src="js/header.js"></script>
 
     <!-- JSON-LD 结构化数据 -->
     <script type="application/ld+json">
@@ -659,27 +660,8 @@
     <!-- 粒子背景 -->
     <div id="particles-js"></div>
     
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>深度实践</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html#home">首页</a></li>
-                <li><a href="blog.html">博客</a></li>
-                <li><a href="prompts.html" class="active">提示词库</a></li>
-                <li><a href="index.html#about">关于我们</a></li>
-                <li><a href="index.html#platform">平台介绍</a></li>
-                <li><a href="index.html#values">公司理念</a></li>
-                <li><a href="index.html#contact">联系我们</a></li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-        </nav>
-    </header>
+    <!-- Header容器 -->
+    <div id="header-container"></div>
 
     <section class="prompts-hero">
         <div class="container">
@@ -715,41 +697,8 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h2>深度实践</h2>
-                    <p>实践·协作·创新</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h3>导航</h3>
-                        <ul>
-                            <li><a href="index.html#home">首页</a></li>
-                            <li><a href="blog.html">博客</a></li>
-                            <li><a href="prompts.html">提示词库</a></li>
-                            <li><a href="index.html#about">关于我们</a></li>
-                            <li><a href="index.html#platform">平台介绍</a></li>
-                            <li><a href="index.html#values">公司理念</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h3>法律信息</h3>
-                        <ul>
-                            <li><a href="#">隐私政策</a></li>
-                            <li><a href="#">服务条款</a></li>
-                            <li><a href="#">版权信息</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 长沙深度实践智能科技有限公司. 版权所有. <a href="https://beian.miit.gov.cn/" target="_blank" style="color: var(--text-secondary);">湘ICP备2025110834号</a></p>
-                <div class="footer-decoration"></div>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer容器 -->
+    <div id="footer-container"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
@@ -874,25 +823,28 @@
             const nav = document.querySelector('.nav-links');
             const navLinks = document.querySelectorAll('.nav-links li');
             
-            burger.addEventListener('click', () => {
-                // 切换导航栏
-                nav.classList.toggle('nav-active');
-                
-                // 激活链接动画
-                navLinks.forEach((link, index) => {
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    } else {
-                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-                    }
+            if (burger && nav) {
+                burger.addEventListener('click', () => {
+                    // 切换导航栏
+                    nav.classList.toggle('nav-active');
+                    
+                    // 激活链接动画
+                    navLinks.forEach((link, index) => {
+                        if (link.style.animation) {
+                            link.style.animation = '';
+                        } else {
+                            link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                        }
+                    });
+                    
+                    // 汉堡菜单动画
+                    burger.classList.toggle('toggle');
                 });
-                
-                // 汉堡菜单动画
-                burger.classList.toggle('toggle');
-            });
+            }
         }
         
-        navSlide();
+        // 等待DOM加载完成后初始化导航
+        document.addEventListener('DOMContentLoaded', navSlide);
 
         // 提示词数据
         const promptsData = [
@@ -1056,170 +1008,71 @@
             });
         }
 
-        // 分类过滤
-        const categoryFilters = document.querySelectorAll('.category-filter');
-        categoryFilters.forEach(filter => {
-            filter.addEventListener('click', () => {
-                // 更新活动状态
-                categoryFilters.forEach(f => f.classList.remove('active'));
-                filter.classList.add('active');
-                
-                const category = filter.getAttribute('data-category');
-                
-                // 过滤提示词
-                if (category === 'all') {
-                    renderPromptCards(promptsData);
-                } else {
-                    const filtered = promptsData.filter(prompt => prompt.category === category);
-                    renderPromptCards(filtered);
-                }
+        // 初始化函数
+        function initPromptSystem() {
+            // 分类过滤
+            const categoryFilters = document.querySelectorAll('.category-filter');
+            categoryFilters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    // 更新活动状态
+                    categoryFilters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+                    
+                    const category = filter.getAttribute('data-category');
+                    
+                    // 过滤提示词
+                    if (category === 'all') {
+                        renderPromptCards(promptsData);
+                    } else {
+                        const filtered = promptsData.filter(prompt => prompt.category === category);
+                        renderPromptCards(filtered);
+                    }
+                });
             });
-        });
 
-        // 搜索功能
-        const searchInput = document.getElementById('prompt-search');
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            
-            if (searchTerm === '') {
-                // 如果搜索框为空，显示当前选中分类的提示词
-                const activeCategory = document.querySelector('.category-filter.active').getAttribute('data-category');
-                if (activeCategory === 'all') {
-                    renderPromptCards(promptsData);
-                } else {
-                    const filtered = promptsData.filter(prompt => prompt.category === activeCategory);
-                    renderPromptCards(filtered);
-                }
-                return;
+            // 搜索功能
+            const searchInput = document.getElementById('prompt-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    const searchTerm = searchInput.value.toLowerCase().trim();
+                    
+                    if (searchTerm === '') {
+                        // 如果搜索框为空，显示当前选中分类的提示词
+                        const activeCategory = document.querySelector('.category-filter.active');
+                        if (activeCategory) {
+                            const category = activeCategory.getAttribute('data-category');
+                            if (category === 'all') {
+                                renderPromptCards(promptsData);
+                            } else {
+                                const filtered = promptsData.filter(prompt => prompt.category === category);
+                                renderPromptCards(filtered);
+                            }
+                        } else {
+                            renderPromptCards(promptsData);
+                        }
+                        return;
+                    }
+                    
+                    // 搜索逻辑
+                    const searchResults = promptsData.filter(prompt => {
+                        return prompt.title.toLowerCase().includes(searchTerm) ||
+                               prompt.description.toLowerCase().includes(searchTerm) ||
+                               prompt.categoryLabel.toLowerCase().includes(searchTerm);
+                    });
+                    
+                    renderPromptCards(searchResults);
+                });
             }
-            
-            // 搜索逻辑
-            const searchResults = promptsData.filter(prompt => {
-                return prompt.title.toLowerCase().includes(searchTerm) ||
-                       prompt.description.toLowerCase().includes(searchTerm) ||
-                       prompt.categoryLabel.toLowerCase().includes(searchTerm);
-            });
-            
-            renderPromptCards(searchResults);
-        });
+
+            // 渲染初始提示词
+            renderPromptCards(promptsData);
+        }
 
         // 初始化页面
         document.addEventListener('DOMContentLoaded', () => {
-            renderPromptCards(promptsData);
+            initPromptSystem();
         });
     </script>
 
-<!-- 统一Analytics v3.0 - 百度统计 + Cloudflare Analytics -->
-<script>
-(function() {
-    try {
-        // 百度统计
-        var _hmt = _hmt || [];
-        (function() {
-            try {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
-                var s = document.getElementsByTagName("script")[0]; 
-                s.parentNode.insertBefore(hm, s);
-            } catch (e) {
-                console.debug('百度统计加载失败:', e);
-            }
-        })();
-
-        // Cloudflare Analytics
-        (function() {
-            try {
-                // 检查是否支持defer属性和必要的API
-                if (typeof document !== 'undefined' && document.createElement) {
-                    var script = document.createElement('script');
-                    script.defer = true;
-                    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
-                    
-                    // 添加错误处理
-                    script.onerror = function() {
-                        console.debug('Cloudflare Analytics脚本加载失败');
-                    };
-                    
-                    // 确保在DOM准备好后添加脚本
-                    if (document.head) {
-                        document.head.appendChild(script);
-                    } else {
-                        // 备用方案：等待DOM加载
-                        document.addEventListener('DOMContentLoaded', function() {
-                            if (document.head) {
-                                document.head.appendChild(script);
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
-                console.debug('Cloudflare Analytics初始化失败:', e);
-            }
-        })();
-
-    } catch (e) {
-        // 全局错误处理，确保不影响页面正常功能
-        console.debug('Analytics系统初始化失败:', e);
-    }
-})();
-</script>
-<!-- End 统一Analytics v3.0 -->
-<!-- 统一Analytics v3.1 - 百度统计 + Cloudflare Analytics -->
-<script>
-(function() {
-    try {
-        // 百度统计
-        var _hmt = _hmt || [];
-        (function() {
-            try {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
-                var s = document.getElementsByTagName("script")[0]; 
-                s.parentNode.insertBefore(hm, s);
-            } catch (e) {
-                console.debug('百度统计加载失败:', e);
-            }
-        })();
-
-        // Cloudflare Analytics
-        (function() {
-            try {
-                // 检查是否支持defer属性和必要的API
-                if (typeof document !== 'undefined' && document.createElement) {
-                    var script = document.createElement('script');
-                    script.defer = true;
-                    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
-                    
-                    // 添加错误处理
-                    script.onerror = function() {
-                        console.debug('Cloudflare Analytics脚本加载失败');
-                    };
-                    
-                    // 确保在DOM准备好后添加脚本
-                    if (document.head) {
-                        document.head.appendChild(script);
-                    } else {
-                        // 备用方案：等待DOM加载
-                        document.addEventListener('DOMContentLoaded', function() {
-                            if (document.head) {
-                                document.head.appendChild(script);
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
-                console.debug('Cloudflare Analytics初始化失败:', e);
-            }
-        })();
-
-    } catch (e) {
-        // 全局错误处理，确保不影响页面正常功能
-        console.debug('Analytics系统初始化失败:', e);
-    }
-})();
-</script>
-<!-- End 统一Analytics v3.1 -->
 </body>
 </html>

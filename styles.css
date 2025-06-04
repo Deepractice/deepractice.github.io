@@ -1097,6 +1097,39 @@ footer {
     text-shadow: 0 0 8px rgba(77, 171, 247, 0.3);
 }
 
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.footer-social-link:hover {
+    color: var(--primary-color);
+    transform: translateX(8px);
+    text-shadow: 0 0 8px rgba(77, 171, 247, 0.3);
+}
+
+.footer-social-link i {
+    font-size: 1.2rem;
+    width: 20px;
+    text-align: center;
+}
+
+.footer-social-link span {
+    font-size: 1rem;
+}
+
 .copyright {
     text-align: center;
     padding: 30px 0;
@@ -1104,6 +1137,62 @@ footer {
     color: var(--text-secondary);
     font-size: 0.95rem;
     position: relative;
+}
+
+/* 第一行：版权信息 */
+.copyright-line {
+    margin-bottom: 15px;
+}
+
+.copyright-line p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.company-name {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.icp-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.icp-link:hover {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+/* 第二行：访问统计徽章 */
+.visit-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.visit-counter img {
+    height: 20px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    filter: brightness(0.9);
+    opacity: 0.9;
+}
+
+.visit-counter img:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+    opacity: 1;
+    box-shadow: 0 4px 12px rgba(77, 171, 247, 0.3);
 }
 
 .footer-decoration {
@@ -1118,6 +1207,79 @@ footer {
         rgba(77, 171, 247, 0) 100%);
     opacity: 0.2;
     transform: translateY(30px) skewY(-2deg);
+}
+
+/* Footer访问统计样式 */
+.footer-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 25px 0;
+    margin: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(10, 15, 25, 0.3);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(77, 171, 247, 0.02) 0%, 
+        rgba(77, 171, 247, 0.05) 50%, 
+        rgba(77, 171, 247, 0.02) 100%);
+    pointer-events: none;
+}
+
+.stats-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.stats-item:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.stats-item i {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.stats-item:hover i {
+    opacity: 1;
+    transform: scale(1.1);
+    text-shadow: 0 0 8px rgba(77, 171, 247, 0.5);
+}
+
+.stat-number {
+    font-weight: 600;
+    color: var(--highlight-color);
+    font-size: 1rem;
+    min-width: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stats-item:hover .stat-number {
+    color: var(--primary-color);
+    text-shadow: 0 0 8px rgba(77, 171, 247, 0.3);
 }
 
 /* 响应式设计 */
@@ -1242,10 +1404,47 @@ footer {
     .nav-links li {
         opacity: 0;
         margin: 15px 0;
+        transition: opacity 0.5s ease-in-out;
     }
     
     .nav-active {
         transform: translateX(0%);
+    }
+    
+    .nav-active li {
+        opacity: 1;
+    }
+    
+    .nav-active li:nth-child(1) {
+        transition-delay: 0.1s;
+    }
+    
+    .nav-active li:nth-child(2) {
+        transition-delay: 0.2s;
+    }
+    
+    .nav-active li:nth-child(3) {
+        transition-delay: 0.3s;
+    }
+    
+    .nav-active li:nth-child(4) {
+        transition-delay: 0.4s;
+    }
+    
+    .nav-active li:nth-child(5) {
+        transition-delay: 0.5s;
+    }
+    
+    .nav-active li:nth-child(6) {
+        transition-delay: 0.6s;
+    }
+    
+    .nav-active li:nth-child(7) {
+        transition-delay: 0.7s;
+    }
+    
+    .nav-active li:nth-child(8) {
+        transition-delay: 0.8s;
     }
     
     .burger {
@@ -1269,6 +1468,26 @@ footer {
     .footer-links {
         flex-direction: column;
         gap: 40px;
+    }
+    
+    .footer-stats {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 15px;
+    }
+    
+    .stats-item {
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+    
+    .copyright-line p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    
+    .visit-counter img {
+        height: 18px;
     }
 }
 
@@ -1306,6 +1525,34 @@ footer {
     
     .floating-tech-icons {
         gap: 20px;
+    }
+    
+    .footer-stats {
+        gap: 15px;
+        padding: 15px 10px;
+        margin: 15px 0;
+    }
+    
+    .stats-item {
+        font-size: 0.8rem;
+        gap: 5px;
+    }
+    
+    .stats-item i {
+        font-size: 1rem;
+    }
+    
+    .copyright-line p {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    
+    .visit-counter img {
+        height: 16px;
+    }
+    
+    .company-name {
+        letter-spacing: 0.3px;
     }
 }
 
@@ -1903,21 +2150,135 @@ footer {
         margin: 0;
         overflow: hidden;
         transition: max-height 0.3s ease, padding 0.3s ease;
+        transform: none; /* 重置桌面版的 transform */
+        opacity: 1; /* 重置桌面版的 opacity */
+        visibility: visible; /* 重置桌面版的 visibility */
     }
     
     .dropdown.active .dropdown-menu {
         max-height: 500px;
         padding: 10px 0;
-        opacity: 1;
-        visibility: visible;
     }
     
     .dropdown-menu li a {
         padding: 10px 30px;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        background-color: transparent;
+    }
+    
+    .dropdown-menu li a:hover {
+        background-color: rgba(77, 171, 247, 0.1);
+        color: var(--primary-color);
+        transform: none; /* 移除桌面版的 translateX 效果 */
     }
     
     .dropdown-toggle {
         width: 100%;
         justify-content: space-between;
+        position: relative;
+    }
+    
+    /* 移动端下拉菜单切换器不显示下划线 */
+    .dropdown-toggle:before {
+        display: none !important;
+    }
+    
+    /* 确保下拉菜单切换器在移动端不会触发悬停效果 */
+    .dropdown-toggle:hover:before {
+        width: 0 !important;
+    }
+}
+
+/* ===== 徽章统计系统样式 ===== */
+
+/* Footer统计容器样式增强 */
+.footer-stats h4 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* 徽章容器样式 */
+#footer-stats-badges {
+    text-align: center;
+}
+
+#footer-stats-badges > div {
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+/* 徽章图片样式 */
+#footer-stats-badges img {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+#footer-stats-badges img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(77, 171, 247, 0.3);
+}
+
+/* 链接样式 */
+#footer-stats-badges a {
+    text-decoration: none;
+    display: inline-block;
+}
+
+#footer-stats-badges a:hover img {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(77, 171, 247, 0.3);
+}
+
+/* 徽章加载动画 */
+@keyframes badge-load {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#footer-stats-badges img {
+    animation: badge-load 0.5s ease forwards;
+}
+
+/* 传统统计样式隐藏 */
+.stats-traditional {
+    display: none !important;
+}
+
+/* 徽章响应式增强 */
+@media (max-width: 768px) {
+    #footer-stats-badges > div {
+        justify-content: center;
+        gap: 4px;
+    }
+    
+    #footer-stats-badges img {
+        margin-right: 4px;
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    #footer-stats-badges > div {
+        gap: 2px;
+    }
+    
+    #footer-stats-badges img {
+        margin-right: 2px;
+        margin-bottom: 2px;
+        max-width: calc(50% - 2px);
+        height: auto;
     }
 } 

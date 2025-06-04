@@ -577,25 +577,8 @@
     <!-- 粒子背景 -->
     <div id="particles-js"></div>
     
-    <header>
-        <nav>
-            <div class="logo">
-                <h1><a href="../index.html" style="color: inherit;">深度实践</a></h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="../index.html">首页</a></li>
-                <li><a href="../blog.html">博客</a></li>
-                <li><a href="../prompts.html">提示词库</a></li>
-                <li><a href="../index.html#about">关于我们</a></li>
-                <li><a href="../index.html#contact">联系我们</a></li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-        </nav>
-    </header>
+    <!-- Header容器 -->
+    <div id="header-container"></div>
 
     <section class="profile-hero">
         <div class="profile-content" data-aos="fade-up">
@@ -848,37 +831,10 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h2>深度实践</h2>
-                    <p>让AI触手可及</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h3>快速链接</h3>
-                        <ul>
-                            <li><a href="../index.html">首页</a></li>
-                            <li><a href="../blog.html">博客</a></li>
-                            <li><a href="../prompts.html">提示词库</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h3>联系方式</h3>
-                        <ul>
-                            <li><a href="mailto:7@deepracticex.com">7@deepracticex.com</a></li>
-                            <li><a href="tel:+86-192-3741-0938">+86-192-3741-0938</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2024 深度实践. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer容器 -->
+    <div id="footer-container"></div>
 
+    <script src="../js/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
@@ -959,117 +915,5 @@
         document.addEventListener('DOMContentLoaded', fetchGitHubStats);
     </script>
 
-<!-- 统一Analytics v3.0 - 百度统计 + Cloudflare Analytics -->
-<script>
-(function() {
-    try {
-        // 百度统计
-        var _hmt = _hmt || [];
-        (function() {
-            try {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
-                var s = document.getElementsByTagName("script")[0]; 
-                s.parentNode.insertBefore(hm, s);
-            } catch (e) {
-                console.debug('百度统计加载失败:', e);
-            }
-        })();
-
-        // Cloudflare Analytics
-        (function() {
-            try {
-                // 检查是否支持defer属性和必要的API
-                if (typeof document !== 'undefined' && document.createElement) {
-                    var script = document.createElement('script');
-                    script.defer = true;
-                    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
-                    
-                    // 添加错误处理
-                    script.onerror = function() {
-                        console.debug('Cloudflare Analytics脚本加载失败');
-                    };
-                    
-                    // 确保在DOM准备好后添加脚本
-                    if (document.head) {
-                        document.head.appendChild(script);
-                    } else {
-                        // 备用方案：等待DOM加载
-                        document.addEventListener('DOMContentLoaded', function() {
-                            if (document.head) {
-                                document.head.appendChild(script);
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
-                console.debug('Cloudflare Analytics初始化失败:', e);
-            }
-        })();
-
-    } catch (e) {
-        // 全局错误处理，确保不影响页面正常功能
-        console.debug('Analytics系统初始化失败:', e);
-    }
-})();
-</script>
-<!-- End 统一Analytics v3.0 -->
-<!-- 统一Analytics v3.1 - 百度统计 + Cloudflare Analytics -->
-<script>
-(function() {
-    try {
-        // 百度统计
-        var _hmt = _hmt || [];
-        (function() {
-            try {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
-                var s = document.getElementsByTagName("script")[0]; 
-                s.parentNode.insertBefore(hm, s);
-            } catch (e) {
-                console.debug('百度统计加载失败:', e);
-            }
-        })();
-
-        // Cloudflare Analytics
-        (function() {
-            try {
-                // 检查是否支持defer属性和必要的API
-                if (typeof document !== 'undefined' && document.createElement) {
-                    var script = document.createElement('script');
-                    script.defer = true;
-                    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
-                    
-                    // 添加错误处理
-                    script.onerror = function() {
-                        console.debug('Cloudflare Analytics脚本加载失败');
-                    };
-                    
-                    // 确保在DOM准备好后添加脚本
-                    if (document.head) {
-                        document.head.appendChild(script);
-                    } else {
-                        // 备用方案：等待DOM加载
-                        document.addEventListener('DOMContentLoaded', function() {
-                            if (document.head) {
-                                document.head.appendChild(script);
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
-                console.debug('Cloudflare Analytics初始化失败:', e);
-            }
-        })();
-
-    } catch (e) {
-        // 全局错误处理，确保不影响页面正常功能
-        console.debug('Analytics系统初始化失败:', e);
-    }
-})();
-</script>
-<!-- End 统一Analytics v3.1 -->
 </body>
 </html>

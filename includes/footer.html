@@ -1,0 +1,128 @@
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>深度实践</h2>
+                <p>实践·协作·创新</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>导航</h3>
+                    <ul>
+                        <li><a href="index.html#home">首页</a></li>
+                        <li><a href="blog.html">博客</a></li>
+                        <li><a href="prompts.html">提示词库</a></li>
+                        <li><a href="index.html#about">关于我们</a></li>
+                        <li><a href="index.html#platform">平台介绍</a></li>
+                        <li><a href="index.html#values">公司理念</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>法律信息</h3>
+                    <ul>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">服务条款</a></li>
+                        <li><a href="#">版权信息</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关注我们</h3>
+                    <div class="footer-social">
+                        <a href="https://github.com/Deepractice" target="_blank" class="footer-social-link">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="#" class="footer-social-link">
+                            <i class="fab fa-weixin"></i>
+                            <span>微信</span>
+                        </a>
+                        <a href="#" class="footer-social-link">
+                            <i class="fab fa-weibo"></i>
+                            <span>微博</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <!-- 第一行：版权信息 -->
+            <div class="copyright-line">
+                <p>&copy; 2025 <span class="company-name">长沙深度实践人工智能科技有限公司</span> · 版权所有 · <a href="https://beian.miit.gov.cn/" target="_blank" class="icp-link">湘ICP备2025110834号</a></p>
+            </div>
+            
+            <!-- 第二行：访问统计徽章 -->
+            <div class="visit-counter">
+                <img src="https://komarev.com/ghpvc/?username=deepractice-website&label=Website%20visit&color=0e75b6&style=flat-square" alt="Website visit counter" style="vertical-align: middle;">
+            </div>
+            
+            <div class="footer-decoration"></div>
+        </div>
+    </div>
+</footer>
+
+<!-- 统一Analytics管理 - 百度统计 + Cloudflare Analytics -->
+<script>
+(function() {
+    // 检查是否为本地开发环境
+    const isLocalDev = window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1' || 
+                      window.location.protocol === 'file:';
+    
+    if (isLocalDev) {
+        console.debug('本地开发环境，跳过深度Analytics加载');
+        return;
+    }
+    
+    console.debug('生产环境，加载深度Analytics系统');
+    
+    try {
+        // 百度统计
+        var _hmt = _hmt || [];
+        (function() {
+            try {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?c26c5664a01363a5e260e758ade6c663";
+                hm.onerror = function() {
+                    console.debug('百度统计脚本加载失败');
+                };
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+                console.debug('百度统计已加载');
+            } catch (e) {
+                console.debug('百度统计初始化失败:', e);
+            }
+        })();
+
+        // Cloudflare Analytics
+        (function() {
+            try {
+                if (typeof document !== 'undefined' && document.createElement) {
+                    var script = document.createElement('script');
+                    script.defer = true;
+                    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+                    script.setAttribute('data-cf-beacon', '{"token": "dcaad93d0ed547e79576def350e16df7"}');
+                    
+                    script.onerror = function() {
+                        console.debug('Cloudflare Analytics脚本加载失败');
+                    };
+                    
+                    script.onload = function() {
+                        console.debug('Cloudflare Analytics已加载');
+                    };
+                    
+                    if (document.head) {
+                        document.head.appendChild(script);
+                    }
+                }
+            } catch (e) {
+                console.debug('Cloudflare Analytics初始化失败:', e);
+            }
+        })();
+
+    } catch (e) {
+        console.debug('Analytics系统初始化失败:', e);
+    }
+})();
+</script>
+<!-- End 统一Analytics管理 -->

@@ -1,38 +1,55 @@
 // 等待DOM完全加载
 document.addEventListener('DOMContentLoaded', () => {
-    // 初始化AOS动画库
-    AOS.init({
-        duration: 800,
-        once: false,
-        mirror: true
-    });
-    
-    // 初始化粒子效果
-    initParticles();
-    
-    // 初始化倾斜效果
-    initTilt();
-    
-    // 初始化导航菜单
-    initNavigation();
-    
-    // 初始化3D视差效果
-    initParallax();
-    
-    // 初始化动态连接线
-    initConnectionLines();
-    
-    // 窗口滚动事件
-    initScrollEffects();
-    
-    // 表单提交事件
-    initFormSubmit();
-    
-    // 评估中心相关交互
-    initEvaluationInteractions();
-    
-    // 移动端导航栏下拉菜单
-    initMobileDropdown();
+    try {
+        // 初始化AOS动画库
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 800,
+                once: false,
+                mirror: true
+            });
+        } else {
+            console.warn('AOS库未加载');
+        }
+        
+        // 初始化粒子效果
+        if (typeof particlesJS !== 'undefined') {
+            initParticles();
+        } else {
+            console.warn('Particles.js库未加载');
+        }
+        
+        // 初始化倾斜效果
+        if (typeof VanillaTilt !== 'undefined') {
+            initTilt();
+        } else {
+            console.warn('VanillaTilt库未加载');
+        }
+        
+        // 初始化导航菜单
+        initNavigation();
+        
+        // 初始化3D视差效果
+        initParallax();
+        
+        // 初始化动态连接线
+        initConnectionLines();
+        
+        // 窗口滚动事件
+        initScrollEffects();
+        
+        // 表单提交事件
+        initFormSubmit();
+        
+        // 评估中心相关交互
+        initEvaluationInteractions();
+        
+        // 移动端导航栏下拉菜单
+        initMobileDropdown();
+        
+    } catch (error) {
+        console.warn('页面初始化过程中出现错误:', error);
+    }
 });
 
 // 粒子背景初始化
@@ -165,7 +182,8 @@ function initNavigation() {
     const header = document.querySelector('header');
     
     // 汉堡菜单点击事件
-    burger.addEventListener('click', () => {
+    if (burger && nav) {
+        burger.addEventListener('click', () => {
         // 切换导航菜单显示
         nav.classList.toggle('nav-active');
         
@@ -180,7 +198,8 @@ function initNavigation() {
         
         // 切换汉堡菜单动画
         burger.classList.toggle('toggle');
-    });
+        });
+    }
     
     // 平滑滚动到锚点
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

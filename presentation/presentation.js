@@ -1,15 +1,21 @@
 // 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== Presentation.js 开始初始化 ===');
+    
     // 初始化粒子效果
+    console.log('初始化粒子效果...');
     initParticles();
     
     // 初始化幻灯片控制
+    console.log('初始化幻灯片控制...');
     initSlideControls();
     
     // 初始化导航栏交互
+    console.log('初始化导航栏交互...');
     initNavigation();
     
     // 初始化交互式问答卡片
+    console.log('初始化交互式问答卡片...');
     initInteractiveCards();
     
     // 添加观察结果点击展示功能
@@ -485,13 +491,23 @@ function initNavigation() {
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     
-    burger.addEventListener('click', () => {
-        // 切换导航菜单
-        nav.classList.toggle('nav-active');
-        
-        // 切换汉堡按钮动画
-        burger.classList.toggle('toggle');
-    });
+    console.log('导航元素检查:');
+    console.log('- burger元素:', burger);
+    console.log('- nav元素:', nav);
+    
+    // 检查元素是否存在
+    if (burger && nav) {
+        console.log('✅ 导航元素存在，添加事件监听器');
+        burger.addEventListener('click', () => {
+            // 切换导航菜单
+            nav.classList.toggle('nav-active');
+            
+            // 切换汉堡按钮动画
+            burger.classList.toggle('toggle');
+        });
+    } else {
+        console.warn('⚠️ 导航元素不存在，跳过导航初始化');
+    }
     
     // 监听全屏变化事件
     document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -517,35 +533,63 @@ function initInteractiveCards() {
     const popupContainers = document.querySelectorAll('.popup-container');
     const popupCloseButtons = document.querySelectorAll('.popup-close');
     
+    console.log('找到的弹窗触发器数量:', popupTriggers.length);
+    console.log('找到的弹窗容器数量:', popupContainers.length);
+    
     // 打开弹窗
-    popupTriggers.forEach(trigger => {
-        trigger.addEventListener('click', function() {
+    popupTriggers.forEach((trigger, index) => {
+        console.log(`初始化弹窗触发器 ${index}:`, trigger);
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault(); // 防止默认行为
+            e.stopPropagation(); // 防止事件冒泡
+            
             const popupId = this.getAttribute('data-popup');
             const popup = document.getElementById(popupId);
             
-            // 添加活动类以显示弹窗
-            popup.classList.add('active');
+            console.log('点击触发器，弹窗ID:', popupId);
+            console.log('找到的弹窗元素:', popup);
             
-            // 防止滚动
-            document.body.style.overflow = 'hidden';
+            if (popup) {
+                // 添加活动类以显示弹窗
+                popup.classList.add('active');
+                
+                // 防止滚动
+                document.body.style.overflow = 'hidden';
+                
+                console.log('弹窗已激活');
+            } else {
+                console.error('未找到弹窗元素:', popupId);
+            }
         });
     });
     
     // 关闭弹窗
-    popupCloseButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const popup = this.closest('.popup-container');
-            popup.classList.remove('active');
+    popupCloseButtons.forEach((button, index) => {
+        console.log(`初始化关闭按钮 ${index}:`, button);
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             
-            // 恢复滚动
-            document.body.style.overflow = '';
+            const popup = this.closest('.popup-container');
+            console.log('关闭弹窗:', popup);
+            
+            if (popup) {
+                popup.classList.remove('active');
+                
+                // 恢复滚动
+                document.body.style.overflow = '';
+                
+                console.log('弹窗已关闭');
+            }
         });
     });
     
     // 点击弹窗背景关闭弹窗
-    popupContainers.forEach(container => {
+    popupContainers.forEach((container, index) => {
+        console.log(`初始化弹窗容器 ${index}:`, container);
         container.addEventListener('click', function(e) {
             if (e.target === this) {
+                console.log('点击背景关闭弹窗');
                 this.classList.remove('active');
                 document.body.style.overflow = '';
             }
@@ -562,4 +606,9 @@ function initInteractiveCards() {
             }
         }
     });
+    
+    console.log('=== 弹窗系统初始化完成 ===');
+    console.log('触发器数量:', popupTriggers.length);
+    console.log('容器数量:', popupContainers.length);
+    console.log('关闭按钮数量:', popupCloseButtons.length);
 } 

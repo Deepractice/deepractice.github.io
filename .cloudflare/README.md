@@ -1,169 +1,84 @@
-# 统一Analytics自动化系统
+# DeepracticeX 部署工具集
 
 ## 📊 系统概述
 
-统一管理**百度统计**和**Cloudflare Analytics**的自动化部署系统，特别针对微信浏览器优化。
+简化的自动化部署工具集，专注于SEO优化和高效部署。
 
-## 🎯 核心功能
+## 🎯 核心理念
 
-### 📱 双统计系统
-- **百度统计**：完美支持微信浏览器，国内用户流量统计
-- **Cloudflare Analytics**：全球覆盖，海外用户和技术指标统计
+### 统一Analytics管理
+- **集中管理**: 所有Analytics代码统一在 `includes/footer.html` 中
+- **双统计系统**: 百度统计（国内）+ Cloudflare Analytics（全球）
+- **环境感知**: 本地开发时自动跳过统计代码
+- **一次配置**: 不需要在每个页面重复添加
 
-### 🔧 版本管理
-- **智能检测**：自动识别当前版本
-- **自动升级**：检测到新版本时自动替换旧代码
-- **统一管理**：所有版本信息集中在变量中，升级时只需修改一处
+### 自动化Sitemap
+- **智能发现**: 自动扫描所有有效HTML页面
+- **SEO优化**: 智能设置优先级和更新频率
+- **实时更新**: CI/CD自动更新网站地图
 
-### 🛡️ 错误处理
-- **三层保护**：百度统计、Cloudflare Analytics、全局错误处理
-- **微信兼容**：特别针对微信浏览器做兼容性处理
-- **静默失败**：任何统计脚本出错都不会影响页面正常运行
+## 📁 文件说明
 
-## 🚀 使用方法
+### 主要脚本
+- `ci.py` - 统一CI/CD部署脚本（仅Sitemap生成）
+- `generate_sitemap.py` - Sitemap生成主脚本
+- `deploy_generate_sitemap.py` - CI/CD模式的Sitemap生成
 
-### 基础使用
+### 工具脚本  
+- `cleanup_analytics.py` - 一次性清理工具，移除重复Analytics代码
+
+### 文档
+- `CI_README.md` - CI/CD系统详细说明
+- `SITEMAP_README.md` - Sitemap生成系统说明
+
+## 🚀 快速使用
+
+### 生成网站地图
 ```bash
 cd .cloudflare
-python3 install_analytics.py
+python3 ci.py
 ```
-
-### CI/CD模式
-```bash
-python3 install_analytics.py --ci
-```
-
-### 详细输出模式
-```bash
-python3 install_analytics.py --verbose
-```
-
-## 📋 版本管理
-
-### 当前版本配置
-```python
-# 版本信息
-ANALYTICS_VERSION = "v3.1"
-ANALYTICS_DESCRIPTION = "双统计系统，完美兼容微信浏览器，统一版本管理"
-ANALYTICS_FULL_NAME = "统一Analytics"
-```
-
-### 升级版本
-只需修改 `ANALYTICS_VERSION` 变量，然后运行脚本即可自动升级所有页面。
-
-### 版本历史
-- **v1.0**: 原始Cloudflare Analytics
-- **v2.0**: 添加错误处理，修复微信浏览器兼容性
-- **v3.0**: 统一管理百度统计+Cloudflare Analytics
-- **v3.1**: 统一版本管理系统
-
-## 🔍 功能特性
-
-### 自动检测与处理
-- ✅ 检测现有Analytics代码
-- ✅ 自动移除旧版本
-- ✅ 智能版本识别
-- ✅ 避免重复添加
-
-### 兼容性
-- ✅ 微信浏览器优化
-- ✅ 所有主流浏览器支持
-- ✅ 移动端友好
-- ✅ 网络环境容错
-
-### 部署集成
-- ✅ Cloudflare Pages自动部署
-- ✅ CI/CD流水线支持
-- ✅ 本地开发环境测试
-
-## 📊 统计覆盖
-
-脚本会自动处理以下类型的HTML文件：
-- 主页面：`index.html`, `blog.html`, `prompts.html`
-- 博客文章：`blog/*.html`
-- 个人页面：`people/*.html`
-- 提示词页面：`prompt-html/**/*.html`
-- 演示页面：`presentation/*.html`
-
-总计：**28个HTML文件**，确保全站统计覆盖。
-
-## 🛠️ 技术实现
-
-### 代码结构
-```javascript
-// 统一Analytics v3.1
-(function() {
-    try {
-        // 百度统计 - 微信浏览器优化
-        var _hmt = _hmt || [];
-        // ... 百度统计代码 ...
-
-        // Cloudflare Analytics - 全球覆盖
-        // ... Cloudflare代码 ...
-    } catch (e) {
-        console.debug('Analytics系统初始化失败:', e);
-    }
-})();
-```
-
-### 错误处理策略
-1. **百度统计错误处理**：单独try-catch
-2. **Cloudflare错误处理**：单独try-catch + script.onerror
-3. **全局错误处理**：最外层try-catch
-
-## 🔄 自动化流程
-
-### 本地开发
-1. 修改版本号（如需要）
-2. 运行 `python3 install_analytics.py`
-3. Git提交推送
 
 ### CI/CD部署
 ```bash
-cd .cloudflare && python3 install_analytics.py --ci && cd ..
+cd .cloudflare && python3 ci.py --quiet && cd ..
 ```
 
-### 版本升级流程
-1. 修改 `ANALYTICS_VERSION`
-2. 更新 `ANALYTICS_DESCRIPTION`（可选）
-3. 运行脚本自动升级所有文件
-4. 提交部署
-
-## 📈 监控效果
-
-升级后，您可以在以下平台查看统计数据：
-- **百度统计后台**：查看国内用户访问情况
-- **Cloudflare Dashboard**：查看全球用户和技术指标
-
-双统计系统确保不遗漏任何访问数据！
-
-## 📊 输出示例
-
-### 详细模式
-```
-🚀 开始安装统一Analytics系统（百度统计 + Cloudflare Analytics）...
-============================================================
-📂 脚本位置: /path/to/.cloudflare
-📂 扫描目录: /path/to/project
-📄 找到 28 个HTML文件
-------------------------------------------------------------
-🔄 已更新 ../index.html - 升级到v3.1版本
-⏭️  跳过 ../blog.html - 已是最新版本
-------------------------------------------------------------
-📊 安装统计:
-   ✅ 新添加: 0 个文件
-   🔄 已更新: 1 个文件
-   ⏭️  已是最新: 27 个文件
-   ❌ 处理失败: 0 个文件
-------------------------------------------------------------
-🎉 统一Analytics v3.1（百度统计 + Cloudflare Analytics）安装/更新完成！
+### 清理重复Analytics（仅需执行一次）
+```bash
+cd .cloudflare
+python3 cleanup_analytics.py
 ```
 
-### CI模式
-```
-🔧 统一Analytics Auto-Install (CI/CD Mode)
-📄 找到 28 个HTML文件
-🔄 ../index.html
-📊 结果: ✅0 🔄1 ⏭️27 ❌0
-�� 双统计系统已更新到v3.1!
-``` 
+## 🔄 架构演进
+
+### 之前的架构（已简化）
+- ❌ 每个页面单独管理Analytics代码
+- ❌ CI/CD需要安装/更新Analytics
+- ❌ 容易出现重复代码和版本不一致
+
+### 现在的架构（简化后）
+- ✅ Analytics统一在footer.html管理
+- ✅ CI/CD专注Sitemap生成
+- ✅ 代码简洁，维护方便
+- ✅ 环境感知，开发友好
+
+## 📊 统计数据覆盖
+
+当前网站结构：
+- **主要页面**: 3个（首页、博客、提示词库）
+- **博客文章**: 8个
+- **演示页面**: 3个  
+- **个人页面**: 1个
+- **提示词页面**: 13个
+
+**总计**: 28个页面，100%覆盖Analytics和Sitemap
+
+## 🌟 优势特性
+
+- **维护简单**: 一处修改，全站生效
+- **性能优化**: 环境检测，本地开发无统计代码干扰
+- **SEO友好**: 自动Sitemap，优化搜索引擎收录
+- **CI/CD友好**: 专注核心功能，部署快速可靠
+
+通过这种架构，实现了代码的高内聚、低耦合，既保证了功能完整性，又极大简化了维护工作！ 
