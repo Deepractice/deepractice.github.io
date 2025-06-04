@@ -1,0 +1,523 @@
+/* 全局样式 */
+:root {
+    --primary-color: #4dabf7;
+    --secondary-color: #64ffda;
+    --accent-color: #ff6b6b;
+    --star-color: #ffffff;
+    --deep-space: #0a0a23;
+    --space-blue: #1a1a3a;
+    --nebula-purple: #2d1b69;
+    --cosmic-gold: #ffd700;
+    --cosmic-silver: #c0c0c0;
+    --glow-blue: rgba(77, 171, 247, 0.8);
+    --glow-purple: rgba(138, 43, 226, 0.6);
+    --glow-gold: rgba(255, 215, 0, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, var(--space-blue) 0%, var(--deep-space) 70%);
+    font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+    color: var(--star-color);
+    cursor: grab;
+}
+
+body:active {
+    cursor: grabbing;
+}
+
+/* 星空背景 */
+.starfield {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+/* 可交互星系 */
+.interactive-stars {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+}
+
+/* 星系系统 */
+.star-system {
+    position: absolute;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* 星系位置 */
+.blog-star { top: 15%; left: 20%; }
+.project-star { top: 25%; left: 70%; }
+.video-star { top: 45%; left: 15%; }
+.team-star { top: 60%; left: 75%; }
+.social-star { top: 75%; left: 30%; }
+.ai-star { top: 35%; left: 85%; }
+.docs-star { top: 80%; left: 65%; }
+.github-star { top: 10%; left: 50%; }
+
+/* 主星球 */
+.main-star {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(100,255,218,0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 3;
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 
+        0 0 20px var(--glow-blue),
+        inset 0 0 20px rgba(255,255,255,0.1);
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.main-star i {
+    font-size: 24px;
+    color: var(--star-color);
+    z-index: 4;
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* 星球发光效果 */
+.star-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    animation: glow-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 20px var(--glow-blue);
+    }
+    50% { 
+        transform: scale(1.1);
+        box-shadow: 0 0 30px var(--glow-blue), 0 0 40px rgba(77,171,247,0.4);
+    }
+}
+
+@keyframes glow-pulse {
+    0% { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 轨道系统 */
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 20s linear infinite;
+}
+
+.satellite {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, var(--secondary-color), transparent);
+    border-radius: 50%;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px var(--secondary-color);
+    animation: satellite-glow 1.5s ease-in-out infinite alternate;
+}
+
+.satellite-2 {
+    animation-delay: 0.5s;
+    transform: translateX(-50%) rotate(120deg);
+    transform-origin: 50% 64px;
+}
+
+.satellite-3 {
+    animation-delay: 1s;
+    transform: translateX(-50%) rotate(240deg);
+    transform-origin: 50% 64px;
+}
+
+@keyframes rotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes satellite-glow {
+    0% { box-shadow: 0 0 5px var(--secondary-color); }
+    100% { box-shadow: 0 0 15px var(--secondary-color), 0 0 25px rgba(100,255,218,0.3); }
+}
+
+/* 星球标签 */
+.star-label {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* 悬停效果 */
+.star-system:hover {
+    transform: scale(1.2);
+}
+
+.star-system:hover .star-label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.star-system:hover .main-star {
+    animation-duration: 1s;
+    box-shadow: 
+        0 0 40px var(--glow-blue),
+        0 0 60px rgba(77,171,247,0.4),
+        inset 0 0 20px rgba(255,255,255,0.2);
+}
+
+/* 特定星球颜色 */
+.blog-star .main-star { background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,107,107,0.3)); }
+.blog-star .star-glow { background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%); }
+.blog-star:hover .main-star { box-shadow: 0 0 40px var(--accent-color); }
+
+.project-star .main-star { background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,215,0,0.3)); }
+.project-star .star-glow { background: radial-gradient(circle, var(--cosmic-gold) 0%, transparent 70%); }
+.project-star:hover .main-star { box-shadow: 0 0 40px var(--cosmic-gold); }
+
+.ai-star .main-star { background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(138,43,226,0.3)); }
+.ai-star .star-glow { background: radial-gradient(circle, var(--glow-purple) 0%, transparent 70%); }
+.ai-star:hover .main-star { box-shadow: 0 0 40px var(--glow-purple); }
+
+/* 星系连接线画布 */
+#constellation-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 信息面板 */
+.info-panel {
+    position: fixed;
+    top: 50%;
+    right: -400px;
+    transform: translateY(-50%);
+    width: 350px;
+    background: rgba(26, 26, 58, 0.95);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: right 0.4s ease;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.info-panel.active {
+    right: 20px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.panel-header h3 {
+    color: var(--secondary-color);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--accent-color);
+    transform: rotate(90deg);
+}
+
+.panel-content {
+    padding: 20px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+}
+
+.panel-content h4 {
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.panel-content p {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.panel-content .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.panel-content .link-btn {
+    padding: 8px 16px;
+    background: rgba(77,171,247,0.2);
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.panel-content .link-btn:hover {
+    background: var(--primary-color);
+    color: var(--deep-space);
+    transform: translateY(-2px);
+}
+
+/* 空间控制 */
+.space-controls {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(26, 26, 58, 0.8);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--star-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn:hover {
+    background: rgba(77,171,247,0.3);
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(77,171,247,0.3);
+}
+
+.control-btn i {
+    font-size: 18px;
+}
+
+/* 星空标题 */
+.space-title {
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 1000;
+    opacity: 0.9;
+}
+
+.space-title h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(77,171,247,0.5);
+    animation: title-glow 3s ease-in-out infinite alternate;
+}
+
+.space-title p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+}
+
+@keyframes title-glow {
+    0% { 
+        filter: drop-shadow(0 0 10px rgba(77,171,247,0.5));
+    }
+    100% { 
+        filter: drop-shadow(0 0 20px rgba(77,171,247,0.8));
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .space-title h1 {
+        font-size: 2rem;
+    }
+    
+    .space-title p {
+        font-size: 0.9rem;
+    }
+    
+    .info-panel {
+        width: 280px;
+    }
+    
+    .main-star {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .main-star i {
+        font-size: 20px;
+    }
+    
+    .orbit {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .space-controls {
+        bottom: 20px;
+        left: 20px;
+    }
+    
+    .control-btn {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .space-title {
+        top: 30px;
+    }
+    
+    .space-title h1 {
+        font-size: 1.5rem;
+    }
+    
+    .info-panel {
+        width: calc(100vw - 40px);
+        right: -100vw;
+    }
+    
+    .info-panel.active {
+        right: 20px;
+    }
+}
+
+/* 特殊效果 */
+.cosmic-dust {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 50px 100px, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 150px 200px, rgba(100,255,218,0.1), transparent),
+        radial-gradient(1px 1px at 300px 50px, rgba(255,107,107,0.1), transparent);
+    background-size: 400px 300px;
+    animation: float-dust 30s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes float-dust {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-400px); }
+}
+
+/* 流星效果 */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, var(--star-color), transparent);
+    animation: shooting 3s linear infinite;
+    opacity: 0;
+}
+
+@keyframes shooting {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) translateY(-100px) rotate(45deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100vw) translateY(100vh) rotate(45deg);
+    }
+}
+
+/* 新增：星云效果 */
+.nebula-effect {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(138,43,226,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: nebula-float 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes nebula-float {
+    0% { transform: rotate(0deg) translate(50px) rotate(0deg); }
+    100% { transform: rotate(360deg) translate(50px) rotate(-360deg); }
+} 
