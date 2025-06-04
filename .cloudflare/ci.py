@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-DeepracticeX CI/CD 统一部署脚本
+Deepractice CI/CD 统一部署脚本
 集成Analytics安装和Sitemap生成，提供一键式部署解决方案
 """
 
@@ -15,7 +15,7 @@ from datetime import datetime
 def print_banner():
     """打印横幅"""
     print("🚀" + "=" * 50 + "🚀")
-    print("    DeepracticeX CI/CD 自动化部署系统")
+    print("    Deepractice CI/CD 自动化部署系统")
     print("🚀" + "=" * 50 + "🚀")
     print()
 
@@ -101,7 +101,7 @@ def check_environment():
 def main():
     """主函数"""
     parser = argparse.ArgumentParser(
-        description='DeepracticeX CI/CD 自动化部署脚本',
+        description='Deepractice CI/CD 自动化部署脚本',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 使用示例:

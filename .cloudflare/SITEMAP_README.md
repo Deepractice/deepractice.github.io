@@ -88,7 +88,7 @@ PAGE_CONFIG = {
 ### URL处理
 - ✅ 自动URL编码（支持中文文件名）
 - ✅ 首页特殊处理（index.html → /）
-- ✅ 完整URL生成（https://deepracticex.com/...）
+- ✅ 完整URL生成（https://deepractice.ai/...）
 - ✅ 路径安全性检查
 
 ### 文件验证
@@ -120,7 +120,7 @@ PAGE_CONFIG = {
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://deepracticex.com/</loc>
+        <loc>https://deepractice.ai/</loc>
         <lastmod>2025-06-03</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
@@ -163,7 +163,7 @@ cd .cloudflare && python3 deploy_install_analytics.py && python3 deploy_generate
 生成sitemap.xml后，建议提交到：
 1. **Google Search Console** - 提升Google搜索收录
 2. **百度站长平台** - 优化百度搜索表现
-3. **robots.txt** - 添加 `Sitemap: https://deepracticex.com/sitemap.xml`
+3. **robots.txt** - 添加 `Sitemap: https://deepractice.ai/sitemap.xml`
 
 ### 收录监控
 定期检查：

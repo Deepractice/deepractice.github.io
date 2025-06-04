@@ -1,4 +1,4 @@
-# DeepracticeX 网页演示系统使用文档
+# Deepractice 网页演示系统使用文档
 
 这是一个基于网页的演示系统，用于创建具有现代UI和交互效果的演示文稿。该系统采用HTML、CSS和JavaScript构建，无需任何后端服务，可以在任何支持现代浏览器的环境中运行。
 
@@ -31,7 +31,7 @@ presentation/
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>你的演示标题 | DeepracticeX</title>
+    <title>你的演示标题 | Deepractice</title>
     <meta name="description" content="演示描述">
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="author" content="深度实践">

@@ -14,7 +14,7 @@ from datetime import datetime
 from urllib.parse import quote
 
 # 网站配置
-WEBSITE_URL = "https://deepracticex.com"
+WEBSITE_URL = "https://deepractice.ai"
 SITEMAP_FILE = "../sitemap.xml"
 
 # 页面优先级和更新频率配置
@@ -231,7 +231,7 @@ def main():
         print("   1. 检查生成的sitemap.xml文件")
         print("   2. 提交到Google Search Console")
         print("   3. 提交到百度站长平台")
-        print("   4. 可以添加到robots.txt中: Sitemap: https://deepracticex.com/sitemap.xml")
+        print("   4. 可以添加到robots.txt中: Sitemap: https://deepractice.ai/sitemap.xml")
         
     except Exception as e:
         print(f"❌ 生成失败: {str(e)}")

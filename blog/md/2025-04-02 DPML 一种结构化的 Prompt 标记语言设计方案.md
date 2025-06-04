@@ -237,7 +237,7 @@ schema属性用于指定DPML文档的验证规则来源：
 
 3. **引用格式**：
 
-4. - URI引用：`schema="http://dpml.deepracticex.com/schemas/finance-v2.xsd"`
+4. - URI引用：`schema="http://dpml.deepractice.ai/schemas/finance-v2.xsd"`
 
 5. **验证流程**：
 
@@ -255,7 +255,7 @@ schema属性用于指定DPML文档的验证规则来源：
 <!-- schema使用示例 -->
 <prompt 
   version="2.0" 
-  schema="http://dpml.deepracticex.com/schemas/finance-v2.xsd">
+  schema="http://dpml.deepractice.ai/schemas/finance-v2.xsd">
   <!-- 内容将根据finance-v2模式进行验证 -->
 </prompt>
 ```
@@ -275,7 +275,7 @@ frontend-developer-assistant.prompt
 <prompt
   version="1.0"
   id="frontend-developer-assistant"
-  schema="http://dpml.deepracticex.com/schemas/v1.xsd"
+  schema="http://dpml.deepractice.ai/schemas/v1.xsd"
   lang="zh-CN">
   
 

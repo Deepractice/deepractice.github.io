@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://deepracticex.com/sitemap.xml
+Sitemap: https://deepractice.ai/sitemap.xml
 
 # 百度Spider
 User-agent: Baiduspider
