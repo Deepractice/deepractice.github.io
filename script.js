@@ -181,23 +181,36 @@ function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-links li');
     const header = document.querySelector('header');
     
-    // 汉堡菜单点击事件
-    if (burger && nav) {
-        burger.addEventListener('click', () => {
-        // 切换导航菜单显示
-        nav.classList.toggle('nav-active');
+    // 打开导航菜单的函数
+    function openNav() {
+        nav.classList.add('nav-active');
+        burger.classList.add('toggle');
         
         // 链接动画
         navLinks.forEach((link, index) => {
-            if (link.style.animation) {
-                link.style.animation = '';
-            } else {
-                link.style.animation = `fadeIn 0.5s ease forwards ${index / 7 + 0.3}s`;
-            }
+            link.style.animation = `fadeIn 0.5s ease forwards ${index / 7 + 0.3}s`;
         });
+    }
+    
+    // 关闭导航菜单的函数
+    function closeNavMenu() {
+        nav.classList.remove('nav-active');
+        burger.classList.remove('toggle');
         
-        // 切换汉堡菜单动画
-        burger.classList.toggle('toggle');
+        // 清除动画
+        navLinks.forEach(link => {
+            link.style.animation = '';
+        });
+    }
+    
+    // 汉堡菜单点击事件
+    if (burger && nav) {
+        burger.addEventListener('click', () => {
+            if (nav.classList.contains('nav-active')) {
+                closeNavMenu();
+            } else {
+                openNav();
+            }
         });
     }
     
@@ -208,12 +221,7 @@ function initNavigation() {
             
             // 关闭移动端导航菜单
             if (nav.classList.contains('nav-active')) {
-                nav.classList.remove('nav-active');
-                burger.classList.remove('toggle');
-                
-                navLinks.forEach(link => {
-                    link.style.animation = '';
-                });
+                closeNavMenu();
             }
             
             const targetId = this.getAttribute('href');
