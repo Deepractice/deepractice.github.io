@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PromptX - 革命性AI提示词框架分享会</title>
-    <!-- 引入网站样式 -->
-    <link rel="stylesheet" href="../styles/main.css">
     <style>
         * {
             margin: 0;
@@ -18,13 +16,6 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0d1117 50%, #000000 100%);
             overflow-x: hidden;
             color: white;
-        }
-
-        /* 调整PPT容器以适配导航 */
-        .ppt-container {
-            margin-top: 80px; /* 为header留出空间 */
-            position: relative;
-            z-index: 5;
         }
 
         /* 背景动画粒子 */
@@ -69,7 +60,7 @@
         }
 
         .slide {
-            min-height: calc(100vh - 80px); /* 减去header高度 */
+            min-height: 100vh;
             display: none;
             align-items: center;
             justify-content: center;
@@ -380,13 +371,6 @@
 
         /* 响应式设计 */
         @media (max-width: 768px) {
-            .ppt-container {
-                margin-top: 60px; /* 移动端header高度调整 */
-            }
-            .slide {
-                min-height: calc(100vh - 60px);
-                padding: 20px;
-            }
             .slide-title {
                 font-size: 2.5rem;
             }
@@ -398,6 +382,9 @@
             }
             .architecture-comparison {
                 grid-template-columns: 1fr;
+            }
+            .slide {
+                padding: 20px;
             }
         }
 
@@ -456,312 +443,290 @@
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
         }
-
-        @media (max-width: 768px) {
-            .cover-slide .slide-title {
-                font-size: 3rem;
-            }
-            .cover-slide .slide-subtitle {
-                font-size: 1.5rem;
-            }
-            .github-badge {
-                position: static;
-                display: inline-block;
-                margin: 20px 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- 网站导航 -->
-    <div id="header-container"></div>
+    <!-- 背景粒子效果 -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-    <div class="ppt-container">
-        <!-- 背景粒子效果 -->
-        <div class="particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
+    <div class="slide-container">
+        <!-- 封面页 -->
+        <div class="slide cover-slide active">
+            <a href="https://github.com/Deepractice/PromptX" class="github-badge" target="_blank">
+                🚀 GitHub开源
+            </a>
+            <div class="slide-content">
+                <h1 class="slide-title">PromptX</h1>
+                <p class="slide-subtitle">革命性AI提示词框架</p>
+                <div class="cover-features">
+                    <div class="cover-feature">
+                        <span class="cover-feature-icon">⚡</span>
+                        <h3>一键激活</h3>
+                        <p>5秒变专家</p>
+                    </div>
+                    <div class="cover-feature">
+                        <span class="cover-feature-icon">🧠</span>
+                        <h3>智能记忆</h3>
+                        <p>跨会话保持</p>
+                    </div>
+                    <div class="cover-feature">
+                        <span class="cover-feature-icon">🎭</span>
+                        <h3>多重身份</h3>
+                        <p>专业角色库</p>
+                    </div>
+                </div>
+                <div class="command-demo">
+                    <div class="command-line">$ npx dpml-prompt@snapshot init</div>
+                    <div class="command-output">🎯 PromptX系统初始化完成！AI专家化服务已启动...</div>
+                </div>
+            </div>
         </div>
 
-        <div class="slide-container">
-            <!-- 封面页 -->
-            <div class="slide cover-slide active">
-                <a href="https://github.com/Deepractice/PromptX" class="github-badge" target="_blank">
-                    🚀 GitHub开源
-                </a>
-                <div class="slide-content">
-                    <h1 class="slide-title">PromptX</h1>
-                    <p class="slide-subtitle">革命性AI提示词框架</p>
-                    <div class="cover-features">
-                        <div class="cover-feature">
-                            <span class="cover-feature-icon">⚡</span>
-                            <h3>一键激活</h3>
-                            <p>5秒变专家</p>
-                        </div>
-                        <div class="cover-feature">
-                            <span class="cover-feature-icon">🧠</span>
-                            <h3>智能记忆</h3>
-                            <p>跨会话保持</p>
-                        </div>
-                        <div class="cover-feature">
-                            <span class="cover-feature-icon">🎭</span>
-                            <h3>多重身份</h3>
-                            <p>专业角色库</p>
+        <!-- 第一部分：痛点分析 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">当前Agent工作的四大痛点</h2>
+                <p class="slide-subtitle">为什么我们需要一个全新的AI提示词框架？</p>
+                
+                <div class="pain-points">
+                    <div class="pain-point">
+                        <span class="pain-icon">😵‍💫</span>
+                        <h3 class="pain-title">AI健忘症</h3>
+                        <p class="pain-desc">
+                            <strong>无持久化记忆</strong><br>
+                            上下文切换后完全不认人<br>
+                            每次都要重新介绍背景<br>
+                            无法积累项目经验和偏好
+                        </p>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <span class="pain-icon">📚💥</span>
+                        <h3 class="pain-title">提示词管理地狱</h3>
+                        <p class="pain-desc">
+                            <strong>量大难以管理</strong><br>
+                            复杂AI助手需要3000+字提示词<br>
+                            无法组合、复用和沉淀<br>
+                            维护成本越来越高
+                        </p>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <span class="pain-icon">🧠💸</span>
+                        <h3 class="pain-title">上下文资源浪费</h3>
+                        <p class="pain-desc">
+                            <strong>静态加载浪费</strong><br>
+                            系统提示词占用8000+ tokens<br>
+                            80%内容与当前任务无关<br>
+                            响应速度慢，成本高
+                        </p>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <span class="pain-icon">🎭🔄</span>
+                        <h3 class="pain-title">角色切换困难症</h3>
+                        <p class="pain-desc">
+                            <strong>切换不方便</strong><br>
+                            需要手动复制粘贴不同提示词<br>
+                            容易混用不同角色设定<br>
+                            多任务处理效率低下
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二部分：实战演示 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">PromptX实战演示</h2>
+                <p class="slide-subtitle">从零到专家的5分钟旅程</p>
+                
+                <div class="demo-steps">
+                    <div class="demo-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">⚡ 一键初始化</h3>
+                        <div class="step-content">
+                            <p>只需一行命令，PromptX开始工作</p>
+                            <div class="command-demo">
+                                <div class="command-line">$ npx -f -y dpml-prompt@snapshot init</div>
+                                <div class="command-output">✅ 创建.promptx配置目录 ✅ 准备锦囊状态机框架</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="command-demo">
+                    
+                    <div class="demo-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">🎭 智能角色推荐</h3>
+                        <div class="step-content">
+                            <p>AI主动推荐5个专业角色，每个都有明确的专业领域</p>
+                            <div class="command-demo">
+                                <div class="command-line">$ npx dpml-prompt@snapshot hello</div>
+                                <div class="command-output">🤖 智能助手 📊 产品经理 ☕ Java开发者 🎭 角色设计师 🧪 测试角色</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">⚡ 瞬间专家化</h3>
+                        <div class="step-content">
+                            <p>AI从通用助手瞬间变身专业产品经理</p>
+                            <div class="command-demo">
+                                <div class="command-line">$ npx dpml-prompt@snapshot action product-manager</div>
+                                <div class="command-output">🎭 产品经理角色完全激活！获得产品策略、用户研究、市场分析能力</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">🧠 记忆持久化验证</h3>
+                        <div class="step-content">
+                            <p>AI智能记忆项目信息，跨会话保持专业身份</p>
+                            <div class="command-demo">
+                                <div class="command-line">$ npx dpml-prompt@snapshot remember "企业级SaaS产品开发"</div>
+                                <div class="command-output">🧠 记忆分析完成：项目类型、目标用户、核心价值已储存</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第三部分：技术原理 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">双核心架构设计</h2>
+                <p class="slide-subtitle">DPML + PATEOAS = 专业化 × 智能化</p>
+                
+                <div class="architecture-comparison">
+                    <div class="architecture-card dpml">
+                        <h3 class="arch-title dpml">DPML协议</h3>
+                        <p class="arch-desc">
+                            <strong>模拟人类专家的完整认知体系</strong><br>
+                            结构化实现思考模式、行为模式、记忆模式
+                        </p>
+                        <ul class="arch-features">
+                            <li><strong>Personality层</strong> - 专家思考框架</li>
+                            <li><strong>Principle层</strong> - 工作原则约束</li>
+                            <li><strong>Knowledge层</strong> - 专业知识体系</li>
+                            <li>让AI像真正的领域专家一样思考</li>
+                        </ul>
+                        <div class="command-demo">
+                            <div class="command-line">&lt;role domain="product-management"&gt;</div>
+                            <div class="command-line">  &lt;personality&gt;用户导向+数据驱动&lt;/personality&gt;</div>
+                            <div class="command-line">  &lt;principle&gt;快速迭代+风险评估&lt;/principle&gt;</div>
+                            <div class="command-line">  &lt;knowledge&gt;AARRR+OKR框架&lt;/knowledge&gt;</div>
+                            <div class="command-line">&lt;/role&gt;</div>
+                        </div>
+                    </div>
+                    
+                    <div class="architecture-card pateoas">
+                        <h3 class="arch-title pateoas">PATEOAS协议</h3>
+                        <p class="arch-desc">
+                            <strong>情景化智能提示词引擎</strong><br>
+                            状态驱动的提示词系统，按需加载专业能力
+                        </p>
+                        <ul class="arch-features">
+                            <li><strong>情景识别</strong> - 智能判断当前任务</li>
+                            <li><strong>按需加载</strong> - 只激活相关能力</li>
+                            <li><strong>状态转换</strong> - 自动引导下一步</li>
+                            <li>节省90%上下文，提升10倍效率</li>
+                        </ul>
+                        <div class="command-demo">
+                            <div class="command-line">传统: 8000+ tokens全量加载</div>
+                            <div class="command-line">PATEOAS: 500 tokens按需加载</div>
+                            <div class="command-output">✅ 资源优化 ✅ 专注高效 ✅ 成本降低90%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px; padding: 30px; background: rgba(255, 255, 255, 0.05); border-radius: 20px;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: #10b981;">🚀 协同效果：1+1>2</h3>
+                    <p style="font-size: 1.2rem; color: #d0d7de;">
+                        <strong>DPML定义"AI是谁"</strong> + <strong>PATEOAS决定"AI现在该做什么"</strong><br>
+                        = 既有专家能力，又有情景智能的革命性AI系统
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 总结页 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">PromptX：让AI成为AI的老师</h2>
+                <p class="slide-subtitle">不仅仅是工具，更是AI认知架构的革命</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 50px 0;">
+                    <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 20px; padding: 30px;">
+                        <h3 style="font-size: 1.5rem; color: #22c55e; margin-bottom: 15px;">✅ 问题解决</h3>
+                        <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
+                            <li>✓ 彻底解决AI健忘症</li>
+                            <li>✓ 提示词模块化管理</li>
+                            <li>✓ 资源智能按需加载</li>
+                            <li>✓ 一键专业角色切换</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 30px;">
+                        <h3 style="font-size: 1.5rem; color: #3b82f6; margin-bottom: 15px;">🚀 核心价值</h3>
+                        <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
+                            <li>⚡ 效率提升90%+</li>
+                            <li>🧠 AI真正专业化</li>
+                            <li>💰 成本降低90%</li>
+                            <li>🎯 体验质的飞跃</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 20px; padding: 30px;">
+                        <h3 style="font-size: 1.5rem; color: #a855f7; margin-bottom: 15px;">🌟 未来愿景</h3>
+                        <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
+                            <li>🏢 企业级AI标准</li>
+                            <li>🌍 开源生态建设</li>
+                            <li>🤖 AI认知架构革命</li>
+                            <li>🚀 让AI触手可及</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 50px;">
+                    <div class="command-demo" style="font-size: 1.2rem;">
                         <div class="command-line">$ npx dpml-prompt@snapshot init</div>
-                        <div class="command-output">🎯 PromptX系统初始化完成！AI专家化服务已启动...</div>
+                        <div class="command-output">🎯 开始您的AI专家化之旅！</div>
                     </div>
+                    <p style="margin-top: 30px; font-size: 1.3rem; color: #10b981;">
+                        <strong>🔗 GitHub: github.com/Deepractice/PromptX</strong><br>
+                        <span style="color: #d0d7de;">⭐ 记得点Star支持开源！</span>
+                    </p>
                 </div>
             </div>
-
-            <!-- 第一部分：痛点分析 -->
-            <div class="slide">
-                <div class="slide-content">
-                    <h2 class="slide-title">当前Agent工作的四大痛点</h2>
-                    <p class="slide-subtitle">为什么我们需要一个全新的AI提示词框架？</p>
-                    
-                    <div class="pain-points">
-                        <div class="pain-point">
-                            <span class="pain-icon">😵‍💫</span>
-                            <h3 class="pain-title">AI健忘症</h3>
-                            <p class="pain-desc">
-                                <strong>无持久化记忆</strong><br>
-                                上下文切换后完全不认人<br>
-                                每次都要重新介绍背景<br>
-                                无法积累项目经验和偏好
-                            </p>
-                        </div>
-                        
-                        <div class="pain-point">
-                            <span class="pain-icon">📚💥</span>
-                            <h3 class="pain-title">提示词管理地狱</h3>
-                            <p class="pain-desc">
-                                <strong>量大难以管理</strong><br>
-                                复杂AI助手需要3000+字提示词<br>
-                                无法组合、复用和沉淀<br>
-                                维护成本越来越高
-                            </p>
-                        </div>
-                        
-                        <div class="pain-point">
-                            <span class="pain-icon">🧠💸</span>
-                            <h3 class="pain-title">上下文资源浪费</h3>
-                            <p class="pain-desc">
-                                <strong>静态加载浪费</strong><br>
-                                系统提示词占用8000+ tokens<br>
-                                80%内容与当前任务无关<br>
-                                响应速度慢，成本高
-                            </p>
-                        </div>
-                        
-                        <div class="pain-point">
-                            <span class="pain-icon">🎭🔄</span>
-                            <h3 class="pain-title">角色切换困难症</h3>
-                            <p class="pain-desc">
-                                <strong>切换不方便</strong><br>
-                                需要手动复制粘贴不同提示词<br>
-                                容易混用不同角色设定<br>
-                                多任务处理效率低下
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 第二部分：实战演示 -->
-            <div class="slide">
-                <div class="slide-content">
-                    <h2 class="slide-title">PromptX实战演示</h2>
-                    <p class="slide-subtitle">从零到专家的5分钟旅程</p>
-                    
-                    <div class="demo-steps">
-                        <div class="demo-step">
-                            <div class="step-number">1</div>
-                            <h3 class="step-title">⚡ 一键初始化</h3>
-                            <div class="step-content">
-                                <p>只需一行命令，PromptX开始工作</p>
-                                <div class="command-demo">
-                                    <div class="command-line">$ npx -f -y dpml-prompt@snapshot init</div>
-                                    <div class="command-output">✅ 创建.promptx配置目录 ✅ 准备锦囊状态机框架</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="demo-step">
-                            <div class="step-number">2</div>
-                            <h3 class="step-title">🎭 智能角色推荐</h3>
-                            <div class="step-content">
-                                <p>AI主动推荐5个专业角色，每个都有明确的专业领域</p>
-                                <div class="command-demo">
-                                    <div class="command-line">$ npx dpml-prompt@snapshot hello</div>
-                                    <div class="command-output">🤖 智能助手 📊 产品经理 ☕ Java开发者 🎭 角色设计师 🧪 测试角色</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="demo-step">
-                            <div class="step-number">3</div>
-                            <h3 class="step-title">⚡ 瞬间专家化</h3>
-                            <div class="step-content">
-                                <p>AI从通用助手瞬间变身专业产品经理</p>
-                                <div class="command-demo">
-                                    <div class="command-line">$ npx dpml-prompt@snapshot action product-manager</div>
-                                    <div class="command-output">🎭 产品经理角色完全激活！获得产品策略、用户研究、市场分析能力</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="demo-step">
-                            <div class="step-number">4</div>
-                            <h3 class="step-title">🧠 记忆持久化验证</h3>
-                            <div class="step-content">
-                                <p>AI智能记忆项目信息，跨会话保持专业身份</p>
-                                <div class="command-demo">
-                                    <div class="command-line">$ npx dpml-prompt@snapshot remember "企业级SaaS产品开发"</div>
-                                    <div class="command-output">🧠 记忆分析完成：项目类型、目标用户、核心价值已储存</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 第三部分：技术原理 -->
-            <div class="slide">
-                <div class="slide-content">
-                    <h2 class="slide-title">双核心架构设计</h2>
-                    <p class="slide-subtitle">DPML + PATEOAS = 专业化 × 智能化</p>
-                    
-                    <div class="architecture-comparison">
-                        <div class="architecture-card dpml">
-                            <h3 class="arch-title dpml">DPML协议</h3>
-                            <p class="arch-desc">
-                                <strong>模拟人类专家的完整认知体系</strong><br>
-                                结构化实现思考模式、行为模式、记忆模式
-                            </p>
-                            <ul class="arch-features">
-                                <li><strong>Personality层</strong> - 专家思考框架</li>
-                                <li><strong>Principle层</strong> - 工作原则约束</li>
-                                <li><strong>Knowledge层</strong> - 专业知识体系</li>
-                                <li>让AI像真正的领域专家一样思考</li>
-                            </ul>
-                            <div class="command-demo">
-                                <div class="command-line">&lt;role domain="product-management"&gt;</div>
-                                <div class="command-line">  &lt;personality&gt;用户导向+数据驱动&lt;/personality&gt;</div>
-                                <div class="command-line">  &lt;principle&gt;快速迭代+风险评估&lt;/principle&gt;</div>
-                                <div class="command-line">  &lt;knowledge&gt;AARRR+OKR框架&lt;/knowledge&gt;</div>
-                                <div class="command-line">&lt;/role&gt;</div>
-                            </div>
-                        </div>
-                        
-                        <div class="architecture-card pateoas">
-                            <h3 class="arch-title pateoas">PATEOAS协议</h3>
-                            <p class="arch-desc">
-                                <strong>情景化智能提示词引擎</strong><br>
-                                状态驱动的提示词系统，按需加载专业能力
-                            </p>
-                            <ul class="arch-features">
-                                <li><strong>情景识别</strong> - 智能判断当前任务</li>
-                                <li><strong>按需加载</strong> - 只激活相关能力</li>
-                                <li><strong>状态转换</strong> - 自动引导下一步</li>
-                                <li>节省90%上下文，提升10倍效率</li>
-                            </ul>
-                            <div class="command-demo">
-                                <div class="command-line">传统: 8000+ tokens全量加载</div>
-                                <div class="command-line">PATEOAS: 500 tokens按需加载</div>
-                                <div class="command-output">✅ 资源优化 ✅ 专注高效 ✅ 成本降低90%</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 40px; padding: 30px; background: rgba(255, 255, 255, 0.05); border-radius: 20px;">
-                        <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: #10b981;">🚀 协同效果：1+1>2</h3>
-                        <p style="font-size: 1.2rem; color: #d0d7de;">
-                            <strong>DPML定义"AI是谁"</strong> + <strong>PATEOAS决定"AI现在该做什么"</strong><br>
-                            = 既有专家能力，又有情景智能的革命性AI系统
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 总结页 -->
-            <div class="slide">
-                <div class="slide-content">
-                    <h2 class="slide-title">PromptX：让AI成为AI的老师</h2>
-                    <p class="slide-subtitle">不仅仅是工具，更是AI认知架构的革命</p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 50px 0;">
-                        <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 20px; padding: 30px;">
-                            <h3 style="font-size: 1.5rem; color: #22c55e; margin-bottom: 15px;">✅ 问题解决</h3>
-                            <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
-                                <li>✓ 彻底解决AI健忘症</li>
-                                <li>✓ 提示词模块化管理</li>
-                                <li>✓ 资源智能按需加载</li>
-                                <li>✓ 一键专业角色切换</li>
-                            </ul>
-                        </div>
-                        
-                        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 30px;">
-                            <h3 style="font-size: 1.5rem; color: #3b82f6; margin-bottom: 15px;">🚀 核心价值</h3>
-                            <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
-                                <li>⚡ 效率提升90%+</li>
-                                <li>🧠 AI真正专业化</li>
-                                <li>💰 成本降低90%</li>
-                                <li>🎯 体验质的飞跃</li>
-                            </ul>
-                        </div>
-                        
-                        <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 20px; padding: 30px;">
-                            <h3 style="font-size: 1.5rem; color: #a855f7; margin-bottom: 15px;">🌟 未来愿景</h3>
-                            <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
-                                <li>🏢 企业级AI标准</li>
-                                <li>🌍 开源生态建设</li>
-                                <li>🤖 AI认知架构革命</li>
-                                <li>🚀 让AI触手可及</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 50px;">
-                        <div class="command-demo" style="font-size: 1.2rem;">
-                            <div class="command-line">$ npx dpml-prompt@snapshot init</div>
-                            <div class="command-output">🎯 开始您的AI专家化之旅！</div>
-                        </div>
-                        <p style="margin-top: 30px; font-size: 1.3rem; color: #10b981;">
-                            <strong>🔗 GitHub: github.com/Deepractice/PromptX</strong><br>
-                            <span style="color: #d0d7de;">⭐ 记得点Star支持开源！</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 导航控制 -->
-        <div class="nav-controls">
-            <button class="nav-btn" id="prevBtn">‹</button>
-            <div class="slide-indicator">
-                <div class="indicator-dot active" data-slide="0"></div>
-                <div class="indicator-dot" data-slide="1"></div>
-                <div class="indicator-dot" data-slide="2"></div>
-                <div class="indicator-dot" data-slide="3"></div>
-                <div class="indicator-dot" data-slide="4"></div>
-            </div>
-            <button class="nav-btn" id="nextBtn">›</button>
         </div>
     </div>
 
-    <!-- 引入网站导航脚本 -->
-    <script src="../js/header.js"></script>
-    
+    <!-- 导航控制 -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">‹</button>
+        <div class="slide-indicator">
+            <div class="indicator-dot active" data-slide="0"></div>
+            <div class="indicator-dot" data-slide="1"></div>
+            <div class="indicator-dot" data-slide="2"></div>
+            <div class="indicator-dot" data-slide="3"></div>
+            <div class="indicator-dot" data-slide="4"></div>
+        </div>
+        <button class="nav-btn" id="nextBtn">›</button>
+    </div>
+
     <script>
         // 幻灯片导航逻辑
         let currentSlide = 0;

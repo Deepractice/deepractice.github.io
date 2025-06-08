@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepractice with Cursor - 演示文稿</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 8px 15px;
+            border-radius: 25px;
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            z-index: 1000;
+        }
+
+        .control-btn {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            padding: 6px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 11px;
+            font-weight: 500;
+            min-width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            color: #94a3b8;
+            padding: 6px 10px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .navigation-hint {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            font-size: 12px;
+            color: #94a3b8;
+            z-index: 1000;
+        }
+
+        .fullscreen-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.6);
+        }
+
+        .slide-indicator {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .indicator-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(148, 163, 184, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background: #38bdf8;
+            transform: scale(1.2);
+        }
+
+        .indicator-dot:hover {
+            background: rgba(56, 189, 248, 0.6);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .controls {
+                bottom: 15px;
+                right: 15px;
+                padding: 6px 12px;
+                gap: 8px;
+            }
+            
+            .control-btn {
+                padding: 5px 8px;
+                font-size: 10px;
+                min-width: 25px;
+            }
+            
+            .slide-counter {
+                padding: 4px 8px;
+                font-size: 9px;
+            }
+            
+            .navigation-hint {
+                top: 20px;
+                right: 20px;
+                padding: 8px 15px;
+                font-size: 11px;
+            }
+            
+            .fullscreen-btn {
+                top: 20px;
+                left: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="全屏/退出全屏">
+            📺
+        </button>
+        
+        <div class="navigation-hint">
+            使用 ← → 键或点击按钮导航
+        </div>
+
+        <div class="slide-container">
+            <img class="slide active" src="Deepractice with Cursor - Slidev/0.png" alt="幻灯片 1" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/1.png" alt="幻灯片 2" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/2.png" alt="幻灯片 3" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/3.png" alt="幻灯片 4" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/4.png" alt="幻灯片 5" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/5.png" alt="幻灯片 6" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/6.png" alt="幻灯片 7" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/7.png" alt="幻灯片 8" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/8.png" alt="幻灯片 9" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/9.png" alt="幻灯片 10" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/10.png" alt="幻灯片 11" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/11.png" alt="幻灯片 12" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/12.png" alt="幻灯片 13" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/13.png" alt="幻灯片 14" />
+            <img class="slide" src="Deepractice with Cursor - Slidev/14.png" alt="幻灯片 15" />
+        </div>
+
+        <div class="slide-indicator">
+            <div class="indicator-dot active" onclick="goToSlide(0)"></div>
+            <div class="indicator-dot" onclick="goToSlide(1)"></div>
+            <div class="indicator-dot" onclick="goToSlide(2)"></div>
+            <div class="indicator-dot" onclick="goToSlide(3)"></div>
+            <div class="indicator-dot" onclick="goToSlide(4)"></div>
+            <div class="indicator-dot" onclick="goToSlide(5)"></div>
+            <div class="indicator-dot" onclick="goToSlide(6)"></div>
+            <div class="indicator-dot" onclick="goToSlide(7)"></div>
+            <div class="indicator-dot" onclick="goToSlide(8)"></div>
+            <div class="indicator-dot" onclick="goToSlide(9)"></div>
+            <div class="indicator-dot" onclick="goToSlide(10)"></div>
+            <div class="indicator-dot" onclick="goToSlide(11)"></div>
+            <div class="indicator-dot" onclick="goToSlide(12)"></div>
+            <div class="indicator-dot" onclick="goToSlide(13)"></div>
+            <div class="indicator-dot" onclick="goToSlide(14)"></div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="previousSlide()">← 上一页</button>
+            <div class="slide-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">15</span>
+            </div>
+            <button class="control-btn" onclick="nextSlide()">下一页 →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 15;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const currentSlideElement = document.getElementById('current-slide');
+
+        function showSlide(index) {
+            // 隐藏所有幻灯片
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // 显示当前幻灯片
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            // 更新计数器
+            currentSlideElement.textContent = index + 1;
+            
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // 键盘导航
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    previousSlide();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    goToSlide(totalSlides - 1);
+                    break;
+                case 'F11':
+                    e.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'Escape':
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
+                    break;
+            }
+        });
+
+        // 触摸/鼠标滑动支持（移动设备）
+        let startX = 0;
+        let startY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (!startX || !startY) return;
+            
+            const endX = e.changedTouches[0].clientX;
+            const endY = e.changedTouches[0].clientY;
+            
+            const diffX = startX - endX;
+            const diffY = startY - endY;
+            
+            // 确保是水平滑动而不是垂直滑动
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > 50) { // 最小滑动距离
+                    if (diffX > 0) {
+                        nextSlide();
+                    } else {
+                        previousSlide();
+                    }
+                }
+            }
+            
+            startX = 0;
+            startY = 0;
+        });
+
+        // 预加载图片
+        function preloadImages() {
+            for (let i = 0; i < totalSlides; i++) {
+                const img = new Image();
+                img.src = `Deepractice with Cursor - Slidev/${i}.png`;
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            preloadImages();
+            showSlide(0);
+        });
+    </script>
+</body>
+</html> 
