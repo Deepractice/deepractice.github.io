@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptX - 3天1.1万行高质量代码的AI协作革命</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d1117 50%, #000000 100%);
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* 背景动画粒子 */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); }
+            50% { transform: translateY(-10vh) scale(1); }
+        }
+
+        /* 幻灯片容器 */
+        .slide-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 标题样式 */
+        .slide-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ffffff, #e6e6e6, #cccccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            letter-spacing: -2px;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)); }
+            to { filter: brightness(1.2) drop-shadow(0 0 40px rgba(255, 255, 255, 0.5)); }
+        }
+
+        .slide-subtitle {
+            font-size: 1.5rem;
+            color: #d0d7de;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* 故事步骤样式 */
+        .story-step {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-step.problem {
+            border-left: 5px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .story-step.solution {
+            border-left: 5px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .story-step.tech {
+            border-left: 5px solid #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .story-step.value {
+            border-left: 5px solid #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .step-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f0f6fc;
+        }
+
+        .step-content {
+            color: #b1bac4;
+            line-height: 1.6;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* 代码演示样式 */
+        .code-demo {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-line {
+            color: #e6edf3;
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+
+        .code-comment {
+            color: #7d8590;
+            font-style: italic;
+        }
+
+        .code-command {
+            color: #79c0ff;
+        }
+
+        .code-output {
+            color: #56d364;
+            background: rgba(86, 211, 100, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        /* 特色卡片样式 */
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #f0f6fc;
+        }
+
+        .feature-desc {
+            color: #b1bac4;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* 演示步骤样式 */
+        .demo-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .demo-step {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #7c3aed, #06b6d4, #10b981);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #7c3aed, #06b6d4);
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* 导航控制 */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background: #10b981;
+            transform: scale(1.3);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .slide-title {
+                font-size: 2.5rem;
+            }
+            
+            .slide-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .feature-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .story-step {
+                padding: 25px;
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子动画 -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- 幻灯片容器 -->
+    <div class="slide-container">
+        <!-- 第1页：封面页 -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h1 class="slide-title">PromptX</h1>
+                <p class="slide-subtitle">3天1.1万行高质量代码的AI协作革命</p>
+                
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <span class="feature-icon">🎭</span>
+                        <h3 class="feature-title">专业角色</h3>
+                        <p class="feature-desc">Java/前端/数据分析专家即刻上线，告别万金油AI</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <span class="feature-icon">🧠</span>
+                        <h3 class="feature-title">项目记忆</h3>
+                        <p class="feature-desc">永久记住架构规范和历史经验，无需重复解释</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h3 class="feature-title">效率爆表</h3>
+                        <p class="feature-desc">3天完成传统数周的开发任务，真正的生产力革命</p>
+                    </div>
+                </div>
+
+                <div class="code-demo">
+                    <div class="code-line code-comment"># 通过MCP工具使用PromptX</div>
+                    <div class="code-line code-command">Claude Desktop / Cursor / Continue 等MCP平台</div>
+                    <div class="code-output">🚀 PromptX MCP工具已就绪！GitHub 863⭐ 持续增长中...</div>
+                </div>
+
+                <p style="margin-top: 30px; font-size: 1.2rem; color: #d0d7de;">
+                    <strong>姜山 Sean @ deepractice.ai</strong><br>
+                    和鲸社区·深度技术分享
+                </p>
+            </div>
+        </div>
+
+        <!-- 第2页：痛点1 - 提示词混乱 → 工程化管理 → DPML -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">第一个痛点：提示词逻辑混乱</h2>
+                <p class="slide-subtitle">从个人困扰到工程化解决方案</p>
+                
+                <div class="story-step problem">
+                    <span class="step-icon">😰</span>
+                    <h3 class="step-title">遇到什么问题？</h3>
+                    <p class="step-content">
+                        随着项目越来越复杂，我发现提示词开始混乱：文件散落各处、逻辑重复、无法复用、维护困难。
+                        就像早期的代码一样，急需工程化管理。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># 混乱的状态</div>
+                        <div class="code-line">prompt1.txt - 产品经理提示词</div>
+                        <div class="code-line">java_dev.md - Java开发提示词</div>
+                        <div class="code-line">前端专家.docx - 前端提示词</div>
+                        <div class="code-line code-comment"># 完全没有结构，无法管理</div>
+                    </div>
+                </div>
+
+                <div class="story-step solution">
+                    <span class="step-icon">💡</span>
+                    <h3 class="step-title">如何解决？</h3>
+                    <p class="step-content">
+                        借鉴软件工程思维：结构化组织、模块化设计、标准化格式。
+                        像管理代码一样管理提示词，建立清晰的层次结构。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line">prompt/</div>
+                        <div class="code-line">├── domain/           # 专业领域</div>
+                        <div class="code-line">├── protocol/         # 标准协议</div>
+                        <div class="code-line">├── core/            # 核心能力</div>
+                        <div class="code-line">└── registry.json    # 统一注册</div>
+                    </div>
+                </div>
+
+                <div class="story-step tech">
+                    <span class="step-icon">🔧</span>
+                    <h3 class="step-title">怎么实现？</h3>
+                    <p class="step-content">
+                        设计DPML（Deepractice Prompt Markup Language）协议：
+                        标准化的角色定义语言，让AI专业能力可复制、可传播。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line">&lt;role domain="data-science"&gt;</div>
+                        <div class="code-line">  &lt;thought&gt;统计思维+实验设计&lt;/thought&gt;</div>
+                        <div class="code-line">  &lt;execution&gt;数据处理+模型构建&lt;/execution&gt;</div>
+                        <div class="code-line">  &lt;knowledge&gt;机器学习+统计学&lt;/knowledge&gt;</div>
+                        <div class="code-line">&lt;/role&gt;</div>
+                    </div>
+                </div>
+
+                <div class="story-step value">
+                    <span class="step-icon">🚀</span>
+                    <h3 class="step-title">带来什么价值？</h3>
+                    <p class="step-content">
+                        ✅ 提示词结构清晰，便于维护<br>
+                        ✅ 专业能力标准化，可复用<br>
+                        ✅ 团队协作效率大幅提升<br>
+                        ✅ AI专业化程度显著增强
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：痛点2 - AI行为偏差 → 动态记忆 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">第二个痛点：AI行为偏差</h2>
+                <p class="slide-subtitle">从静态修正到动态学习</p>
+                
+                <div class="story-step problem">
+                    <span class="step-icon">😵‍💫</span>
+                    <h3 class="step-title">遇到什么问题？</h3>
+                    <p class="step-content">
+                        在使用过程中发现，AI的行为经常不符合预期。传统做法是修改提示词然后重新开始，
+                        但这种方式效率太低，而且会丢失前面的工作成果。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># 传统的低效循环</div>
+                        <div class="code-line">AI回答不满意 → 修改提示词 → 重新开始对话</div>
+                        <div class="code-line">AI又偏差了 → 再次修改 → 又要重新开始</div>
+                        <div class="code-line code-comment"># 无法积累经验，效率极低</div>
+                    </div>
+                </div>
+
+                <div class="story-step solution">
+                    <span class="step-icon">💡</span>
+                    <h3 class="step-title">如何解决？</h3>
+                    <p class="step-content">
+                        需要一个动态纠偏机制：让AI能够在对话中学习和调整，
+                        记住用户的纠正和偏好，避免重复犯错。
+                    </p>
+                </div>
+
+                <div class="story-step tech">
+                    <span class="step-icon">🔧</span>
+                    <h3 class="step-title">怎么实现？</h3>
+                    <p class="step-content">
+                        引入记忆系统：AI可以记住项目背景、用户偏好、历史决策，
+                        形成个人化的知识库，支持跨会话的连续学习。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># 通过MCP工具调用remember功能</div>
+                        <div class="code-line">🧠 记忆："项目使用Spring Boot架构"</div>
+                        <div class="code-line">🧠 记忆："代码风格：驼峰命名，详细注释"</div>
+                        <div class="code-line">🧠 记忆："避免使用@Autowired注解"</div>
+                        <div class="code-output">💾 记忆已保存，AI将自动应用这些规则</div>
+                    </div>
+                </div>
+
+                <div class="story-step value">
+                    <span class="step-icon">🚀</span>
+                    <h3 class="step-title">带来什么价值？</h3>
+                    <p class="step-content">
+                        ✅ AI能够持续学习和改进<br>
+                        ✅ 避免重复修正相同问题<br>
+                        ✅ 形成个性化的AI助手<br>
+                        ✅ 大幅提升协作效率
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：痛点3 - 上下文限制 → PATEOAS技术 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">第三个痛点：AI健忘症</h2>
+                <p class="slide-subtitle">从有限窗口到无限上下文</p>
+                
+                <div class="story-step problem">
+                    <span class="step-icon">🤦‍♂️</span>
+                    <h3 class="step-title">遇到什么问题？</h3>
+                    <p class="step-content">
+                        AI有上下文窗口限制，对话长了就会"遗忘"早期的内容。
+                        在复杂项目中，这导致AI无法保持长期的上下文连贯性。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># AI的健忘症</div>
+                        <div class="code-line">对话开始：AI记得项目架构</div>
+                        <div class="code-line">对话中期：开始遗忘部分信息</div>
+                        <div class="code-line">对话后期：完全忘记初始设定</div>
+                        <div class="code-line code-comment"># 用户需要重复解释</div>
+                    </div>
+                </div>
+
+                <div class="story-step solution">
+                    <span class="step-icon">💡</span>
+                    <h3 class="step-title">如何解决？</h3>
+                    <p class="step-content">
+                        突破上下文窗口限制，让AI拥有"理论上无限"的记忆能力，
+                        能够随时访问历史对话和项目信息。
+                    </p>
+                </div>
+
+                <div class="story-step tech">
+                    <span class="step-icon">🔧</span>
+                    <h3 class="step-title">怎么实现？</h3>
+                    <p class="step-content">
+                        借鉴REST架构的PATEOAS原理：通过超媒体链接机制，
+                        让AI可以"链式访问"历史信息，实现动态的上下文扩展。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># PATEOAS链式访问</div>
+                        <div class="code-line">当前对话 ← 链接到 → 历史记忆</div>
+                        <div class="code-line">                ← 链接到 → 项目文档</div>
+                        <div class="code-line">                ← 链接到 → 相关经验</div>
+                        <div class="code-output">🔗 无限上下文，永不遗忘</div>
+                    </div>
+                </div>
+
+                <div class="story-step value">
+                    <span class="step-icon">🚀</span>
+                    <h3 class="step-title">带来什么价值？</h3>
+                    <p class="step-content">
+                        ✅ 突破传统上下文窗口限制<br>
+                        ✅ 实现真正的长期记忆<br>
+                        ✅ 保持对话的连贯性<br>
+                        ✅ 支持复杂长期项目协作
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第5页：痛点4 - 平台兼容 → MCP标准化 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">第四个痛点：平台兼容性</h2>
+                <p class="slide-subtitle">从个人工具到生态标准</p>
+                
+                <div class="story-step problem">
+                    <span class="step-icon">😤</span>
+                    <h3 class="step-title">遇到什么问题？</h3>
+                    <p class="step-content">
+                        PromptX做得再好，如果只能在特定平台使用，推广就很困难。
+                        用户希望在Claude、Cursor、Continue等各种AI工具中都能使用。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># 平台割裂的痛苦</div>
+                        <div class="code-line">Claude用户：希望在Claude中使用PromptX</div>
+                        <div class="code-line">Cursor用户：希望在IDE中直接使用</div>
+                        <div class="code-line">Continue用户：希望在VS Code中使用</div>
+                        <div class="code-line code-comment"># 每个平台都要单独适配</div>
+                    </div>
+                </div>
+
+                <div class="story-step solution">
+                    <span class="step-icon">💡</span>
+                    <h3 class="step-title">如何解决？</h3>
+                    <p class="step-content">
+                        需要一个标准化的协议，让PromptX能够无缝接入所有主流AI平台，
+                        用户无论使用什么工具都能享受到专业化能力。
+                    </p>
+                </div>
+
+                <div class="story-step tech">
+                    <span class="step-icon">🔧</span>
+                    <h3 class="step-title">怎么实现？</h3>
+                    <p class="step-content">
+                        接入MCP（Model Context Protocol）标准：这是AI应用生态的"通用语言"，
+                        一次开发，处处运行。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># 通过MCP协议自动支持所有兼容平台</div>
+                        <div class="code-line">✅ Claude Desktop - 内置MCP工具</div>
+                        <div class="code-line">✅ Cursor IDE - 集成PromptX</div>
+                        <div class="code-line">✅ Continue VS Code - 无缝使用</div>
+                        <div class="code-line">✅ 未来所有MCP平台自动支持</div>
+                    </div>
+                </div>
+
+                <div class="story-step value">
+                    <span class="step-icon">🚀</span>
+                    <h3 class="step-title">带来什么价值？</h3>
+                    <p class="step-content">
+                        ✅ 一次安装，处处可用<br>
+                        ✅ 降低用户使用门槛<br>
+                        ✅ 快速扩展用户群体<br>
+                        ✅ 建立行业生态标准
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第6页：痛点5 - 使用门槛 → 女娲创造者模式 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">第五个痛点：使用门槛太高</h2>
+                <p class="slide-subtitle">从使用者到创造者的民主化革命</p>
+                
+                <div class="story-step problem">
+                    <span class="step-icon">😓</span>
+                    <h3 class="step-title">遇到什么问题？</h3>
+                    <p class="step-content">
+                        虽然PromptX功能强大，但要学习DPML语法、理解角色结构，门槛还是太高。
+                        普通用户希望直接表达需求，就能得到专业的AI助手。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># 用户的困惑</div>
+                        <div class="code-line">"我想要一个时间序列分析专家"</div>
+                        <div class="code-line">"但我不会写DPML语法"</div>
+                        <div class="code-line">"不懂什么是thought、execution、knowledge"</div>
+                        <div class="code-line code-comment"># 使用门槛成为推广障碍</div>
+                    </div>
+                </div>
+
+                <div class="story-step solution">
+                    <span class="step-icon">💡</span>
+                    <h3 class="step-title">如何解决？</h3>
+                    <p class="step-content">
+                        需要一个"用来制造角色的角色"：用户只需用自然语言描述需求，
+                        系统自动生成专业的AI角色，人人都能成为创造者。
+                    </p>
+                </div>
+
+                <div class="story-step tech">
+                    <span class="step-icon">🔧</span>
+                    <h3 class="step-title">怎么实现？</h3>
+                    <p class="step-content">
+                        设计女娲角色：基于需求描述，自动生成完整的DPML角色定义，
+                        包括专业思维、执行流程、知识体系等。
+                    </p>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># 通过MCP工具激活女娲角色</div>
+                        <div class="code-line">🎭 激活女娲角色</div>
+                        <div class="code-line">"我需要一个专门分析股票技术指标的AI助手"</div>
+                        <div class="code-output">🎨 女娲正在创造角色...</div>
+                        <div class="code-output">✅ 股票技术分析专家已创建！</div>
+                    </div>
+                </div>
+
+                <div class="story-step value">
+                    <span class="step-icon">🚀</span>
+                    <h3 class="step-title">带来什么价值？</h3>
+                    <p class="step-content">
+                        ✅ 零学习成本，即用即有<br>
+                        ✅ 2分钟从想法到专业AI<br>
+                        ✅ 人人都是AI创造者<br>
+                        ✅ 真正的民主化创新
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第7页：实战演示 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">实战演示：1.1万行代码工作流</h2>
+                <p class="slide-subtitle">现场体验AI协作的完整过程</p>
+                
+                <div class="demo-steps">
+                    <div class="demo-step">
+                        <div class="step-number">1</div>
+                        <h3 class="feature-title">激活数据分析专家</h3>
+                        <div class="code-demo">
+                            <div class="code-line code-comment"># 通过MCP工具激活专业角色</div>
+                            <div class="code-line">🎭 激活数据分析专家角色</div>
+                            <div class="code-output">✅ 数据分析专家已激活！专业技能已加载...</div>
+                        </div>
+                        <p class="feature-desc">告别万金油AI，瞬间获得专业数据科学家思维</p>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number">2</div>
+                        <h3 class="feature-title">注入项目记忆</h3>
+                        <div class="code-demo">
+                            <div class="code-line code-comment"># 通过MCP工具保存项目记忆</div>
+                            <div class="code-line">🧠 记忆："用户行为分析项目"</div>
+                            <div class="code-line">🧠 记忆："数据：user_id, action_type, timestamp"</div>
+                            <div class="code-output">💾 项目信息已永久记忆</div>
+                        </div>
+                        <p class="feature-desc">一次配置，AI永久记住项目背景和架构规范</p>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number">3</div>
+                        <h3 class="feature-title">生成专业代码</h3>
+                        <div class="code-demo">
+                            <div class="code-line code-comment"># AI自动应用专业标准</div>
+                            <div class="code-line">数据清洗 → 特征工程 → 模型训练 → 可视化分析</div>
+                            <div class="code-output">✅ 生成1000+行专业级Python代码</div>
+                        </div>
+                        <p class="feature-desc">AI记住规范，主动应用最佳实践，避免重复错误</p>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number">4</div>
+                        <h3 class="feature-title">持续迭代优化</h3>
+                        <div class="code-demo">
+                            <div class="code-line">需求变更 → AI记住新要求 → 自动调整策略</div>
+                            <div class="code-output">🎯 无需重新解释，AI主动适应</div>
+                        </div>
+                        <p class="feature-desc">3天完成1.1万行高质量代码，效率提升10倍</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第8页：技术架构总览 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">技术架构总览</h2>
+                <p class="slide-subtitle">五大技术突破的协同效应</p>
+                
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <span class="feature-icon">📜</span>
+                        <h3 class="feature-title">DPML语义渲染</h3>
+                        <p class="feature-desc">角色定义标准化，专业能力可复制传播</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <span class="feature-icon">🧠</span>
+                        <h3 class="feature-title">记忆管理系统</h3>
+                        <p class="feature-desc">跨会话持久化，动态学习用户偏好</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <span class="feature-icon">🔗</span>
+                        <h3 class="feature-title">PATEOAS无限上下文</h3>
+                        <p class="feature-desc">链式访问历史信息，突破窗口限制</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <span class="feature-icon">🔌</span>
+                        <h3 class="feature-title">MCP标准接入</h3>
+                        <p class="feature-desc">一次开发处处运行，支持所有主流平台</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <span class="feature-icon">🎨</span>
+                        <h3 class="feature-title">女娲创造者模式</h3>
+                        <p class="feature-desc">自然语言生成角色，人人都是创造者</p>
+                    </div>
+                    
+                    <div class="feature-card" style="border: 2px dashed rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.02);">
+                        <span class="feature-icon">🚀</span>
+                        <h3 class="feature-title">期待更多模块</h3>
+                        <p class="feature-desc">
+                            • 代码审查助手<br>
+                            • 文档生成器<br>
+                            • 测试用例设计师<br>
+                            • 性能优化顾问<br>
+                            <span style="color: #10b981;">欢迎社区贡献！</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px; padding: 30px; background: rgba(255, 255, 255, 0.05); border-radius: 20px;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: #10b981;">🚀 协同效应：1+1+1+1+1>5</h3>
+                    <p style="font-size: 1.2rem; color: #d0d7de;">
+                        <strong>工程化管理</strong> + <strong>动态记忆</strong> + <strong>无限上下文</strong> + <strong>标准化生态</strong> + <strong>民主化创造</strong><br>
+                        = 从个人痛点到行业标准的完整解决方案
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第9页：总结与行动呼吁 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">开启AI协作新时代</h2>
+                <p class="slide-subtitle">从使用者到创造者，从工具到伙伴</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 50px 0;">
+                    <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 20px; padding: 30px;">
+                        <h3 style="font-size: 1.5rem; color: #22c55e; margin-bottom: 15px;">✅ 革命成果</h3>
+                        <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
+                            <li>✓ 5个核心技术突破</li>
+                            <li>✓ 从个人工具到行业标准</li>
+                            <li>✓ 3天1.1万行代码实现</li>
+                            <li>✓ GitHub 863⭐持续增长</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 30px;">
+                        <h3 style="font-size: 1.5rem; color: #3b82f6; margin-bottom: 15px;">🚀 核心价值</h3>
+                        <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
+                            <li>⚡ 开发效率提升10倍</li>
+                            <li>🧠 AI真正专业化</li>
+                            <li>💾 永久项目记忆</li>
+                            <li>🎯 个性化创造能力</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 20px; padding: 30px;">
+                        <h3 style="font-size: 1.5rem; color: #a855f7; margin-bottom: 15px;">🌟 立即体验</h3>
+                        <ul style="color: #d0d7de; line-height: 1.8; list-style: none;">
+                            <li>🔧 在MCP平台中启用PromptX工具</li>
+                            <li>⭐ github.com/Deepractice/PromptX</li>
+                            <li>🔄 支持所有MCP兼容平台</li>
+                            <li>👥 加入开源社区</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 50px;">
+                    <div class="code-demo" style="font-size: 1.2rem;">
+                        <div class="code-line code-comment"># 在AI平台中开始使用PromptX MCP工具</div>
+                        <div class="code-line">Claude Desktop / Cursor / Continue 等平台</div>
+                        <div class="code-output">🎯 PromptX MCP工具已就绪！让AI成为你的专业伙伴！</div>
+                    </div>
+                    
+                    <div style="margin-top: 40px; text-align: center;">
+                        <p style="font-size: 1.4rem; color: #10b981; font-weight: 600;">
+                            🔗 <strong>GitHub.com/Deepractice/PromptX</strong>
+                        </p>
+                        <p style="font-size: 1.1rem; color: #d0d7de; margin-top: 10px;">
+                            和鲸社区·深度技术分享 | 姜山 Sean @ deepractice.ai
+                        </p>
+                        <p style="font-size: 1rem; color: #7d8590; margin-top: 15px;">
+                            ⭐ 记得点Star支持开源！让AI触手可及！
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航控制 -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">‹</button>
+        <div class="slide-indicator">
+            <div class="indicator-dot active" data-slide="0"></div>
+            <div class="indicator-dot" data-slide="1"></div>
+            <div class="indicator-dot" data-slide="2"></div>
+            <div class="indicator-dot" data-slide="3"></div>
+            <div class="indicator-dot" data-slide="4"></div>
+            <div class="indicator-dot" data-slide="5"></div>
+            <div class="indicator-dot" data-slide="6"></div>
+            <div class="indicator-dot" data-slide="7"></div>
+            <div class="indicator-dot" data-slide="8"></div>
+        </div>
+        <button class="nav-btn" id="nextBtn">›</button>
+    </div>
+
+    <script>
+        // 幻灯片导航逻辑
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+
+        // 事件监听
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // 鼠标移动视差效果
+        document.addEventListener('mousemove', function(e) {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.3;
+                const x = mouseX * speed;
+                const y = mouseY * speed;
+                particle.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
