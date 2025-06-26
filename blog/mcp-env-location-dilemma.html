@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP生态系统环境定位困境 | 深度实践</title>
+    <meta name="description" content="深入探讨MCP生态系统中的项目环境（Path）定位困境，以及如何通过AI驱动的创新方案解决这一难题，实现从" 系统猜测"到"AI协作"的思维转变。">
+    <meta name="keywords" content="MCP, 环境定位, Path问题, AI驱动, PromptX, 深度实践, AI协作">
+    <meta name="author" content="深度实践团队">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="MCP生态系统环境定位困境 | 深度实践">
+    <meta property="og:description" content="深入探讨MCP生态系统中的项目环境（Path）定位困境，以及如何通过AI驱动的创新方案解决这一难题。">
+    <meta property="og:image" content="https://deepractice.ai/images/blog/2025-06-26 MCP/1.png">
+    <meta property="og:url" content="https://deepractice.ai/blog/mcp-env-location-dilemma.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://deepractice.ai/blog/mcp-env-location-dilemma.html">
+    <link rel="icon" href="../images/image.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/image.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../images/image.png">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <style>
+        /* 博客文章页面特定样式 */
+        .article-container {
+            max-width: 900px;
+            margin: 150px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* 确保内容不被导航栏遮挡 */
+        #header-container header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .article-title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
+        }
+
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .article-date {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .article-date i {
+            margin-right: 5px;
+        }
+
+        .article-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(167, 119, 227, 0.3);
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: #a777e3;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid #a777e3;
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .article-content pre {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+        }
+
+        .article-content code {
+            color: #f0f0f0;
+        }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-content th,
+        .article-content td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            text-align: left;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .article-content th {
+            background: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .back-to-blogs {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-blogs:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(167, 119, 227, 0.3);
+        }
+
+        .article-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                margin-top: 100px;
+            }
+
+            .article-content {
+                padding: 25px;
+            }
+
+            .article-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+
+    <!-- JSON-LD 结构化数据 - 文章信息 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MCP 生态系统的环境定位困境：一场技术与思维的突围之旅",
+        "description": "深入探讨MCP生态系统中的项目环境（Path）定位困境，以及如何通过AI驱动的创新方案解决这一难题，实现从"系统猜测"到"AI协作"的思维转变。",
+        "image": "https://deepractice.ai/images/blog/2025-06-26 MCP/1.png",
+        "author": {
+            "@type": "Organization",
+            "name": "深度实践"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "深度实践",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://deepractice.ai/images/image.png"
+            }
+        },
+        "datePublished": "2025-06-26",
+        "dateModified": "2025-06-26",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://deepractice.ai/blog/mcp-env-location-dilemma.html"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>深度实践</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-page="home">首页</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">演示 <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../presentation/foundation-logic.html">AI时代底层逻辑</a></li>
+                        <li><a href="../presentation/intent-interaction.html">AI时代意图交互模式</a></li>
+                        <li><a href="../presentation/business-paradigm.html">AI时代商业组织新范式</a></li>
+                        <li><a href="../presentation/promptx-presentation.html">PromptX - 革命性AI提示词框架</a></li>
+                        <li><a href="../presentation/heywhale-story-presentation.html">PromptX - 3天1.1万行代码的AI协作革命</a>
+                        </li>
+                        <li><a href="../presentation/deepractice-cursor-presentation.html">Deepractice with Cursor</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="../blog.html" data-page="blog">博客</a></li>
+                <li><a href="../prompts.html" data-page="prompts">提示词库</a></li>
+                <li><a href="../index.html#about">关于我们</a></li>
+                <li><a href="../index.html#values">公司理念</a></li>
+                <li><a href="../index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="article-container">
+        <article>
+            <div class="article-header" data-aos="fade-up">
+                <h1 class="article-title">MCP 生态系统的环境定位困境</h1>
+                <p class="article-subtitle">一场技术与思维的突围之旅</p>
+                <div class="article-meta">
+                    <span class="article-date">
+                        <i class="fas fa-calendar"></i>
+                        2025年6月26日
+                    </span>
+                </div>
+            </div>
+
+            <div class="article-content" data-aos="fade-up" data-aos-delay="200">
+                <p>在当今数字化浪潮中，MCP
+                    生态系统犹如一座繁华的数字城邦，蕴含着无限的潜力与机遇。然而，这座城邦却面临着一个棘手的问题——系统环境（Path）定位困境。今天，就让我们一同深入探究这个问题，看看科技先驱们是如何突破困境，开辟出一条崭新的道路。
+                </p>
+
+                <h2>困境初现：MCP 生态的"迷途羔羊"</h2>
+                <p>在 MCP 生态系统的开发过程中，开发角色的注册和发现机制遭遇了一个令人头疼的问题：由于 MCP 是基于各个 IDE 和 AI
+                    客户端之上的，它无法直接定位到用户当前的项目根目录。这就好比在茫茫大海中航行，却没有指南针，系统只能通过文件系统标识、环境变量、Git 目录等方式"猜测"项目路径。</p>
+                <p>这种传统的解决方案存在着核心缺陷，系统永远不知道用户真正想要的项目是什么。这就导致了 DirectoryLocator.js 经常定位到 IDE 安装目录或用户主目录，引发了一系列的
+                    Bug，让开发者们苦不堪言。</p>
+
+                <h2>灵光乍现：AI 成为破局关键</h2>
+                <p>就在大家为这个问题绞尽脑汁的时候，一个突破性的洞察出现了：AI 知道环境！在深度分析 DirectoryLocator 架构问题时，我们突然意识到，AI
+                    有上下文，它知道用户当前在哪个项目工作。这是一个革命性的认知转变，就像在黑暗中突然点亮了一盏明灯。</p>
+                <p>从此，角色发生了转换，从"系统猜测路径"变为"AI 主动告知路径"，AI 成为了最可靠的项目环境信息提供者。这一转变为解决 MCP 生态系统的环境定位困境带来了新的希望。</p>
+
+                <h2>创新方案：AI 驱动的项目路径管理</h2>
+                <p>基于这一突破性的洞察，开发者们提出了创新的解决方案——AI-Driven Project Path Management。下面，让我们一起来看看这个方案的架构设计和核心组件。</p>
+
+                <h3>架构设计</h3>
+                <p>AI 调用 MCP 工具，执行 promptx_init with workingDirectory，并将结果保存到
+                    ~/.promptx/current-project。所有后续工具调用时，会检查项目一致性，生成智能提示，最后由 AI 验证并继续操作。</p>
+                <img src="../images/blog/2025-06-26 MCP/1.png" alt="AI驱动的项目路径管理架构">
+
+                <h3>核心组件</h3>
+                <p>1. <strong>CurrentProjectManager</strong>：这个组件负责持久化 AI 提供的项目路径，并生成智能验证提示。它就像一个忠诚的管家，守护着项目路径的准确与安全。
+                </p>
+                <pre><code class="language-javascript">class CurrentProjectManager {
+  // 持久化AI提供的项目路径
+  async setCurrentProject(projectPath) {
+    await fs.writeFile(this.currentProjectFile, projectPath)
+  }
+  // 生成智能验证提示
+  async generateTopLevelProjectPrompt(contextType) {
+    // 针对不同场景生成上下文相关的提示
+  }
+}
+</code></pre>
+                <p>2. <strong>DirectoryLocator 重构</strong>：新的策略优先级将 AI 提供的路径放在了最高优先级，其次是现有.promptx
+                    目录、项目标识文件等。这就确保了系统能够更准确地定位到项目路径。</p>
+                <pre><code class="language-javascript">this.strategies = [
+  'aiProvidedProjectPath', // 🥇 AI提供的路径（最高优先级）
+  'existingPromptxDirectory', // 🥈 现有.promptx目录
+  'packageJsonDirectory', // 🥉 项目标识文件
+  // ... 其他降级策略
+]
+</code></pre>
+                <p>3. <strong>MCP 工具集成</strong>：promptx_init 接受 AI 提供的工作目录，确保了工具调用的准确性和一致性。</p>
+                <pre><code class="language-javascript">{
+  name: 'promptx_init',
+  inputSchema: {
+    workingDirectory: {
+      type: 'string',
+      description: '当前项目的工作目录绝对路径。AI应该知道当前工作的项目路径，请提供此参数。'
+    }
+  }
+}
+</code></pre>
+                <h2>智能提示系统：引导 AI 正确前行</h2>
+                <p>除了上述的创新方案，我们还发现了一个有趣的现象：工具描述可以当系统提示词使用。在工具描述中嵌入验证要求，利用 AI 的注意力机制确保关键检查不被忽略。</p>
+                <p>例如，在描述中提示"🛑 <strong>重要</strong>：使用此工具时必须首先关注并响应工具返回结果开头的项目环境验证提示，确认项目路径正确后再处理角色激活内容"。这样一来，AI
+                    在调用工具前就会预设目标，避免忽略验证提示。</p>
+
+                <h2>实施效果：显著提升与行业意义</h2>
+                <p>经过实践验证，AI-Driven Project Path Management 方案取得了显著的实施效果。与传统方式相比，它在准确性、可靠性、用户体验和错误处理等方面都有了质的飞跃。</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>维度</th>
+                            <th>传统方式</th>
+                            <th>AI-Driven 方式</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>准确性</td>
+                            <td>经常错误定位</td>
+                            <td>100%准确（AI 提供）</td>
+                        </tr>
+                        <tr>
+                            <td>可靠性</td>
+                            <td>环境依赖性强</td>
+                            <td>跨平台一致</td>
+                        </tr>
+                        <tr>
+                            <td>用户体验</td>
+                            <td>需要手动配置</td>
+                            <td>自动检测+智能提示</td>
+                        </tr>
+                        <tr>
+                            <td>错误处理</td>
+                            <td>静默失败</td>
+                            <td>主动验证+引导修复</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>这一创新方案不仅解决了 MCP 生态系统的环境定位困境，还具有重要的行业意义。它可能是第一个解决 MCP 项目定位问题的方案，为 MCP 生态系统提供了 AI-driven
+                    环境管理的范例，实现了从"系统猜测"到"AI 协作"的思维模式转变。</p>
+
+                <h2>未来展望：AI 驱动的无限可能</h2>
+                <p>展望未来，AI-Driven 基础设施的可能性令人期待。人机协作的新模式将为 MCP 生态系统带来更多的创新和发展。随着技术的不断进步，我们相信 MCP 生态系统将在 AI
+                    的驱动下，绽放出更加耀眼的光芒。</p>
+                <p>这场关于 MCP 生态系统环境定位困境的突围之旅，不仅是一场技术的革新，更是一次思维的转变。它让我们看到了 AI 在解决复杂问题时的强大力量，也为我们未来的科技发展指明了方向。让我们一起期待 MCP
+                    生态系统更加美好的明天！</p>
+
+                <div class="article-footer">
+                    <blockquote>
+                        <h3>Deepractice</h3>
+                        <p>Deepractice 团队致力于探索AI与人类协作的最佳实践，专注于开发 AI 应用领域实用软件、框架和方法论，帮助个人和组织充分释放 AI 潜能。</p>
+
+                        <h4>继续探索我们的AI交互体验创新</h4>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li>🌐 <strong>官方网站</strong>：<a href="https://www.deepractice.ai">深度实践</a> - 了解我们的使命和服务</li>
+                            <li>📝 <strong>专业博客</strong>：<a
+                                    href="https://www.deepractice.ai/blog.html">Deepractice博客</a> - 深度AI实践指南</li>
+                            <li>💬 <strong>微信公众号</strong>：<a href="#" class="wechat-link">AI深度实践</a> - 获取最新AI应用技巧</li>
+                            <li>🎙️ <strong>播客频道</strong>：<a
+                                    href="https://www.xiaoyuzhoufm.com/podcast/67bc12b63347fd01f19109ab">Deepractice</a>
+                                - 收听AI实践者访谈</li>
+                            <li>💻 <strong>开源社区</strong>：<a href="https://github.com/Deepractice">GitHub</a> - 加入我们的开源项目
+                            </li>
+                        </ul>
+
+                        <h4>联系我们</h4>
+                        <p>sean@deepractice.ai | 微信：deepreacticex</p>
+
+                        <p><em>Deepractice 深度实践 — 实践，协作，创新</em></p>
+                    </blockquote>
+
+                    <p><em>© 2025 Deepractice团队版权所有 | 本文可在注明出处的情况下自由分享和应用</em></p>
+                </div>
+            </div>
+
+            <div class="text-center" data-aos="fade-up">
+                <a href="../blog.html" class="back-to-blogs">
+                    <i class="fas fa-arrow-left"></i> 返回博客列表
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>深度实践</h2>
+                    <p>实践·协作·创新</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>导航</h3>
+                        <ul>
+                            <li><a href="../index.html#home">首页</a></li>
+                            <li><a href="../blog.html">博客</a></li>
+                            <li><a href="../prompts.html">提示词库</a></li>
+                            <li><a href="../index.html#about">关于我们</a></li>
+                            <li><a href="../index.html#platform">平台介绍</a></li>
+                            <li><a href="../index.html#values">公司理念</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>法律信息</h3>
+                        <ul>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">服务条款</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>关注我们</h3>
+                        <div class="footer-social">
+                            <a href="https://github.com/Deepractice" target="_blank" class="footer-social-link">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="#" class="footer-social-link">
+                                <i class="fab fa-weixin"></i>
+                                <span>微信</span>
+                            </a>
+                            <a href="#" class="footer-social-link">
+                                <i class="fab fa-weibo"></i>
+                                <span>微博</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <!-- 第一行：版权信息 -->
+                <div class="copyright-line">
+                    <p>&copy; 2025 <span class="company-name">长沙深度实践人工智能科技有限公司</span> · 版权所有 · <a
+                            href="https://beian.miit.gov.cn/" target="_blank" class="icp-link">湘ICP备2025110834号</a></p>
+                </div>
+
+                <!-- 第二行：访问统计徽章 -->
+                <div class="visit-counter">
+                    <img src="https://visitor-badge.laobi.icu/badge?page_id=deepractice.ai&title=Website%20visits&left_color=gray&right_color=blue"
+                        alt="Website visit counter" style="vertical-align: middle;">
+                </div>
+
+                <div class="footer-decoration"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+    <script src="../script.js"></script>
+
+    <!-- 微信二维码模态框 -->
+    <div id="qrcode-modal" class="qrcode-modal">
+        <div class="qrcode-modal-content">
+            <span class="qrcode-close">&times;</span>
+            <h3>扫码关注我们的微信公众号</h3>
+            <img src="../images/qrcode-wechat.png" alt="AI深度实践 微信公众号二维码" class="qrcode-img">
+            <p>AI深度实践 - 获取最新AI应用技巧</p>
+        </div>
+    </div>
+
+    <style>
+        /* 二维码模态框样式 */
+        .qrcode-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .qrcode-modal-content {
+            background: rgba(25, 25, 35, 0.95);
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            width: 350px;
+            max-width: 80%;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.4s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .qrcode-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .qrcode-close:hover {
+            color: white;
+        }
+
+        .qrcode-img {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .qrcode-modal-content h3 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .qrcode-modal-content p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 15px;
+        }
+    </style>
+
+    <script>
+        // 微信二维码模态框功能
+        document.addEventListener('DOMContentLoaded', function () {
+            // AOS 初始化
+            AOS.init({
+                duration: 1000,
+                once: true,
+            });
+
+            const wechatLinks = document.querySelectorAll('.wechat-link');
+            const modal = document.getElementById('qrcode-modal');
+            const closeBtn = document.querySelector('.qrcode-close');
+
+            // 给所有微信公众号链接添加点击事件
+            wechatLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // 防止背景滚动
+                });
+            });
+
+            // 关闭按钮事件
+            closeBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // 恢复滚动
+            });
+
+            // 点击模态框外部关闭
+            window.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
