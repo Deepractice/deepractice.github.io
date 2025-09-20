@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptX ToolX - 让AI的企业集成像呼吸一样简单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* 背景动画粒子 */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1.5s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 3s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 4.5s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 6s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 7.5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 9s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 10.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translateY(-10vh) scale(1); opacity: 1; }
+            80% { opacity: 1; }
+        }
+
+        /* 幻灯片容器 */
+        .slide-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide {
+            min-height: 100vh;
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 标题页特殊样式 */
+        .title-slide {
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+        }
+
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
+            letter-spacing: -2px;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1) drop-shadow(0 0 30px rgba(99, 102, 241, 0.5)); }
+            to { filter: brightness(1.2) drop-shadow(0 0 50px rgba(139, 92, 246, 0.7)); }
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #cbd5e1;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        /* 内容页样式 */
+        .content-slide {
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #f1f5f9, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.4rem;
+            color: #94a3b8;
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+
+        /* 故事卡片样式 */
+        .story-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+        }
+
+        .story-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .story-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+        }
+
+        .story-content {
+            color: #cbd5e1;
+            line-height: 1.8;
+            font-size: 1.2rem;
+        }
+
+        /* 数据展示样式 */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .data-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .data-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .data-label {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        /* 代码演示样式 */
+        .code-demo {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: 'Fira Code', 'Monaco', monospace;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .code-line {
+            color: #e2e8f0;
+            margin: 10px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .code-comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .code-keyword {
+            color: #c084fc;
+        }
+
+        .code-string {
+            color: #86efac;
+        }
+
+        .code-function {
+            color: #67e8f9;
+        }
+
+        /* 对比表格 */
+        .comparison-table {
+            width: 100%;
+            margin: 40px 0;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            color: #f1f5f9;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .comparison-table td {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table .highlight {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        /* 架构图样式 */
+        .architecture-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 40px 0;
+            padding: 40px;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 20px;
+        }
+
+        .arch-component {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            position: relative;
+        }
+
+        .arch-component::after {
+            content: '→';
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #6366f1;
+        }
+
+        .arch-component:last-child::after {
+            display: none;
+        }
+
+        .arch-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .arch-title {
+            font-size: 1.3rem;
+            color: #f1f5f9;
+            margin-bottom: 10px;
+        }
+
+        .arch-desc {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* 导航控制 */
+        .nav-controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px 30px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-btn {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: white;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(99, 102, 241, 0.4);
+            transform: scale(1.1);
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background: #6366f1;
+            transform: scale(1.4);
+        }
+
+        /* CTA按钮 */
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .architecture-diagram {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .arch-component::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子动画 -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- 幻灯片容器 -->
+    <div class="slide-container">
+        <!-- 第1页：封面页 -->
+        <div class="slide active title-slide">
+            <div class="slide-content">
+                <h1 class="main-title">PromptX ToolX</h1>
+                <p class="subtitle">让AI的企业集成像呼吸一样简单</p>
+                
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="data-value">3分钟</div>
+                        <div class="data-label">完成企业集成</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">零门槛</div>
+                        <div class="data-label">业务人员可用</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">100x</div>
+                        <div class="data-label">效率提升</div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 50px; font-size: 1.3rem; color: #94a3b8;">
+                    Sean Jiang @ Deepractice | Cursor MeetUp 长沙站<br>
+                    2025年9月20日
+                </p>
+            </div>
+        </div>
+
+        <!-- 第2页：开场故事 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">一个真实的困境</h2>
+                <p class="section-subtitle">从朋友的需求说起</p>
+                
+                <div class="story-card">
+                    <span class="story-icon">😰</span>
+                    <h3 class="story-title">朋友："我需要一个能收发邮件的AI助手"</h3>
+                    <p class="story-content">
+                        听起来很简单的需求，但实际操作时...<br><br>
+                        • 安装MCP协议 → 环境配置复杂<br>
+                        • 处理依赖冲突 → npm地狱<br>
+                        • 调试各种报错 → 文档不全<br>
+                        • 最终... → 放弃了 😔
+                    </p>
+                </div>
+                
+                <div class="story-card" style="margin-top: 30px;">
+                    <span class="story-icon">💡</span>
+                    <h3 class="story-title">核心洞察</h3>
+                    <p class="story-content">
+                        <strong style="color: #6366f1; font-size: 1.4rem;">
+                            AI的企业级需求本质是集成，但集成太难了！
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：如果... -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">如果...</h2>
+                <p class="section-subtitle">让我们重新想象AI集成</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 40px; margin-top: 60px;">
+                    <div class="story-card">
+                        <h3 class="story-title">🎯 如果AI能一句话就接入企业系统？</h3>
+                        <p class="story-content">不需要写代码，不需要配环境，说出需求就能实现</p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <h3 class="story-title">👥 如果业务人员也能完成系统集成？</h3>
+                        <p class="story-content">打破技术壁垒，让每个人都能成为集成专家</p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <h3 class="story-title">⚡ 如果每个集成只需要3分钟？</h3>
+                        <p class="story-content">从2天到3分钟，100倍效率提升不是梦</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：邮件助手演示 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">展示可能：邮件助手</h2>
+                <p class="section-subtitle">传统方式2天 vs PromptX 3分钟</p>
+
+                <div class="story-card">
+                    <span class="story-icon">📧</span>
+                    <h3 class="story-title">智能邮件收发助手</h3>
+                    <div class="code-demo">
+                        <div class="code-line code-comment"># AI读取未读邮件</div>
+                        <div class="code-line">
+                            <span class="code-keyword">const</span> emails = <span class="code-keyword">await</span> <span class="code-function">readUnreadEmails</span>();
+                        </div>
+                        <div class="code-line code-comment"># 智能分析内容</div>
+                        <div class="code-line">
+                            <span class="code-keyword">const</span> analysis = <span class="code-keyword">await</span> AI.<span class="code-function">analyzeContent</span>(emails);
+                        </div>
+                        <div class="code-line code-comment"># 自动生成回复</div>
+                        <div class="code-line">
+                            <span class="code-keyword">const</span> reply = <span class="code-keyword">await</span> AI.<span class="code-function">generateReply</span>(analysis);
+                        </div>
+                        <div class="code-line code-comment"># 一键发送</div>
+                        <div class="code-line">
+                            <span class="code-keyword">await</span> <span class="code-function">sendEmail</span>(reply);
+                        </div>
+                    </div>
+                    <p class="story-content" style="margin-top: 20px;">
+                        ✨ 全程无需写代码，3分钟完成集成
+                    </p>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <a href="https://www.bilibili.com/video/BV1wBpQzZESe/" target="_blank" class="cta-button" style="display: inline-flex; align-items: center; gap: 10px;">
+                            <span>▶️</span> 观看完整演示视频
+                        </a>
+                        <p style="color: #94a3b8; margin-top: 15px; font-size: 1rem;">点击查看3分钟邮箱集成实录</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 第5页：核心创新1 - ToolInterface -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">核心创新：ToolInterface</h2>
+                <p class="section-subtitle">集成模式框架化 - 让AI有统一的集成标准</p>
+                
+                <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 20px; padding: 40px; margin: 40px 0;">
+                    <h3 style="text-align: center; color: #f1f5f9; font-size: 1.6rem; margin-bottom: 40px;">
+                        🎯 任何企业API都能用这5个方法标准化
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
+                        <div style="text-align: center; background: rgba(15, 23, 42, 0.6); padding: 25px 15px; border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                            <div style="font-size: 2.5rem; margin-bottom: 15px;">📦</div>
+                            <div style="color: #6366f1; font-weight: 600; font-size: 1.1rem; margin-bottom: 10px;">getDependencies</div>
+                            <div style="color: #94a3b8; font-size: 0.95rem;">声明需要什么</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(15, 23, 42, 0.6); padding: 25px 15px; border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                            <div style="font-size: 2.5rem; margin-bottom: 15px;">📋</div>
+                            <div style="color: #6366f1; font-weight: 600; font-size: 1.1rem; margin-bottom: 10px;">getMetadata</div>
+                            <div style="color: #94a3b8; font-size: 0.95rem;">描述工具用途</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(15, 23, 42, 0.6); padding: 25px 15px; border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                            <div style="font-size: 2.5rem; margin-bottom: 15px;">📐</div>
+                            <div style="color: #6366f1; font-weight: 600; font-size: 1.1rem; margin-bottom: 10px;">getSchema</div>
+                            <div style="color: #94a3b8; font-size: 0.95rem;">定义参数格式</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(15, 23, 42, 0.6); padding: 25px 15px; border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                            <div style="font-size: 2.5rem; margin-bottom: 15px;">✅</div>
+                            <div style="color: #6366f1; font-weight: 600; font-size: 1.1rem; margin-bottom: 10px;">validate</div>
+                            <div style="color: #94a3b8; font-size: 0.95rem;">验证输入正确</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(15, 23, 42, 0.6); padding: 25px 15px; border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                            <div style="font-size: 2.5rem; margin-bottom: 15px;">🚀</div>
+                            <div style="color: #6366f1; font-weight: 600; font-size: 1.1rem; margin-bottom: 10px;">execute</div>
+                            <div style="color: #94a3b8; font-size: 0.95rem;">执行核心功能</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="architecture-diagram">
+                    <div class="arch-component">
+                        <div class="arch-icon">🏢</div>
+                        <div class="arch-title">企业API</div>
+                        <div class="arch-desc">任意系统接口</div>
+                    </div>
+                    <div class="arch-component">
+                        <div class="arch-icon">🔧</div>
+                        <div class="arch-title">ToolInterface</div>
+                        <div class="arch-desc">标准化封装</div>
+                    </div>
+                    <div class="arch-component">
+                        <div class="arch-icon">🤖</div>
+                        <div class="arch-title">AI理解</div>
+                        <div class="arch-desc">统一调用</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第6页：核心创新2 - ToolSandbox -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">核心创新：ToolSandbox</h2>
+                <p class="section-subtitle">基于Node.js生态的智能运行环境</p>
+                
+                <div class="data-grid" style="margin-top: 50px;">
+                    <div class="story-card">
+                        <span class="story-icon">📦</span>
+                        <h3 class="story-title">智能依赖管理</h3>
+                        <p class="story-content">
+                            自动分析依赖<br>
+                            pnpm智能安装<br>
+                            版本冲突隔离
+                        </p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <span class="story-icon">🏗️</span>
+                        <h3 class="story-title">运行时环境搭建</h3>
+                        <p class="story-content">
+                            独立沙箱环境<br>
+                            即插即用<br>
+                            无需配置
+                        </p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <span class="story-icon">🔒</span>
+                        <h3 class="story-title">安全隔离机制</h3>
+                        <p class="story-content">
+                            VM沙箱保护<br>
+                            目录权限限制<br>
+                            企业级安全
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <h3 style="font-size: 2rem; color: #6366f1;">
+                        快速集成 + 稳定运行 + 安全隔离 = 企业级保障
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第7页：能力展示 - 一句话开发的威力 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">🚀 能力展示：一句话开发的威力</h2>
+                <p class="section-subtitle">从想法到工具，只需一句话</p>
+
+                <div class="story-card" style="margin-top: 40px;">
+                    <span class="story-icon" style="font-size: 4rem;">🎨</span>
+                    <h3 class="story-title" style="font-size: 2rem; margin: 30px 0;">AI生图工具 - 一句话调用DALL-E</h3>
+
+                    <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); padding: 40px; border-radius: 20px; margin: 30px 0;">
+                        <p style="color: #f1f5f9; font-size: 1.5rem; margin-bottom: 30px; text-align: center;">
+                            <strong>"帮我创建一个调用AI生图模型的工具"</strong>
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+                            <div>
+                                <h4 style="color: #6366f1; margin-bottom: 15px;">✨ 瞬间实现</h4>
+                                <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.1rem;">
+                                    • 自动集成DALL-E、Midjourney等主流模型<br>
+                                    • 智能处理提示词优化<br>
+                                    • 批量生成与管理功能<br>
+                                    • 3分钟完成全部开发
+                                </p>
+                            </div>
+                            <div>
+                                <h4 style="color: #8b5cf6; margin-bottom: 15px;">🎯 核心价值</h4>
+                                <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.1rem;">
+                                    • 零代码实现AI能力<br>
+                                    • 业务人员即可操作<br>
+                                    • 立即投入生产使用<br>
+                                    • 无需维护和部署
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 40px;">
+                        <a href="https://www.bilibili.com/video/BV1ZmpQzDEer/" target="_blank" class="cta-button" style="display: inline-flex; align-items: center; gap: 15px; background: linear-gradient(135deg, #ec4899, #8b5cf6); font-size: 1.3rem; padding: 20px 50px;">
+                            <span style="font-size: 1.5rem;">▶️</span> 观看完整开发实录
+                        </a>
+                        <p style="color: #94a3b8; margin-top: 20px; font-size: 1.2rem;">
+                            见证3分钟：从一句话到生产力工具
+                        </p>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 50px;">
+                        <p style="font-size: 1.8rem; color: #6366f1; font-weight: 600;">
+                            "每个想法都值得被实现，每个工具都只需3分钟"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第8页：企业价值 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">三大价值革命</h2>
+                <p class="section-subtitle">从工具到生产力的跃迁</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 30px;">
+                    <div class="story-card" style="border-left: 5px solid #6366f1;">
+                        <h3 class="story-title">⚡ 效率革命</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <p class="story-content">集成时间：周 → 分钟</p>
+                                <p class="story-content">效率提升：100倍</p>
+                            </div>
+                            <div class="data-value">100x</div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card" style="border-left: 5px solid #8b5cf6;">
+                        <h3 class="story-title">👥 门槛革命</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <p class="story-content">使用者：程序员 → 业务人员</p>
+                                <p class="story-content">普及率：IT部门 → 全员可用</p>
+                            </div>
+                            <div class="data-value">全员</div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card" style="border-left: 5px solid #ec4899;">
+                        <h3 class="story-title">💎 资产革命</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <p class="story-content">模式：一次性开发 → 可复用工具库</p>
+                                <p class="story-content">价值：成本中心 → 知识资产</p>
+                            </div>
+                            <div class="data-value">∞</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第9页：无限可能的未来 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">展望：无限可能</h2>
+                <p class="section-subtitle">PromptX 将连接一切企业服务</p>
+
+                <table class="comparison-table" style="margin-top: 40px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">技术平台集成</th>
+                            <th style="width: 50%;">业务价值实现</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>PromptX + FFmpeg</strong></td>
+                            <td class="highlight">AI智能剪辑、视频批处理</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + 微信开放平台</strong></td>
+                            <td class="highlight">公众号运营、客户自动回复</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + 企业微信</strong></td>
+                            <td class="highlight">财务审批、打卡签到、会议管理</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + 钉钉</strong></td>
+                            <td class="highlight">OKR管理、项目协作、日报周报</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + Jira/GitLab</strong></td>
+                            <td class="highlight">敏捷开发、代码审查、CI/CD自动化</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + 阿里云/AWS</strong></td>
+                            <td class="highlight">云资源管理、成本优化、监控告警</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + Salesforce/HubSpot</strong></td>
+                            <td class="highlight">CRM智能分析、销售线索跟进</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + SAP/用友</strong></td>
+                            <td class="highlight">ERP数据分析、供应链优化</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + Elasticsearch</strong></td>
+                            <td class="highlight">日志分析、智能搜索、异常检测</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PromptX + IoT平台</strong></td>
+                            <td class="highlight">设备监控、预测性维护、能源管理</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <p style="font-size: 1.8rem; color: #6366f1; font-weight: 600;">
+                        "任何有API的系统，都能在3分钟内被AI掌控"
+                    </p>
+                    <p style="color: #94a3b8; margin-top: 15px; font-size: 1.2rem;">
+                        这不是未来，这是现在正在发生的事
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第10页：技术架构总览 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">完整技术架构</h2>
+                <p class="section-subtitle">端到端的企业集成解决方案</p>
+                
+                <div class="architecture-diagram" style="flex-direction: column; gap: 40px;">
+                    <div style="display: flex; justify-content: space-around; width: 100%;">
+                        <div class="arch-component">
+                            <div class="arch-icon">🏢</div>
+                            <div class="arch-title">企业系统</div>
+                            <div class="arch-desc">ERP/CRM/OA等</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">🔌</div>
+                            <div class="arch-title">API接口</div>
+                            <div class="arch-desc">REST/GraphQL等</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">📝</div>
+                            <div class="arch-title">ToolInterface</div>
+                            <div class="arch-desc">标准化封装</div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; font-size: 2rem; color: #6366f1;">⬇️</div>
+                    
+                    <div style="display: flex; justify-content: space-around; width: 100%;">
+                        <div class="arch-component">
+                            <div class="arch-icon">📦</div>
+                            <div class="arch-title">ToolSandbox</div>
+                            <div class="arch-desc">智能执行环境</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-title">AI/人类</div>
+                            <div class="arch-desc">统一调用接口</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">💼</div>
+                            <div class="arch-title">业务价值</div>
+                            <div class="arch-desc">即时生效</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第11页：结尾与行动呼吁 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="text-align: center;">
+                <h2 class="main-title" style="font-size: 3.5rem;">开启企业集成新时代</h2>
+                <p class="subtitle" style="font-size: 1.6rem; margin-bottom: 60px;">
+                    让每个企业都能在3分钟内接入任何系统
+                </p>
+                
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="data-value">2.7k⭐</div>
+                        <div class="data-label">GitHub Stars</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">215+</div>
+                        <div class="data-label">Forks</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">15+</div>
+                        <div class="data-label">核心工具</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 60px;">
+                    <a href="https://github.com/Deepractice/PromptX" class="cta-button">
+                        🚀 立即体验 PromptX
+                    </a>
+                </div>
+                
+                <div style="margin-top: 50px;">
+                    <p style="font-size: 1.3rem; color: #cbd5e1;">
+                        GitHub: <strong>github.com/Deepractice/PromptX</strong><br>
+                        官网: <strong>deepractice.ai</strong>
+                    </p>
+                    <p style="margin-top: 30px; color: #94a3b8;">
+                        感谢聆听 | Q&A环节
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航控制 -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">‹</button>
+        <div class="slide-indicator">
+            <div class="indicator-dot active" data-slide="0"></div>
+            <div class="indicator-dot" data-slide="1"></div>
+            <div class="indicator-dot" data-slide="2"></div>
+            <div class="indicator-dot" data-slide="3"></div>
+            <div class="indicator-dot" data-slide="4"></div>
+            <div class="indicator-dot" data-slide="5"></div>
+            <div class="indicator-dot" data-slide="6"></div>
+            <div class="indicator-dot" data-slide="7"></div>
+            <div class="indicator-dot" data-slide="8"></div>
+            <div class="indicator-dot" data-slide="9"></div>
+            <div class="indicator-dot" data-slide="10"></div>
+        </div>
+        <button class="nav-btn" id="nextBtn">›</button>
+    </div>
+
+    <script>
+        // 幻灯片导航逻辑
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+
+        // 事件监听
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                // F键全屏
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // 触摸手势支持
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', () => {
+            document.querySelector('.slide.active').style.opacity = '1';
+            document.querySelector('.slide.active').style.transform = 'translateX(0)';
+        });
+    </script>
+</body>
+</html>
