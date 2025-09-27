@@ -358,9 +358,62 @@
             background-clip: text;
             font-weight: 700;
         }
+        /* 图片预览模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #6366f1;
+        }
+
+        .clickable-img {
+            cursor: zoom-in;
+            transition: opacity 0.3s;
+        }
+
+        .clickable-img:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
+    <!-- 图片预览模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
     <!-- 背景粒子动画 -->
     <div class="particles">
         <div class="particle"></div>
@@ -419,15 +472,24 @@
 
                     <p style="color: #cbd5e1; font-size: 1.3rem; line-height: 1.8; margin-bottom: 40px;">
                         PromptX Writer 自我介绍<br>
-                        <span style="font-size: 1.1rem; color: #94a3b8;">包含完整的创作视频演示</span>
+                        <span style="font-size: 1.1rem; color: #94a3b8;">完整展示AI写作能力</span>
                     </p>
 
-                    <a href="https://mp.weixin.qq.com/s/5I0Dh-6pTuAEacmDvJCiSg"
-                       target="_blank"
-                       class="cta-button"
-                       style="display: inline-block; padding: 20px 50px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border-radius: 50px; font-size: 1.3rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);">
-                        🔗 点击查看文章与视频
-                    </a>
+                    <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                        <a href="https://mp.weixin.qq.com/s/5I0Dh-6pTuAEacmDvJCiSg"
+                           target="_blank"
+                           class="cta-button"
+                           style="display: inline-block; padding: 18px 45px; background: linear-gradient(135deg, #07c160, #06ae56); color: white; border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(7, 193, 96, 0.3);">
+                            📄 查看文章
+                        </a>
+
+                        <a href="https://www.bilibili.com/video/BV1c6njzXEv6/"
+                           target="_blank"
+                           class="cta-button"
+                           style="display: inline-block; padding: 18px 45px; background: linear-gradient(135deg, #00a1d6, #0093d0); color: white; border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0, 161, 214, 0.3);">
+                            ▶️ 观看视频
+                        </a>
+                    </div>
 
                     <p style="color: #94a3b8; font-size: 1rem; margin-top: 30px;">
                         建议在演示时点击跳转，展示Writer的实际创作能力
@@ -461,38 +523,20 @@
                         📝 Writer 实战案例展示
                     </h3>
 
-                    <div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 60px;">
-                        <!-- 微信公众号文章 -->
-                        <div style="text-align: center; flex: 1;">
-                            <div style="background: white; padding: 15px; border-radius: 15px; display: inline-block; margin-bottom: 20px;">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://mp.weixin.qq.com/s/gV33qYJCq1kJwev7C_RDmw"
-                                     alt="WeChat Article QR"
-                                     style="width: 180px; height: 180px; display: block;">
-                            </div>
-                            <p style="color: #f1f5f9; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">
-                                微信公众号文章
-                            </p>
-                            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.5;">
-                                AI驱动创作的深度思考<br>
-                                扫码查看完整文章
-                            </p>
-                        </div>
+                    <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin: 30px 0;">
+                        <a href="https://mp.weixin.qq.com/s/gV33qYJCq1kJwev7C_RDmw"
+                           target="_blank"
+                           style="display: inline-block; padding: 20px 40px; background: linear-gradient(135deg, #07c160, #06ae56); color: white; border-radius: 15px; font-size: 1.1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(7, 193, 96, 0.3); text-align: center; min-width: 200px;">
+                            <div style="font-size: 1.3rem; margin-bottom: 10px;">📰 微信公众号文章</div>
+                            <div style="font-size: 0.95rem; font-weight: 400;">AI驱动创作的深度思考</div>
+                        </a>
 
-                        <!-- 知乎回答 -->
-                        <div style="text-align: center; flex: 1;">
-                            <div style="background: white; padding: 15px; border-radius: 15px; display: inline-block; margin-bottom: 20px;">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://www.zhihu.com/question/1953425972318672060/answer/1954612452105912731"
-                                     alt="Zhihu Answer QR"
-                                     style="width: 180px; height: 180px; display: block;">
-                            </div>
-                            <p style="color: #f1f5f9; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">
-                                知乎高质量回答
-                            </p>
-                            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.5;">
-                                AI哲学问题的专业解答<br>
-                                扫码阅读详细内容
-                            </p>
-                        </div>
+                        <a href="https://www.zhihu.com/question/1953425972318672060/answer/1954612452105912731"
+                           target="_blank"
+                           style="display: inline-block; padding: 20px 40px; background: linear-gradient(135deg, #0084ff, #0066cc); color: white; border-radius: 15px; font-size: 1.1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0, 132, 255, 0.3); text-align: center; min-width: 200px;">
+                            <div style="font-size: 1.3rem; margin-bottom: 10px;">💡 知乎高质量回答</div>
+                            <div style="font-size: 0.95rem; font-weight: 400;">AI哲学问题的专业解答</div>
+                        </a>
                     </div>
 
                     <p style="color: #cbd5e1; font-size: 1.1rem; text-align: center; margin-top: 30px;">
@@ -613,7 +657,32 @@
             </div>
         </div>
 
-        <!-- 第6页：矛盾论 -->
+        <!-- 第6页：第一性原理实例 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">第一性原理 - 实践案例</h2>
+                <p class="section-subtitle">PromptX中的实际应用</p>
+
+                <div style="background: rgba(15, 23, 42, 0.8); border-radius: 20px; padding: 20px; margin: 20px 0;">
+                    <img src="images/first-principle.png"
+                         alt="第一性原理提示词示例"
+                         class="clickable-img"
+                         onclick="openModal(this.src)"
+                         style="width: auto; max-width: 95%; max-height: 500px; margin: 0 auto; display: block; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                </div>
+
+                <p style="text-align: center; color: #cbd5e1; font-size: 1.1rem; margin-top: 20px;">
+                    通过不断追问"为什么"，直到找到不可再分的基础真理<br>
+                    <span style="color: #6366f1; font-size: 0.95rem;">🔍 点击图片查看大图</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- 第7页：矛盾论 -->
         <div class="slide content-slide">
             <div class="slide-content" style="position: relative;">
                 <!-- Logo in top right -->
@@ -668,7 +737,32 @@
             </div>
         </div>
 
-        <!-- 第7页：奥卡姆剃刀 -->
+        <!-- 第8页：辩证法实例 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">马克思主义辩证法 - 实践案例</h2>
+                <p class="section-subtitle">PromptX中的矛盾分析</p>
+
+                <div style="background: rgba(15, 23, 42, 0.8); border-radius: 20px; padding: 20px; margin: 20px 0;">
+                    <img src="images/contraction.png"
+                         alt="辩证法提示词示例"
+                         class="clickable-img"
+                         onclick="openModal(this.src)"
+                         style="width: auto; max-width: 95%; max-height: 500px; margin: 0 auto; display: block; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                </div>
+
+                <p style="text-align: center; color: #cbd5e1; font-size: 1.1rem; margin-top: 20px;">
+                    识别对立面，分析主导力量，预测发展方向<br>
+                    <span style="color: #6366f1; font-size: 0.95rem;">🔍 点击图片查看大图</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- 第9页：奥卡姆剃刀 -->
         <div class="slide content-slide">
             <div class="slide-content" style="position: relative;">
                 <!-- Logo in top right -->
@@ -723,7 +817,32 @@
             </div>
         </div>
 
-        <!-- 第8页：苏格拉底对话 -->
+        <!-- 第10页：奥卡姆剃刀实例 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">奥卡姆剃刀 - 实践案例</h2>
+                <p class="section-subtitle">PromptX中的极简设计</p>
+
+                <div style="background: rgba(15, 23, 42, 0.8); border-radius: 20px; padding: 20px; margin: 20px 0;">
+                    <img src="images/occam-razor.png"
+                         alt="奥卡姆剃刀提示词示例"
+                         class="clickable-img"
+                         onclick="openModal(this.src)"
+                         style="width: auto; max-width: 95%; max-height: 500px; margin: 0 auto; display: block; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                </div>
+
+                <p style="text-align: center; color: #cbd5e1; font-size: 1.1rem; margin-top: 20px;">
+                    删除冗余，提炼本质，用最少的词表达最准确的意思<br>
+                    <span style="color: #6366f1; font-size: 0.95rem;">🔍 点击图片查看大图</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- 第11页：苏格拉底对话 -->
         <div class="slide content-slide">
             <div class="slide-content" style="position: relative;">
                 <!-- Logo in top right -->
@@ -778,7 +897,32 @@
             </div>
         </div>
 
-        <!-- 第9页：整合总结 -->
+        <!-- 第12页：苏格拉底对话实例 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">苏格拉底对话 - 实践案例</h2>
+                <p class="section-subtitle">PromptX中的引导式对话</p>
+
+                <div style="background: rgba(15, 23, 42, 0.8); border-radius: 20px; padding: 20px; margin: 20px 0;">
+                    <img src="images/socrate.png"
+                         alt="苏格拉底对话提示词示例"
+                         class="clickable-img"
+                         onclick="openModal(this.src)"
+                         style="width: auto; max-width: 95%; max-height: 500px; margin: 0 auto; display: block; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                </div>
+
+                <p style="text-align: center; color: #cbd5e1; font-size: 1.1rem; margin-top: 20px;">
+                    通过渐进式提问，引导用户发现真正的需求<br>
+                    <span style="color: #6366f1; font-size: 0.95rem;">🔍 点击图片查看大图</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- 第13页：整合总结 -->
         <div class="slide content-slide">
             <div class="slide-content" style="position: relative;">
                 <!-- Logo in top right -->
@@ -829,7 +973,7 @@
             </div>
         </div>
 
-        <!-- 第10页：探索强人工智能 -->
+        <!-- 第14页：探索强人工智能 -->
         <div class="slide content-slide">
             <div class="slide-content" style="position: relative;">
                 <!-- Logo in top right -->
@@ -869,7 +1013,7 @@
             </div>
         </div>
 
-        <!-- 第11页：结尾与展望 -->
+        <!-- 第15页：结尾与展望 -->
         <div class="slide content-slide">
             <div class="slide-content" style="text-align: center; position: relative;">
                 <!-- Logo in top right -->
@@ -889,37 +1033,32 @@
                     </p>
                 </div>
 
-                <div style="display: flex; align-items: center; justify-content: center; gap: 80px; margin-top: 50px;">
-                    <!-- 左侧：二维码和微信信息 -->
-                    <div style="text-align: center;">
-                        <div style="background: white; padding: 20px; border-radius: 20px; display: inline-block;">
-                            <img src="images/shaqing-qrcode.jpg"
-                                 alt="WeChat QR Code"
-                                 style="width: 200px; height: 200px; display: block;">
-                        </div>
-                        <p style="color: #cbd5e1; font-size: 1.1rem; margin-top: 20px;">
-                            <strong style="color: #f1f5f9;">傻青</strong><br>
-                            扫码添加微信，加入AI哲学践行者社群
+                <div style="text-align: center; margin-top: 60px;">
+                    <div style="margin-bottom: 50px;">
+                        <p style="font-size: 1.5rem; color: #f1f5f9; margin-bottom: 30px;">
+                            🚀 <strong>开源项目</strong>
+                        </p>
+                        <a href="https://github.com/Deepractice/PromptX"
+                           target="_blank"
+                           style="display: inline-block; padding: 18px 45px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); margin: 0 10px;">
+                            <span style="font-size: 1.4rem;">📂</span> PromptX GitHub
+                        </a>
+                        <p style="color: #94a3b8; font-size: 1rem; margin-top: 15px;">
+                            哲学驱动的AI Agent平台
                         </p>
                     </div>
 
-                    <!-- 右侧：项目信息 -->
-                    <div style="text-align: left;">
-                        <p style="font-size: 1.4rem; color: #cbd5e1; line-height: 2;">
-                            <strong style="color: #f1f5f9; font-size: 1.5rem;">🚀 开源项目</strong><br>
-                            <strong>PromptX</strong> - 哲学驱动的AI Agent平台<br>
-                            <a href="https://github.com/Deepractice/PromptX"
-                               style="color: #6366f1; text-decoration: none; font-size: 1.1rem;">
-                                github.com/Deepractice/PromptX
-                            </a>
+                    <div>
+                        <p style="font-size: 1.5rem; color: #f1f5f9; margin-bottom: 30px;">
+                            👥 <strong>联系我们</strong>
                         </p>
-                        <p style="font-size: 1.4rem; color: #cbd5e1; line-height: 2; margin-top: 30px;">
-                            <strong style="color: #f1f5f9; font-size: 1.5rem;">🏠 组织主页</strong><br>
-                            <strong>Deepractice</strong> - 深度实践<br>
-                            <a href="https://github.com/Deepractice"
-                               style="color: #6366f1; text-decoration: none; font-size: 1.1rem;">
-                                github.com/Deepractice
-                            </a>
+                        <a href="https://github.com/Deepractice"
+                           target="_blank"
+                           style="display: inline-block; padding: 18px 45px; background: linear-gradient(135deg, #333, #555); color: white; border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); margin: 0 10px;">
+                            <span style="font-size: 1.4rem;">🏠</span> Deepractice 组织
+                        </a>
+                        <p style="color: #94a3b8; font-size: 1rem; margin-top: 15px;">
+                            深度实践 - 让AI触手可及
                         </p>
                     </div>
                 </div>
@@ -948,6 +1087,10 @@
             <div class="indicator-dot" data-slide="8"></div>
             <div class="indicator-dot" data-slide="9"></div>
             <div class="indicator-dot" data-slide="10"></div>
+            <div class="indicator-dot" data-slide="11"></div>
+            <div class="indicator-dot" data-slide="12"></div>
+            <div class="indicator-dot" data-slide="13"></div>
+            <div class="indicator-dot" data-slide="14"></div>
         </div>
         <button class="nav-btn" id="nextBtn">›</button>
     </div>
@@ -1038,6 +1181,35 @@
         window.addEventListener('load', () => {
             document.querySelector('.slide.active').style.opacity = '1';
             document.querySelector('.slide.active').style.transform = 'translateX(0)';
+        });
+
+        // 图片预览功能
+        function openModal(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = src;
+        }
+
+        // 关闭模态框
+        const modal = document.getElementById('imageModal');
+        const closeBtn = document.querySelector('.modal-close');
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
         });
     </script>
 </body>
