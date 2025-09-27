@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哲学思维在AI中的实践 - WaytoAGI AI切磋大会</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* 背景动画粒子 */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1.5s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 3s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 4.5s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 6s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 7.5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 9s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 10.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translateY(-10vh) scale(1); opacity: 1; }
+            80% { opacity: 1; }
+        }
+
+        /* 幻灯片容器 */
+        .slide-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide {
+            min-height: 100vh;
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 标题页特殊样式 */
+        .title-slide {
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
+            letter-spacing: -2px;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1) drop-shadow(0 0 30px rgba(99, 102, 241, 0.5)); }
+            to { filter: brightness(1.2) drop-shadow(0 0 50px rgba(139, 92, 246, 0.7)); }
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* 内容页样式 */
+        .content-slide {
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 35px;
+            background: linear-gradient(90deg, #f1f5f9, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 45px;
+            font-weight: 400;
+        }
+
+        /* 哲学卡片样式 */
+        .philosophy-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .philosophy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+        }
+
+        .philosophy-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .philosophy-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+        }
+
+        .philosophy-content {
+            color: #cbd5e1;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* 三段式布局 */
+        .three-part-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 35px 0;
+        }
+
+        .part-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .part-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .part-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .part-title {
+            color: #f1f5f9;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .part-content {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 视频演示样式 */
+        .video-demo {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            text-align: center;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #6366f1;
+            margin-bottom: 25px;
+        }
+
+        /* CTA按钮 */
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        /* 导航控制 */
+        .nav-controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px 30px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-btn {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: white;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(99, 102, 241, 0.4);
+            transform: scale(1.1);
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background: #6366f1;
+            transform: scale(1.4);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .three-part-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 强调文字 */
+        .highlight {
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        .emphasis {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子动画 -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- 幻灯片容器 -->
+    <div class="slide-container">
+        <!-- 第1页：封面页 -->
+        <div class="slide active title-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+
+                <h1 class="main-title">哲学思维在AI中的实践</h1>
+                <p class="subtitle">探索强人工智能的可能性</p>
+
+                <div style="margin: 50px 0;">
+                    <p style="font-size: 1.4rem; color: #cbd5e1; line-height: 1.8;">
+                        在AI行业中将哲学思维付诸实践<br>
+                        从PromptX Agent看哲学原理的技术转化
+                    </p>
+                </div>
+
+                <p style="margin-top: 60px; font-size: 1.2rem; color: #94a3b8;">
+                    傻青 | AI哲学践行者 开源AI团队理论设计师<br>
+                    Deepractice 深度实践<br>
+                    第17期 AI+行业 AI切磋大会 | 成都<br>
+                    2025年9月27日
+                </p>
+            </div>
+        </div>
+
+        <!-- 第2页：产品介绍 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px;">
+                    <img src="https://brands.deepractice.ai/images/PromptX-transparent.png" alt="PromptX" style="height: 60px; display: block;">
+                </div>
+                <h2 class="section-title">PromptX Writer</h2>
+                <p class="section-subtitle">AI驱动的智能写作助手</p>
+
+                <div class="video-demo">
+                    <div class="video-placeholder">
+                        ▶️
+                    </div>
+                    <h3 style="color: #f1f5f9; font-size: 1.5rem; margin-bottom: 15px;">
+                        Writer 工作演示
+                    </h3>
+                    <p style="color: #cbd5e1; font-size: 1.1rem; line-height: 1.7;">
+                        展示Writer如何理解用户意图<br>
+                        自动组织文章结构<br>
+                        生成高质量内容
+                    </p>
+                </div>
+
+                <div style="text-align: center;">
+                    <p style="font-size: 1.4rem; color: #6366f1; margin-top: 30px;">
+                        接下来，让我们看看背后的哲学原理...
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：总览 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">四大哲学原理</h2>
+                <p class="section-subtitle">从古典智慧到AI实践</p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 50px;">
+                    <div class="philosophy-card">
+                        <span class="philosophy-icon">🎯</span>
+                        <h3 class="philosophy-title">第一性原理</h3>
+                        <p class="philosophy-content">
+                            追求不可再分的基础真理<br>
+                            让AI帮助我们快速找到事物本质
+                        </p>
+                    </div>
+
+                    <div class="philosophy-card">
+                        <span class="philosophy-icon">⚖️</span>
+                        <h3 class="philosophy-title">马克思主义辩证法</h3>
+                        <p class="philosophy-content">
+                            揭示事物发展的内在动力<br>
+                            让AI呈现决策的本质对立面
+                        </p>
+                    </div>
+
+                    <div class="philosophy-card">
+                        <span class="philosophy-icon">✂️</span>
+                        <h3 class="philosophy-title">奥卡姆剃刀</h3>
+                        <p class="philosophy-content">
+                            如无必要，勿增实体<br>
+                            让AI成为复杂性清洁工
+                        </p>
+                    </div>
+
+                    <div class="philosophy-card">
+                        <span class="philosophy-icon">💬</span>
+                        <h3 class="philosophy-title">苏格拉底对话</h3>
+                        <p class="philosophy-content">
+                            通过提问引导发现真理<br>
+                            让AI主动收集具象信息
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：第一性原理 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">第一性原理</h2>
+                <p class="section-subtitle">从现象到本质的AI加速器</p>
+
+                <div class="three-part-layout">
+                    <div class="part-card">
+                        <div class="part-number">1</div>
+                        <div class="part-title">哲学来源</div>
+                        <div class="part-content">
+                            亚里士多德形而上学<br>
+                            笛卡尔、马斯克发扬<br>
+                            从基础事实推理
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">2</div>
+                        <div class="part-title">原本作用</div>
+                        <div class="part-content">
+                            突破思维定式<br>
+                            发现真实本质<br>
+                            创造最优方案
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">3</div>
+                        <div class="part-title">AI新意义</div>
+                        <div class="part-content">
+                            快速分析事物本质<br>
+                            智能追溯第一因<br>
+                            突破认知局限
+                        </div>
+                    </div>
+                </div>
+
+                <div class="philosophy-card" style="margin-top: 40px;">
+                    <h3 class="philosophy-title">
+                        <span class="emphasis">PromptX实践</span>
+                    </h3>
+                    <p class="philosophy-content" style="font-size: 1.2rem;">
+                        每个Agent都具备"追问本质"的能力<br>
+                        不满足于表面答案，帮用户找到问题根源<br>
+                        <span class="highlight">让AI成为本质分析的加速器</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第5页：矛盾论 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">马克思主义辩证法</h2>
+                <p class="section-subtitle">决策透明化的AI工具</p>
+
+                <div class="three-part-layout">
+                    <div class="part-card">
+                        <div class="part-number">1</div>
+                        <div class="part-title">哲学来源</div>
+                        <div class="part-content">
+                            马克思主义辩证法<br>
+                            对立统一规律<br>
+                            量变到质变
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">2</div>
+                        <div class="part-title">原本作用</div>
+                        <div class="part-content">
+                            揭示发展动力<br>
+                            抓住主要矛盾<br>
+                            理解矛盾转化
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">3</div>
+                        <div class="part-title">AI新意义</div>
+                        <div class="part-content">
+                            快速呈现对立面<br>
+                            精准评估得失<br>
+                            预测发展方向
+                        </div>
+                    </div>
+                </div>
+
+                <div class="philosophy-card" style="margin-top: 40px;">
+                    <h3 class="philosophy-title">
+                        <span class="emphasis">PromptX实践</span>
+                    </h3>
+                    <p class="philosophy-content" style="font-size: 1.2rem;">
+                        每个决策场景都分析"对立面A vs 对立面B"<br>
+                        评估主导力量，预测载体转化<br>
+                        <span class="highlight">让决策果断且符合实际</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第6页：奥卡姆剃刀 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">奥卡姆剃刀</h2>
+                <p class="section-subtitle">复杂性清洁工</p>
+
+                <div class="three-part-layout">
+                    <div class="part-card">
+                        <div class="part-number">1</div>
+                        <div class="part-title">哲学来源</div>
+                        <div class="part-content">
+                            威廉·奥卡姆<br>
+                            如无必要勿增实体<br>
+                            简约性原则
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">2</div>
+                        <div class="part-title">原本作用</div>
+                        <div class="part-content">
+                            选择最简假设<br>
+                            消除冗余因素<br>
+                            提高系统效率
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">3</div>
+                        <div class="part-title">AI新意义</div>
+                        <div class="part-content">
+                            Token经济优化<br>
+                            架构极简化<br>
+                            认知负担减轻
+                        </div>
+                    </div>
+                </div>
+
+                <div class="philosophy-card" style="margin-top: 40px;">
+                    <h3 class="philosophy-title">
+                        <span class="emphasis">PromptX实践</span>
+                    </h3>
+                    <p class="philosophy-content" style="font-size: 1.2rem;">
+                        每个Agent定义都遵循"三问原则"<br>
+                        这是必要的吗？能更短吗？可以复用吗？<br>
+                        <span class="highlight">用最少的资源达到最好的效果</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第7页：苏格拉底对话 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">苏格拉底对话</h2>
+                <p class="section-subtitle">信息补全的智能引擎</p>
+
+                <div class="three-part-layout">
+                    <div class="part-card">
+                        <div class="part-number">1</div>
+                        <div class="part-title">哲学来源</div>
+                        <div class="part-content">
+                            苏格拉底产婆术<br>
+                            通过提问引导<br>
+                            催生内在智慧
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">2</div>
+                        <div class="part-title">原本作用</div>
+                        <div class="part-content">
+                            催生智慧<br>
+                            破除偏见<br>
+                            深度探索
+                        </div>
+                    </div>
+
+                    <div class="part-card">
+                        <div class="part-number">3</div>
+                        <div class="part-title">AI新意义</div>
+                        <div class="part-content">
+                            收集具象信息<br>
+                            主动补全任务<br>
+                            检测认知盲点
+                        </div>
+                    </div>
+                </div>
+
+                <div class="philosophy-card" style="margin-top: 40px;">
+                    <h3 class="philosophy-title">
+                        <span class="emphasis">PromptX实践</span>
+                    </h3>
+                    <p class="philosophy-content" style="font-size: 1.2rem;">
+                        ISSUE协作框架的"Friendly Socratic"<br>
+                        Agent主动提问："你的具体场景是什么？"<br>
+                        <span class="highlight">将抽象需求转化为可执行任务</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第8页：整合总结 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">哲学智慧的AI转化</h2>
+                <p class="section-subtitle">四大原理构成AI认知链条</p>
+
+                <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 20px; padding: 40px; margin: 40px 0;">
+                    <div style="display: flex; justify-content: space-around; align-items: center;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">🎯</div>
+                            <div style="color: #f1f5f9; font-weight: 600; font-size: 1.2rem;">找本质</div>
+                            <div style="color: #94a3b8; margin-top: 10px;">第一性原理</div>
+                        </div>
+                        <div style="font-size: 2rem; color: #6366f1;">→</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">⚖️</div>
+                            <div style="color: #f1f5f9; font-weight: 600; font-size: 1.2rem;">看对立</div>
+                            <div style="color: #94a3b8; margin-top: 10px;">辩证法</div>
+                        </div>
+                        <div style="font-size: 2rem; color: #6366f1;">→</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">✂️</div>
+                            <div style="color: #f1f5f9; font-weight: 600; font-size: 1.2rem;">做减法</div>
+                            <div style="color: #94a3b8; margin-top: 10px;">奥卡姆剃刀</div>
+                        </div>
+                        <div style="font-size: 2rem; color: #6366f1;">→</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">💬</div>
+                            <div style="color: #f1f5f9; font-weight: 600; font-size: 1.2rem;">补信息</div>
+                            <div style="color: #94a3b8; margin-top: 10px;">苏格拉底</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="philosophy-card">
+                    <h3 class="philosophy-title" style="text-align: center; font-size: 1.8rem;">
+                        核心洞察
+                    </h3>
+                    <p class="philosophy-content" style="text-align: center; font-size: 1.3rem; line-height: 2;">
+                        <span class="emphasis">哲学不是装饰，而是AI的操作系统</span><br>
+                        古典智慧为AI提供了思维框架<br>
+                        让机器智能更接近人类智慧
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第9页：探索强人工智能 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="position: relative;">
+                <!-- Logo in top right -->
+                <div style="position: absolute; top: -40px; right: -40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 45px; opacity: 0.9;">
+                </div>
+                <h2 class="section-title">探索强人工智能的可能性</h2>
+                <p class="section-subtitle">从工具到智能主体的演进</p>
+
+                <div style="display: flex; flex-direction: column; gap: 30px; margin-top: 50px;">
+                    <div class="philosophy-card">
+                        <h3 class="philosophy-title">🧠 认知能力的构建</h3>
+                        <p class="philosophy-content">
+                            通过哲学原理赋予AI深度思考能力<br>
+                            不再是简单的模式匹配，而是真正的理解和推理
+                        </p>
+                    </div>
+
+                    <div class="philosophy-card">
+                        <h3 class="philosophy-title">🔄 自主决策的实现</h3>
+                        <p class="philosophy-content">
+                            矛盾论让AI理解trade-off<br>
+                            第一性原理让AI找到决策依据<br>
+                            形成独立的判断和选择能力
+                        </p>
+                    </div>
+
+                    <div class="philosophy-card">
+                        <h3 class="philosophy-title">💡 创造性思维的涌现</h3>
+                        <p class="philosophy-content">
+                            苏格拉底对话激发新想法<br>
+                            奥卡姆剃刀优化解决方案<br>
+                            从执行者变为创造者
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第10页：结尾与展望 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="text-align: center;">
+                <h2 class="main-title" style="font-size: 3.5rem;">哲学思维 × AI技术</h2>
+                <p class="subtitle" style="font-size: 1.6rem; margin-bottom: 60px;">
+                    开启智能新纪元
+                </p>
+
+                <div class="philosophy-card">
+                    <p style="font-size: 1.5rem; line-height: 2; color: #f1f5f9;">
+                        当2500年的哲学智慧<br>
+                        遇见21世纪的AI技术<br>
+                        <span class="emphasis" style="font-size: 1.8rem;">强人工智能不再遥远</span>
+                    </p>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <p style="font-size: 1.3rem; color: #cbd5e1;">
+                        <strong>PromptX</strong> - 哲学驱动的AI Agent平台<br>
+                        <strong>Deepractice</strong> - 深度实践，让AI触手可及
+                    </p>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <img src="https://brands.deepractice.ai/images/logo-white.png" alt="Deepractice" style="height: 35px; opacity: 0.8;">
+                </div>
+
+                <div style="margin-top: 50px;">
+                    <p style="color: #94a3b8; font-size: 1.2rem;">
+                        感谢聆听 | Q&A环节<br>
+                        一起探索AI的无限可能
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航控制 -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">‹</button>
+        <div class="slide-indicator">
+            <div class="indicator-dot active" data-slide="0"></div>
+            <div class="indicator-dot" data-slide="1"></div>
+            <div class="indicator-dot" data-slide="2"></div>
+            <div class="indicator-dot" data-slide="3"></div>
+            <div class="indicator-dot" data-slide="4"></div>
+            <div class="indicator-dot" data-slide="5"></div>
+            <div class="indicator-dot" data-slide="6"></div>
+            <div class="indicator-dot" data-slide="7"></div>
+            <div class="indicator-dot" data-slide="8"></div>
+            <div class="indicator-dot" data-slide="9"></div>
+        </div>
+        <button class="nav-btn" id="nextBtn">›</button>
+    </div>
+
+    <script>
+        // 幻灯片导航逻辑
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+
+        // 事件监听
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                // F键全屏
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // 触摸手势支持
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', () => {
+            document.querySelector('.slide.active').style.opacity = '1';
+            document.querySelector('.slide.active').style.transform = 'translateX(0)';
+        });
+    </script>
+</body>
+</html>
