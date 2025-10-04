@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一个纯AI Coding开源项目的成长史 - 潇湘黑客松</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* 背景动画粒子 */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1.5s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 3s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 4.5s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 6s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 7.5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 9s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 10.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translateY(-10vh) scale(1); opacity: 1; }
+            80% { opacity: 1; }
+        }
+
+        /* 幻灯片容器 */
+        .slide-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide {
+            min-height: 100vh;
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 标题页特殊样式 */
+        .title-slide {
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
+            letter-spacing: -2px;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1) drop-shadow(0 0 30px rgba(99, 102, 241, 0.5)); }
+            to { filter: brightness(1.2) drop-shadow(0 0 50px rgba(139, 92, 246, 0.7)); }
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* 内容页样式 */
+        .content-slide {
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 35px;
+            background: linear-gradient(90deg, #f1f5f9, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 45px;
+            font-weight: 400;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+        }
+
+        /* 数据展示 */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 35px 0;
+        }
+
+        .data-item {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .data-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .data-label {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            align-items: flex-start;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6366f1;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 3px solid #6366f1;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 15px;
+        }
+
+        .timeline-desc {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        /* 表格样式 */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            color: #f1f5f9;
+            border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            color: #cbd5e1;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        /* 强调 */
+        .highlight {
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        .emphasis {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        /* 导航控制 */
+        .nav-controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px 30px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-btn {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: white;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(99, 102, 241, 0.4);
+            transform: scale(1.1);
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background: #6366f1;
+            transform: scale(1.4);
+        }
+
+        /* 列表样式 */
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-list li {
+            padding: 15px 0 15px 40px;
+            position: relative;
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .bullet-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #6366f1;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* CTA按钮 */
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子动画 -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- 幻灯片容器 -->
+    <div class="slide-container">
+        <!-- 第1页：封面 -->
+        <div class="slide active title-slide">
+            <div class="slide-content">
+                <h1 class="main-title">一个纯AI Coding<br>开源项目的成长史</h1>
+                <p class="subtitle">PromptX：从提示词到AI协作平台的演进</p>
+                <div style="margin-top: 100px;">
+                    <p style="font-size: 1.3rem; color: #94a3b8; margin-bottom: 15px;">
+                        姜山 (Sean) | Deepractice.ai 创始人
+                    </p>
+                    <p style="font-size: 1.1rem; color: #64748b;">
+                        潇湘黑客松 | 长沙<br>
+                        2025年10月5日
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第2页：数据一览 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">PromptX 数据一览</h2>
+                <p class="section-subtitle">100% 由 AI 编写的开源项目</p>
+
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-number">2.8K+</div>
+                        <div class="data-label">⭐ GitHub Stars</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-number">228</div>
+                        <div class="data-label">🔱 Forks</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-number">160+</div>
+                        <div class="data-label">🚀 版本迭代</div>
+                    </div>
+                </div>
+
+                <div class="data-grid" style="margin-top: 30px;">
+                    <div class="data-item">
+                        <div class="data-number">5个月</div>
+                        <div class="data-label">⏱️ 从 0 到现在</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-number">0行</div>
+                        <div class="data-label">✍️ 人类手写代码</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-number">100%</div>
+                        <div class="data-label">🤖 AI 生成</div>
+                    </div>
+                </div>
+
+                <!-- GitHub 链接 -->
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://github.com/Deepractice/PromptX"
+                       target="_blank"
+                       class="cta-button"
+                       style="font-size: 1.3rem; padding: 18px 45px;">
+                        📂 访问 GitHub 仓库
+                    </a>
+                </div>
+
+                <div class="card" style="margin-top: 40px;">
+                    <h3 style="font-size: 1.8rem; color: #f1f5f9; margin-bottom: 25px;">
+                        <span class="emphasis">今天分享的主题</span>
+                    </h3>
+                    <p style="color: #cbd5e1; font-size: 1.2rem; line-height: 2;">
+                        <strong style="color: #6366f1;">微观</strong>：PromptX 如何从 0 成长到现在<br>
+                        <strong style="color: #6366f1;">宏观</strong>：透过 PromptX 看 AI Coding 市场的演变
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：第一幕 - Vibe Coding 诞生 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">第一幕：Vibe Coding 诞生</h2>
+                <p class="section-subtitle">2025年5月-6月</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">🚀 故事起点</div>
+                            <div class="timeline-desc">
+                                <strong>2025年5月初</strong><br>
+                                • PromptX 只是一堆 .md 提示词文件<br>
+                                • 项目膨胀，提示词越来越多<br>
+                                • 管理成本急剧上升
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">💡 转折点</div>
+                            <div class="timeline-desc">
+                                <strong class="highlight">痛点</strong>：提示词需要代码化管理<br>
+                                <strong class="highlight">决策</strong>：让 AI 全权负责代码实现
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">🎯 v0.1.0 发布（2025.7.9）</div>
+                            <div class="timeline-desc">
+                                <strong class="emphasis">从提示词到完整产品</strong><br>
+                                • AI 自主选择：JavaScript<br>
+                                • AI 设计架构：CLI + 资源管理<br>
+                                • AI 实现功能：记忆系统、角色系统、DPML 协议
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：Vibe Coding 市场洞察 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">市场洞察：Vibe Coding 元年</h2>
+                <p class="section-subtitle">2025年上半年，AI Coding 工具爆发</p>
+
+                <div class="card">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">代表性工具</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Cursor</strong>：Vibe Coding 的代表，对话式编程</li>
+                        <li><strong>Claude Code</strong>：自然语言驱动开发</li>
+                        <li><strong>GitHub Copilot</strong>：从补全到生成</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">关键转变</h3>
+                    <p style="color: #cbd5e1; font-size: 1.2rem; line-height: 1.8;">
+                        • 从 "AI 补全代码" → "AI 写代码"<br>
+                        • 从 "提示词技巧" → "意图表达"<br>
+                        • 开发者角色：<span class="highlight">写代码 → 提需求</span>
+                    </p>
+                </div>
+
+                <p style="text-align: center; margin-top: 40px; font-size: 1.3rem; color: #6366f1;">
+                    PromptX 搭上了 Vibe Coding 的快车
+                </p>
+            </div>
+        </div>
+
+        <!-- 第5页：第二幕 - 遭遇瓶颈 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">第二幕：遭遇瓶颈</h2>
+                <p class="section-subtitle">2025年7月-8月 · v0.1.0 - v0.2.0</p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 40px;">
+                    <div class="card">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 20px;">💣</div>
+                        <h3 style="font-size: 1.4rem; color: #f1f5f9; margin-bottom: 15px; text-align: center;">
+                            危机 1
+                        </h3>
+                        <p style="color: #cbd5e1; text-align: center; line-height: 1.7;">
+                            <strong>代码量 + 复杂度爆炸</strong><br>
+                            单体架构撑不住<br>
+                            需要工程化、模块化
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 20px;">💣</div>
+                        <h3 style="font-size: 1.4rem; color: #f1f5f9; margin-bottom: 15px; text-align: center;">
+                            危机 2
+                        </h3>
+                        <p style="color: #cbd5e1; text-align: center; line-height: 1.7;">
+                            <strong>AI 没有统一标准</strong><br>
+                            代码风格不一致<br>
+                            维护成本急剧上升
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 20px;">💣</div>
+                        <h3 style="font-size: 1.4rem; color: #f1f5f9; margin-bottom: 15px; text-align: center;">
+                            危机 3
+                        </h3>
+                        <p style="color: #cbd5e1; text-align: center; line-height: 1.7;">
+                            <strong>缺少测试覆盖</strong><br>
+                            新增功能怕破坏原有逻辑<br>
+                            <span class="highlight">严重阻碍迭代速度</span>
+                        </p>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 50px; font-size: 1.5rem; color: #ec4899;">
+                    用户增多，功能需求爆炸 → PromptX 开始遭遇成长的烦恼
+                </p>
+            </div>
+        </div>
+
+        <!-- 第6页：市场洞察 - 痛苦期 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">市场洞察：Vibe Coding 的痛苦期</h2>
+                <p class="section-subtitle">整个行业都在经历类似问题</p>
+
+                <div class="card">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">行业现象</h3>
+                    <ul class="bullet-list">
+                        <li>Cursor 用户反馈：生成代码质量不稳定</li>
+                        <li>GitHub Copilot：大项目中容易"翻车"</li>
+                        <li>社区讨论：需要 "AI + 人类" 的协作规范</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">
+                        <span class="emphasis">关键认知</span>
+                    </h3>
+                    <p style="color: #cbd5e1; font-size: 1.3rem; line-height: 2;">
+                        • <strong>Vibe Coding ≠ 银弹</strong><br>
+                        • 复杂项目需要工程化约束<br>
+                        • 测试和质量保证不可或缺
+                    </p>
+                </div>
+
+                <p style="text-align: center; margin-top: 40px; font-size: 1.3rem; color: #6366f1;">
+                    PromptX 的选择：正面应对，引入规范化
+                </p>
+            </div>
+        </div>
+
+        <!-- 第7页：第三幕 - 重生 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">第三幕：Spec Coding 重生</h2>
+                <p class="section-subtitle">2025年9月-至今 · v1.20.0+</p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 40px;">
+                    <div class="card">
+                        <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">
+                            🔧 技术重构
+                        </h3>
+                        <p style="color: #cbd5e1; line-height: 1.8;">
+                            • TypeScript 重写（类型安全）<br>
+                            • 模块化架构（pnpm monorepo）<br>
+                            • 完整测试覆盖（单元 + 集成）<br>
+                            • MCP 协议深度集成
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">
+                            📋 Spec Coding 实践
+                        </h3>
+                        <p style="color: #cbd5e1; line-height: 1.8;">
+                            • <strong>CCPM</strong>：代码规范管理<br>
+                            • <strong>Spec-Kit</strong>：规范工具包<br>
+                            • <strong>Cursor Rules</strong>：AI 行为约束<br>
+                            • <strong>Claude Code Subagent</strong>：专业分工
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px; text-align: center;">
+                        <span class="emphasis">编程方式的跃迁</span>
+                    </h3>
+                    <p style="color: #cbd5e1; font-size: 1.3rem; text-align: center; line-height: 2;">
+                        从 "完全放手" → "规范约束"<br>
+                        <strong class="highlight">定义标准，AI 按规范执行</strong><br>
+                        人类提供规范和架构，AI 负责实现和优化
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第8页：市场洞察 - 新时代 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">市场洞察：Spec + Multi-Agent 时代</h2>
+                <p class="section-subtitle">2025年下半年，AI Coding 进入新阶段</p>
+
+                <div class="card">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">市场趋势</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Claude Projects</strong>：上下文管理 + 多角色</li>
+                        <li><strong>Cursor Rules</strong>：规范化配置兴起</li>
+                        <li><strong>Agent 框架爆发</strong>：Langchain、AutoGPT、CrewAI</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">关键转变</h3>
+                    <p style="color: #cbd5e1; font-size: 1.2rem; line-height: 2;">
+                        • 从 "单 AI 生成" → "多 Agent 协作"<br>
+                        • 从 "自由发挥" → "规范约束"<br>
+                        • 从 "个人工具" → "团队平台"
+                    </p>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.6rem; color: #f1f5f9; margin-bottom: 20px;">
+                        <span class="emphasis">PromptX 的定位</span>
+                    </h3>
+                    <p style="color: #cbd5e1; font-size: 1.3rem; text-align: center; line-height: 2;">
+                        不是替代 Cursor/Claude Code<br>
+                        而是<strong class="highlight">为它们注入专业能力</strong><br>
+                        让每个 AI 都能成为领域专家
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第9页：演进总结 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">PromptX 的三次蜕变</h2>
+                <p class="section-subtitle">从提示词到 AI 协作平台</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>阶段</th>
+                            <th>时间</th>
+                            <th>版本</th>
+                            <th>核心特征</th>
+                            <th>AI Coding 模式</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong class="highlight">诞生</strong></td>
+                            <td>2025.5-7</td>
+                            <td>v0.1.0</td>
+                            <td>从提示词到代码</td>
+                            <td>Vibe Coding</td>
+                        </tr>
+                        <tr>
+                            <td><strong class="highlight">危机</strong></td>
+                            <td>2025.7-8</td>
+                            <td>v0.1.0-v0.2.0</td>
+                            <td>三大瓶颈爆发</td>
+                            <td>痛苦期</td>
+                        </tr>
+                        <tr>
+                            <td><strong class="highlight">重生</strong></td>
+                            <td>2025.9+</td>
+                            <td>v1.20.0+</td>
+                            <td>规范化 + Multi-Agent</td>
+                            <td>Spec + Multi-Agent</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 第10页：关键洞察 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">关键洞察</h2>
+                <p class="section-subtitle">从 PromptX 成长史中学到的</p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-top: 40px;">
+                    <div class="card">
+                        <h3 style="font-size: 1.5rem; color: #f1f5f9; margin-bottom: 15px;">
+                            1️⃣ Vibe Coding 不是终点
+                        </h3>
+                        <p style="color: #cbd5e1; line-height: 1.8;">
+                            适合快速原型和简单项目<br>
+                            复杂系统需要规范和工程化
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="font-size: 1.5rem; color: #f1f5f9; margin-bottom: 15px;">
+                            2️⃣ Spec Coding 是必经之路
+                        </h3>
+                        <p style="color: #cbd5e1; line-height: 1.8;">
+                            规范 = 人类的经验固化<br>
+                            AI 按规范 = 质量保证<br>
+                            测试覆盖 = 迭代信心
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="font-size: 1.5rem; color: #f1f5f9; margin-bottom: 15px;">
+                            3️⃣ Multi-Agent 是未来
+                        </h3>
+                        <p style="color: #cbd5e1; line-height: 1.8;">
+                            单 AI 有认知边界<br>
+                            多 Agent 分工 = 专业化 + 协作<br>
+                            人类角色：从写代码 → 编排团队
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="font-size: 1.5rem; color: #f1f5f9; margin-bottom: 15px;">
+                            4️⃣ AI Coding 的本质演进
+                        </h3>
+                        <p style="color: #cbd5e1; line-height: 1.8;">
+                            <strong class="emphasis">Vibe → Spec → Multi-Agent</strong><br>
+                            = <strong class="highlight">从助手 → 伙伴 → 团队</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第11页：给开发者的建议 -->
+        <div class="slide content-slide">
+            <div class="slide-content">
+                <h2 class="section-title">给开发者的建议</h2>
+                <p class="section-subtitle">根据你的阶段，选择正确的方向</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">如果你现在还在 Vibe Coding</div>
+                            <div class="timeline-desc">
+                                • 享受速度，但要警惕质量<br>
+                                • 小项目可以，大项目需要规范
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">如果你遇到了瓶颈</div>
+                            <div class="timeline-desc">
+                                • 不是 AI 的问题，是缺少规范<br>
+                                • 引入 Spec：代码规范、测试覆盖、架构约束
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">如果你想进入 Multi-Agent</div>
+                            <div class="timeline-desc">
+                                • 从角色分工开始<br>
+                                • 用 PromptX 这样的平台赋能<br>
+                                • <strong class="highlight">人类掌握战略，AI 负责战术</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第12页：结尾 -->
+        <div class="slide content-slide">
+            <div class="slide-content" style="text-align: center;">
+                <h2 class="main-title" style="font-size: 3.5rem;">谢谢！</h2>
+                <p class="subtitle" style="font-size: 1.8rem; margin-top: 40px;">
+                    <span class="emphasis">PromptX：让 AI 触手可及</span>
+                </p>
+
+                <div style="margin-top: 80px;">
+                    <a href="https://github.com/Deepractice/PromptX"
+                       target="_blank"
+                       class="cta-button"
+                       style="font-size: 1.4rem; padding: 22px 50px;">
+                        📂 GitHub: Deepractice/PromptX
+                    </a>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <p style="font-size: 1.3rem; color: #cbd5e1; margin-bottom: 20px;">
+                        姜山 (Sean) - deepractice.ai
+                    </p>
+                    <p style="font-size: 1.1rem; color: #94a3b8;">
+                        让AI不只是工具，而是真正的协作伙伴
+                    </p>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <p style="color: #94a3b8; font-size: 1.2rem;">
+                        Q&A 环节
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航控制 -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">‹</button>
+        <div class="slide-indicator">
+            <div class="indicator-dot active" data-slide="0"></div>
+            <div class="indicator-dot" data-slide="1"></div>
+            <div class="indicator-dot" data-slide="2"></div>
+            <div class="indicator-dot" data-slide="3"></div>
+            <div class="indicator-dot" data-slide="4"></div>
+            <div class="indicator-dot" data-slide="5"></div>
+            <div class="indicator-dot" data-slide="6"></div>
+            <div class="indicator-dot" data-slide="7"></div>
+            <div class="indicator-dot" data-slide="8"></div>
+            <div class="indicator-dot" data-slide="9"></div>
+            <div class="indicator-dot" data-slide="10"></div>
+            <div class="indicator-dot" data-slide="11"></div>
+        </div>
+        <button class="nav-btn" id="nextBtn">›</button>
+    </div>
+
+    <script>
+        // 幻灯片导航逻辑
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+
+        // 事件监听
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                // F键全屏
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // 触摸手势支持
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', () => {
+            document.querySelector('.slide.active').style.opacity = '1';
+            document.querySelector('.slide.active').style.transform = 'translateX(0)';
+        });
+    </script>
+</body>
+</html>
