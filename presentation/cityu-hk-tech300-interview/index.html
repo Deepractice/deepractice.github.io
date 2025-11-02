@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptX - AI Agent Context Platform | HK Tech 300 Pitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0099cc;
+            --accent-color: #ff6b35;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --gradient-main: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            --gradient-card: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* 粒子背景 */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: var(--dark-bg);
+        }
+
+        /* 主容器 */
+        .presentation-container {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部导航 */
+        .presentation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            position: relative;
+            z-index: 10;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .slide-counter {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .nav-btn {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* 幻灯片容器 */
+        .slides-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: translateX(-100px);
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            height: 100%;
+            max-height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        /* 标题样式 */
+        .slide-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            text-align: center;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .slide-subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.8)); }
+        }
+
+        /* 开场英雄区域 */
+        .hero-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(30, 30, 30, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.3);
+            animation: popIn 1s ease-out;
+        }
+
+        .hero-title {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .title-main {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
+            letter-spacing: -3px;
+        }
+
+        .title-sub {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: popIn 0.6s ease-out backwards;
+        }
+
+        .stat-item:nth-child(1) { animation-delay: 0.3s; }
+        .stat-item:nth-child(2) { animation-delay: 0.4s; }
+        .stat-item:nth-child(3) { animation-delay: 0.5s; }
+
+        .stat-number {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 900;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .hero-tagline {
+            max-width: 700px;
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        /* 卡片网格 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card-stat {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* 痛点卡片特殊样式 */
+        .pain-card {
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .pain-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
+        }
+
+        .pain-icon {
+            color: var(--accent-color);
+            filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.5));
+        }
+
+        /* 图表容器 */
+        .chart-container {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            max-height: 400px;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        /* 统计数据 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--gradient-card);
+            padding: 1.8rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: popIn 0.5s ease-out backwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .stat-value {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-growth {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* 时间轴 */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: var(--gradient-main);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 5px solid var(--dark-bg);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .timeline-metric {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* 团队网格 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .team-member {
+            background: var(--gradient-card);
+            padding: 1.8rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: popIn 0.5s ease-out backwards;
+        }
+
+        .team-member:nth-child(1) { animation-delay: 0.1s; }
+        .team-member:nth-child(2) { animation-delay: 0.2s; }
+        .team-member:nth-child(3) { animation-delay: 0.3s; }
+        .team-member:nth-child(4) { animation-delay: 0.4s; }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .team-role {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .team-background {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* 优势列表 */
+        .advantages-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .advantage-item {
+            background: var(--gradient-card);
+            padding: 1.8rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .advantage-item:nth-child(1) { animation-delay: 0.1s; }
+        .advantage-item:nth-child(2) { animation-delay: 0.2s; }
+        .advantage-item:nth-child(3) { animation-delay: 0.3s; }
+        .advantage-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .advantage-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .advantage-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+        }
+
+        .advantage-item h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .advantage-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* CTA按钮 */
+        .cta-section {
+            text-align: center;
+            margin-top: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.5s backwards;
+        }
+
+        .cta-text {
+            font-size: clamp(1.3rem, 2.5vw, 2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--gradient-main);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+            animation: popIn 0.5s ease-out 0.6s backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presentation-header {
+                padding: 1rem;
+            }
+
+            .logo-subtitle {
+                display: none;
+            }
+
+            .slide-content {
+                padding: 0.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .advantages-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 全屏模式 */
+        .fullscreen-btn {
+            background: none;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-btn:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .presentation-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+        }
+
+        .presentation-container.fullscreen #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 主容器 -->
+    <div class="presentation-container">
+        <!-- 顶部导航 -->
+        <header class="presentation-header">
+            <div class="logo">
+                <span class="logo-text">PromptX</span>
+                <span class="logo-subtitle">AI Agent Context Platform</span>
+            </div>
+            <div class="header-controls">
+                <div class="slide-counter">
+                    <span id="current-slide">1</span> / <span id="total-slides">12</span>
+                </div>
+                <button class="nav-btn" id="prev-btn" disabled>
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    </svg>
+                </button>
+                <button class="nav-btn" id="next-btn">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                    </svg>
+                </button>
+                <button class="fullscreen-btn" id="fullscreen-btn">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- 幻灯片容器 -->
+        <main class="slides-container">
+            <!-- 幻灯片 1: 开场 -->
+            <section class="slide active" data-slide="1">
+                <div class="slide-content">
+                    <div class="hero-section">
+                        <div class="hero-title">
+                            <h1 class="title-main">PromptX</h1>
+                            <p class="title-sub">AI Agent Context Platform for Industries</p>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">3K+</div>
+                                <div class="stat-label">GitHub Stars</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">50K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">2K+</div>
+                                <div class="stat-label">Private Community</div>
+                            </div>
+                        </div>
+                        <div class="hero-tagline">
+                            <p><strong>Making Professional AI Accessible to Everyone</strong><br>From 0 to 3,000 GitHub stars in 5 months. Proven community-driven GTM with zero marketing budget.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 2: 市场痛点 -->
+            <section class="slide" data-slide="2">
+                <div class="slide-content">
+                    <h2 class="slide-title">Three Critical AI Adoption Barriers</h2>
+                    <p class="slide-subtitle">Why 95% of enterprises struggle with AI implementation</p>
+
+                    <div class="grid">
+                        <div class="card pain-card">
+                            <div class="card-icon pain-icon">⚠️</div>
+                            <h3>High Technical Threshold</h3>
+                            <p>AI confined to programmers. 95% of employees can't leverage AI technology.</p>
+                            <div class="card-stat">Only 15% of tech workforce can use AI effectively</div>
+                        </div>
+
+                        <div class="card pain-card">
+                            <div class="card-icon pain-icon">🔧</div>
+                            <h3>Industry Adaptation Gap</h3>
+                            <p>Generic AI tools fail for professional work requiring domain expertise.</p>
+                            <div class="card-stat">No standardized industry AI solutions</div>
+                        </div>
+
+                        <div class="card pain-card">
+                            <div class="card-icon pain-icon">📊</div>
+                            <h3>Knowledge Fragmentation</h3>
+                            <p>Critical data scattered across systems, creating coordination nightmares.</p>
+                            <div class="card-stat">High coordination costs, long cycles, low success rate</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 3: 解决方案 -->
+            <section class="slide" data-slide="3">
+                <div class="slide-content">
+                    <h2 class="slide-title">PromptX Solution: Three Breakthroughs</h2>
+                    <p class="slide-subtitle">Transforming any AI into domain experts instantly</p>
+
+                    <div class="grid">
+                        <div class="card">
+                            <div class="card-icon">🧠</div>
+                            <h3>Cognitive Memory System</h3>
+                            <p>Bio-inspired brain-like memory. Continuous learning and optimization through recall-remember loops.</p>
+                            <div class="card-stat">Builds expertise over time</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-icon">⚡</div>
+                            <h3>Nuwa Role Creation</h3>
+                            <p>Create professional AI roles with one sentence. "Legal research assistant", "Curriculum designer" - instant configuration.</p>
+                            <div class="card-stat">Ready in minutes, not months</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-icon">🔌</div>
+                            <h3>Luban Tool Integration</h3>
+                            <p>One-click AI tool generation. Seamlessly connects enterprise systems.</p>
+                            <div class="card-stat">Enterprise-grade integration</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">90%</div>
+                            <div class="stat-label">Lower Barrier</div>
+                            <div class="stat-growth">Reduced complexity</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">300%</div>
+                            <div class="stat-label">Efficiency Gain</div>
+                            <div class="stat-growth">Productivity boost</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">5+</div>
+                            <div class="stat-label">Ready Roles</div>
+                            <div class="stat-growth">Industry experts</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">∞</div>
+                            <div class="stat-label">Scalability</div>
+                            <div class="stat-growth">Ecosystem advantage</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 4: 技术解决方案 -->
+            <section class="slide" data-slide="4">
+                <div class="slide-content">
+                    <h2 class="slide-title">Technology Solutions</h2>
+                    <p class="slide-subtitle">Four core technologies powering PromptX</p>
+
+                    <div class="advantages-list">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🧠</div>
+                            <h4>Cognitive Architecture</h4>
+                            <p>Bio-inspired semantic network with active recall system. Mimics human brain memory formation through recall-remember loops, enabling continuous learning and expertise building.</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon">⚡</div>
+                            <h4>DPML Protocol</h4>
+                            <p>Structured Prompt Definition Markup Language. Industry-first standard for defining AI roles with structured metadata, enabling consistent, reusable, and scalable role creation.</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🎯</div>
+                            <h4>Dynamic Role Generation</h4>
+                            <p>Automated professional role creation engine. One-sentence prompt generates fully-configured domain experts with industry-specific knowledge and workflows.</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon">☁️</div>
+                            <h4>Flexible Deployment</h4>
+                            <p>On-premise deployment for data sovereignty + instant cloud service for speed. Choose deployment model that meets your security, compliance, and operational requirements.</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid" style="margin-top: 2rem;">
+                        <div class="stat-card">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Core Technologies</div>
+                            <div class="stat-growth">Proprietary innovations</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Independent IP</div>
+                            <div class="stat-growth">Self-developed stack</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">Cloud</div>
+                            <div class="stat-label">& On-Premise</div>
+                            <div class="stat-growth">Deployment flexibility</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 5: 市场机会 -->
+            <section class="slide" data-slide="5">
+                <div class="slide-content">
+                    <h2 class="slide-title">Market Opportunity</h2>
+                    <p class="slide-subtitle">Trillion-dollar AI enterprise software market</p>
+
+                    <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                        <div class="stat-card">
+                            <div class="stat-value">$150B+</div>
+                            <div class="stat-label">Global AI Enterprise Market</div>
+                            <div class="stat-growth">25% annual growth</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">$500M</div>
+                            <div class="stat-label">GBA + Hong Kong</div>
+                            <div class="stat-growth">50,000+ enterprises</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">60-80</div>
+                            <div class="stat-label">Year 1 Target Customers</div>
+                            <div class="stat-growth">0.1% penetration</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">High-Value Verticals</div>
+                            <div class="stat-growth">Ready for AI adoption</div>
+                        </div>
+                    </div>
+
+                    <h3 style="text-align: center; color: var(--primary-color); margin: 1.5rem 0 1rem; font-size: 1.3rem;">Target Segments</h3>
+                    <div class="grid" style="margin: 0;">
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">⚖️</div>
+                            <h3>Legal Services</h3>
+                            <p>Contract analysis, legal research, compliance automation</p>
+                            <div class="card-stat">$50B market</div>
+                        </div>
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">🎓</div>
+                            <h3>Education Technology</h3>
+                            <p>Curriculum design, personalized learning, assessment tools</p>
+                            <div class="card-stat">$300B sector</div>
+                        </div>
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">💼</div>
+                            <h3>Enterprise Consulting</h3>
+                            <p>Market research, business analysis, strategic planning</p>
+                            <div class="card-stat">$250B professional services</div>
+                        </div>
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">✍️</div>
+                            <h3>Content Creation</h3>
+                            <p>Brand copywriting, multimedia planning, SEO optimization</p>
+                            <div class="card-stat">$400B creative economy</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 6: 竞争优势 -->
+            <section class="slide" data-slide="6">
+                <div class="slide-content">
+                    <h2 class="slide-title">Competitive Advantage</h2>
+                    <p class="slide-subtitle">Two core differentiators: <span style="color: var(--primary-color); font-weight: 700;">EASY</span> & <span style="color: var(--primary-color); font-weight: 700;">PROFESSIONAL</span></p>
+
+                    <div class="advantages-list">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">⚡</div>
+                            <h4 style="color: var(--primary-color);">EASY - Extremely Simple to Use</h4>
+                            <p>One-sentence prompt creates professional AI roles. No technical expertise required. Get started in minutes, not months.</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🎯</div>
+                            <h4 style="color: var(--primary-color);">PROFESSIONAL - Industry-Grade AI</h4>
+                            <p>Not generic chatbots - deeply customized roles for real business scenarios. Trained on actual industry workflows and best practices.</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🧠</div>
+                            <h4>Cognitive Memory System</h4>
+                            <p>Unique semantic network enables TRUE learning and adaptation - accumulates expertise over time</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🌐</div>
+                            <h4>Flexible Deployment</h4>
+                            <p>Cloud SaaS AND on-premise options - unmatched data sovereignty and compliance for enterprises</p>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🔓</div>
+                            <h4>Open Ecosystem</h4>
+                            <p>Role Marketplace creates network effects - more roles = greater platform value for everyone</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid" style="margin-top: 1.5rem;">
+                        <div class="stat-card">
+                            <div class="stat-value">10x</div>
+                            <div class="stat-label">More Useful</div>
+                            <div class="stat-growth">than generic AI</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">70%</div>
+                            <div class="stat-label">Cost Savings</div>
+                            <div class="stat-growth">vs building in-house</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Compliance Risk</div>
+                            <div class="stat-growth">Data sovereignty guaranteed</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 7: 商业模式 -->
+            <section class="slide" data-slide="7">
+                <div class="slide-content">
+                    <h2 class="slide-title">Business Model</h2>
+                    <p class="slide-subtitle">Dual License framework with sustainable growth</p>
+
+                    <div class="grid">
+                        <div class="card">
+                            <h3 style="color: var(--success-color);">💚 Community Edition</h3>
+                            <p style="font-size: 1.3rem; font-weight: 600; margin: 1rem 0;">Free & Open Source</p>
+                            <p>✓ Core framework<br>✓ Community support<br>✓ Developer ecosystem<br>✓ Market awareness</p>
+                            <div class="card-stat">Building ecosystem moat</div>
+                        </div>
+
+                        <div class="card" style="border-color: var(--primary-color);">
+                            <h3>💎 Enterprise Edition</h3>
+                            <p style="font-size: 1.3rem; font-weight: 600; margin: 1rem 0; color: var(--primary-color);">Annual License</p>
+                            <p>✓ Advanced features<br>✓ Enterprise support<br>✓ SLA guarantees<br>✓ Custom development</p>
+                            <div class="card-stat">Primary revenue driver</div>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="color: var(--secondary-color);">☁️ Cloud Marketplace</h3>
+                            <p style="font-size: 1.3rem; font-weight: 600; margin: 1rem 0; color: var(--secondary-color);">Monthly Subscription</p>
+                            <p>✓ Pre-built industry roles<br>✓ Self-service platform<br>✓ Role customization<br>✓ Managed services</p>
+                            <div class="card-stat">Scalable recurring revenue</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">70%</div>
+                            <div class="stat-label">Recurring Revenue</div>
+                            <div class="stat-growth">SaaS & subscriptions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">20%</div>
+                            <div class="stat-label">Custom Development</div>
+                            <div class="stat-growth">High-margin projects</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">10%</div>
+                            <div class="stat-label">Professional Services</div>
+                            <div class="stat-growth">Consulting & training</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-label">Target Gross Margin</div>
+                            <div class="stat-growth">Software business model</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 8: GTM策略 -->
+            <section class="slide" data-slide="8">
+                <div class="slide-content">
+                    <h2 class="slide-title">Go-to-Market Strategy</h2>
+                    <p class="slide-subtitle">Four-channel approach to market domination</p>
+
+                    <div class="grid" style="margin-bottom: 1.5rem;">
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">🏢</div>
+                            <h3>Direct Enterprise Sales</h3>
+                            <p>Focus on 50-500 employee companies in legal, education, consulting sectors.</p>
+                            <div class="card-stat">High-value enterprise deals</div>
+                        </div>
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">🤝</div>
+                            <h3>Strategic Partnerships</h3>
+                            <p>Integrate with LLM providers, cloud platforms, enterprise software vendors.</p>
+                            <div class="card-stat">Ecosystem leverage</div>
+                        </div>
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">👥</div>
+                            <h3>Open Source Community</h3>
+                            <p>Developer-led growth through GitHub, hackathons, contribution programs.</p>
+                            <div class="card-stat">3,000+ GitHub stars</div>
+                        </div>
+                        <div class="card" style="padding: 1.5rem;">
+                            <div class="card-icon">🛒</div>
+                            <h3>Role Marketplace</h3>
+                            <p>Self-service cloud platform for SMEs with freemium model.</p>
+                            <div class="card-stat">Viral growth potential</div>
+                        </div>
+                    </div>
+
+                    <h3 style="text-align: center; color: var(--primary-color); margin: 1.5rem 0 1rem; font-size: 1.3rem;">Geographic Expansion</h3>
+                    <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div class="card" style="padding: 1.2rem; text-align: center;">
+                            <h4 style="margin-bottom: 0.5rem;">Phase 1: Foundation</h4>
+                            <p style="font-size: 0.95rem;">Hong Kong + Greater Bay Area</p>
+                        </div>
+                        <div class="card" style="padding: 1.2rem; text-align: center;">
+                            <h4 style="margin-bottom: 0.5rem;">Phase 2: Regional</h4>
+                            <p style="font-size: 0.95rem;">Southeast Asia</p>
+                        </div>
+                        <div class="card" style="padding: 1.2rem; text-align: center;">
+                            <h4 style="margin-bottom: 0.5rem;">Phase 3: Global</h4>
+                            <p style="font-size: 0.95rem;">International Markets</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 9: 开源社区驱动模式成功案例 -->
+            <section class="slide" data-slide="9">
+                <div class="slide-content">
+                    <h2 class="slide-title" style="font-size: 2rem; margin-bottom: 0.5rem;">Open Source Community Driven Model</h2>
+                    <p class="slide-subtitle" style="margin-bottom: 1rem; font-size: 1rem;">5 months of proven success in Mainland China (Jun-Nov 2025)</p>
+
+                    <div class="grid" style="margin-bottom: 1rem;">
+                        <div class="card" style="padding: 1rem;">
+                            <div class="card-icon" style="font-size: 2rem;">🏆</div>
+                            <h3 style="font-size: 1rem;">WayToAGI - 1st Place</h3>
+                            <p style="font-size: 0.85rem;">Chengdu & Guangzhou Meetups. Both events ranked #1 by audience vote.</p>
+                            <div class="card-stat" style="font-size: 0.75rem;">Aug 31, 2025</div>
+                        </div>
+                        <div class="card" style="padding: 1rem;">
+                            <div class="card-icon" style="font-size: 2rem;">💡</div>
+                            <h3 style="font-size: 1rem;">Hackathon Winner</h3>
+                            <p style="font-size: 0.85rem;">Changsha Way2AGI Hackathon. Travel itinerary agent won 1st place.</p>
+                            <div class="card-stat" style="font-size: 0.75rem;">Oct 24, 2025</div>
+                        </div>
+                        <div class="card" style="padding: 1rem;">
+                            <div class="card-icon" style="font-size: 2rem;">🎤</div>
+                            <h3 style="font-size: 1rem;">Nanjing Cursor Meetup</h3>
+                            <p style="font-size: 0.85rem;">Official meetup featured PromptX. Recognized by local government.</p>
+                            <div class="card-stat" style="font-size: 0.75rem;">Aug 9, 2025</div>
+                        </div>
+                        <div class="card" style="padding: 1rem;">
+                            <div class="card-icon" style="font-size: 2rem;">🌐</div>
+                            <h3 style="font-size: 1rem;">Entrepreneur Ecosystem</h3>
+                            <p style="font-size: 0.85rem;">GFC Global Freelancer Carnival (Chengdu). Expanded influence.</p>
+                            <div class="card-stat" style="font-size: 0.75rem;">Oct 24-25, 2025</div>
+                        </div>
+                    </div>
+
+                    <div style="position: relative; height: 400px; margin: 1rem 0; border-radius: 16px; overflow: hidden; border: 2px solid rgba(0, 212, 255, 0.3); background: var(--dark-bg);">
+                        <div id="imageCarousel" style="position: absolute; top: 0; left: 0; height: 100%; transition: none; display: flex; align-items: center;">
+                            <img src="images/1.png" alt="Community Event 1" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/2.png" alt="Community Event 2" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/3.png" alt="Community Event 3" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/4.png" alt="Community Event 4" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/5.png" alt="Community Event 5" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/6.png" alt="Community Event 6" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <!-- 复制一份图片用于无缝循环 -->
+                            <img src="images/1.png" alt="Community Event 1" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/2.png" alt="Community Event 2" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/3.png" alt="Community Event 3" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/4.png" alt="Community Event 4" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/5.png" alt="Community Event 5" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                            <img src="images/6.png" alt="Community Event 6" style="width: 320px; height: 320px; object-fit: contain; flex-shrink: 0; margin: 0 10px;">
+                        </div>
+                    </div>
+
+                    <div style="padding: 1rem; background: var(--gradient-card); border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.3);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Key Takeaway: Proven Community-Driven GTM</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5;">
+                            <strong style="color: var(--primary-color);">Zero marketing budget, maximum reach.</strong> Our open-source community model has proven highly effective in China, building a 50K+ user base through grassroots engagement, industry meetups, and real-world success stories.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 10: 团队 -->
+            <section class="slide" data-slide="10">
+                <div class="slide-content" style="padding: 1rem; gap: 1rem;">
+                    <h2 class="slide-title" style="font-size: 2.5rem; margin-bottom: 0.8rem;">World-Class Team</h2>
+                    <p class="slide-subtitle" style="margin-bottom: 1rem; font-size: 1.2rem;">Academic excellence meets entrepreneurial execution</p>
+
+                    <div class="team-grid" style="margin: 0;">
+                        <div class="team-member" style="padding: 1.2rem;">
+                            <div class="team-avatar">
+                                <img src="成员头像/Xiao HU.png" alt="Xiao HU" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            </div>
+                            <div class="team-role">Solution & Application</div>
+                            <div class="team-name">HU XIAO</div>
+                            <div class="team-background">HK PolyU</div>
+                            <div style="margin-top: 0.4rem; padding: 0.4rem; background: rgba(0, 212, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--primary-color);">
+                                Full Stack Solution Expert
+                            </div>
+                        </div>
+                        <div class="team-member" style="padding: 1.2rem;">
+                            <div class="team-avatar">
+                                <img src="成员头像/Maolin Wang.jpg" alt="Dr. Wang Maolin" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            </div>
+                            <div class="team-role">Data & AI</div>
+                            <div class="team-name">Dr. Wang Maolin</div>
+                            <div class="team-background">CityUHK</div>
+                            <div style="margin-top: 0.4rem; padding: 0.4rem; background: rgba(0, 212, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--primary-color);">
+                                LLM & ML Expert
+                            </div>
+                        </div>
+                        <div class="team-member" style="padding: 1.2rem;">
+                            <div class="team-avatar">
+                                <img src="成员头像/Jiang Shan.png" alt="Jiang Shan" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            </div>
+                            <div class="team-role">Core Development & Operation</div>
+                            <div class="team-name">Jiang Shan</div>
+                            <div class="team-background">South-Central Minzu University</div>
+                            <div style="margin-top: 0.4rem; padding: 0.4rem; background: rgba(0, 212, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--primary-color);">
+                                Full Stack Engineer & Agent Expert
+                            </div>
+                        </div>
+                        <div class="team-member" style="padding: 1.2rem;">
+                            <div class="team-avatar">
+                                <img src="成员头像/Qing-He Yang.jpg" alt="Qing-He Yang" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            </div>
+                            <div class="team-role">Marketing</div>
+                            <div class="team-name">Qing-He Yang</div>
+                            <div class="team-background">Tamkang University</div>
+                            <div style="margin-top: 0.4rem; padding: 0.4rem; background: rgba(0, 212, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--primary-color);">
+                                Marketing strategy expert, brand builder
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="text-align: center; color: var(--primary-color); margin: 1rem 0 0.8rem; font-size: 1.3rem;">Advisory Board - CityUHK</h3>
+                    <div class="grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 0;">
+                        <div class="card" style="display: flex; align-items: center; gap: 1rem; padding: 1rem;">
+                            <div style="width: 70px; height: 70px; border-radius: 50%; overflow: hidden; flex-shrink: 0;">
+                                <img src="成员头像/HUANG JIANGLIN.jpg" alt="Dr. Huang Jiaglin" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div>
+                                <h3 style="font-size: 1.1rem;">Dr. Huang Jiaglin</h3>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary);">CEO, Predicx Technology</p>
+                                <div class="card-stat" style="display: inline-block; margin-top: 0.4rem; font-size: 0.75rem;">CityUHK | Industry veteran</div>
+                            </div>
+                        </div>
+                        <div class="card" style="display: flex; align-items: center; gap: 1rem; padding: 1rem;">
+                            <div style="width: 70px; height: 70px; border-radius: 50%; overflow: hidden; flex-shrink: 0;">
+                                <img src="成员头像/ZHAO XIANGYU.jpg" alt="Prof. Zhao Xiangyu" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div>
+                                <h3 style="font-size: 1.1rem;">Prof. Zhao Xiangyu</h3>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary);">Associate Professor, CityUHK Data Science</p>
+                                <div class="card-stat" style="display: inline-block; margin-top: 0.4rem; font-size: 0.75rem;">CityUHK | Academic mentor</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 11: 里程碑 -->
+            <section class="slide" data-slide="11">
+                <div class="slide-content">
+                    <h2 class="slide-title">Three-Year Milestones</h2>
+                    <p class="slide-subtitle">Clear roadmap with measurable success metrics</p>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">Year 1</div>
+                            <div class="timeline-title">Foundation</div>
+                            <div class="timeline-content">
+                                <p>✓ MVP launch & validation<br>✓ 60-80 paying customers<br>✓ Enterprise Edition development<br>✓ Cloud Role Marketplace beta<br>✓ Team: 15-20 people</p>
+                            </div>
+                            <div class="timeline-metric">ARR: $500K</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">Year 2</div>
+                            <div class="timeline-title">Traction</div>
+                            <div class="timeline-content">
+                                <p>✓ 200-300 customers<br>✓ Marketplace: 25-30 roles<br>✓ Southeast Asia expansion<br>✓ Series A funding<br>✓ Team: 40-50 people</p>
+                            </div>
+                            <div class="timeline-metric">ARR: $3.5M</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">Year 3</div>
+                            <div class="timeline-title">Scale</div>
+                            <div class="timeline-content">
+                                <p>✓ 500+ enterprise customers<br>✓ Industry leadership position<br>✓ Global markets<br>✓ Platform ecosystem maturity<br>✓ Team: 80-100 people</p>
+                            </div>
+                            <div class="timeline-metric">ARR: $10M</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 12: 财务预测 -->
+            <section class="slide" data-slide="12">
+                <div class="slide-content">
+                    <h2 class="slide-title">Revenue Forecast</h2>
+                    <p class="slide-subtitle">Conservative projections, exceptional growth</p>
+
+                    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem; align-items: start;">
+                        <div class="chart-container" style="height: 420px;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 100%;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                                <div class="stat-card" style="padding: 1rem;">
+                                    <div class="stat-value" style="font-size: 1.5rem;">$500K</div>
+                                    <div class="stat-label" style="font-size: 0.8rem;">Year 1 ARR</div>
+                                    <div class="stat-growth" style="font-size: 0.7rem;">First revenue validation</div>
+                                </div>
+                                <div class="stat-card" style="padding: 1rem;">
+                                    <div class="stat-value" style="font-size: 1.5rem;">$3.5M</div>
+                                    <div class="stat-label" style="font-size: 0.8rem;">Year 2 ARR</div>
+                                    <div class="stat-growth" style="font-size: 0.7rem;">7x growth</div>
+                                </div>
+                            </div>
+                            <div class="stat-card" style="padding: 1rem;">
+                                <div class="stat-value" style="font-size: 1.5rem;">$10M</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Year 3 ARR</div>
+                                <div class="stat-growth" style="font-size: 0.7rem;">Market leadership</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                                <div class="stat-card" style="padding: 1rem;">
+                                    <div class="stat-value" style="font-size: 1.5rem;">170%</div>
+                                    <div class="stat-label" style="font-size: 0.8rem;">YoY Growth</div>
+                                </div>
+                                <div class="stat-card" style="padding: 1rem;">
+                                    <div class="stat-value" style="font-size: 1.5rem;">85%</div>
+                                    <div class="stat-label" style="font-size: 0.8rem;">Gross Margin</div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                                <div class="stat-card" style="padding: 1rem;">
+                                    <div class="stat-value" style="font-size: 1.5rem;">120%</div>
+                                    <div class="stat-label" style="font-size: 0.8rem;">NRR</div>
+                                </div>
+                                <div class="stat-card" style="padding: 1rem;">
+                                    <div class="stat-value" style="font-size: 1.5rem;">$8K</div>
+                                    <div class="stat-label" style="font-size: 0.8rem;">Average ACV</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 幻灯片 13: 感谢与问答 -->
+            <section class="slide" data-slide="13">
+                <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%;">
+                    <div style="animation: fadeInUp 1s ease-out;">
+                        <h1 style="font-size: clamp(5rem, 12vw, 10rem); font-weight: 900; background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 3rem; letter-spacing: -5px;">
+                            Thank You
+                        </h1>
+                        <div style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; color: var(--text-primary); margin-bottom: 1.5rem;">
+                            Questions & Answers
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 4rem; padding: 2.5rem; background: var(--gradient-card); border-radius: 24px; border: 2px solid rgba(0, 212, 255, 0.3); backdrop-filter: blur(20px); animation: fadeInUp 1s ease-out 0.3s backwards;">
+                        <p style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--text-primary); font-weight: 600; margin-bottom: 1rem;">
+                            PromptX
+                        </p>
+                        <p style="font-size: clamp(1rem, 2vw, 1.3rem); color: var(--text-secondary);">
+                            Making Professional AI Accessible to Everyone
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // 粒子背景初始化
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#00d4ff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#00d4ff",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // 幻灯片导航
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentSlideSpan = document.getElementById('current-slide');
+        const totalSlidesSpan = document.getElementById('total-slides');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const container = document.querySelector('.presentation-container');
+
+        totalSlidesSpan.textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i === index) {
+                    slide.classList.add('active');
+                } else if (i < index) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            currentSlideSpan.textContent = index + 1;
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === totalSlides - 1;
+
+            // 在第11页（财务预测）初始化图表
+            if (index === 10 && !window.revenueChartInitialized) {
+                initRevenueChart();
+                window.revenueChartInitialized = true;
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                currentSlide = 0;
+                showSlide(currentSlide);
+            } else if (e.key === 'End') {
+                currentSlide = totalSlides - 1;
+                showSlide(currentSlide);
+            }
+        });
+
+        // 图片轮播功能 - 连续滑动
+        let currentOffset = 0;
+        const carousel = document.getElementById('imageCarousel');
+        let animationId;
+        const speed = 3; // 每帧滑动的像素
+        const imageWidth = 340; // 320px图片 + 20px边距
+        const resetPoint = imageWidth * 6; // 6张图片的总滑动距离
+
+        function startImageCarousel() {
+            if (animationId) cancelAnimationFrame(animationId);
+            const animate = () => {
+                currentOffset -= speed;
+                carousel.style.transform = `translateX(${currentOffset}px)`;
+
+                // 当滑动到6张图片时，重置到0实现无缝循环
+                if (currentOffset <= -resetPoint) {
+                    currentOffset = 0;
+                }
+
+                animationId = requestAnimationFrame(animate);
+            };
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function stopImageCarousel() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            currentOffset = 0;
+            carousel.style.transform = 'translateX(0)';
+        }
+
+        // 监听幻灯片切换，在第9页启动轮播
+        const originalShowSlide = showSlide;
+        showSlide = function(index) {
+            originalShowSlide(index);
+            if (index === 8) { // 第9页
+                startImageCarousel();
+            } else {
+                stopImageCarousel();
+            }
+        };
+
+        // 全屏切换
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().then(() => {
+                    container.classList.add('fullscreen');
+                    fullscreenBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>';
+                });
+            } else {
+                document.exitFullscreen().then(() => {
+                    container.classList.remove('fullscreen');
+                    fullscreenBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
+                });
+            }
+        });
+
+        // 收入图表
+        function initRevenueChart() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3'],
+                    datasets: [
+                        {
+                            label: 'Enterprise Edition',
+                            data: [250, 1500, 4000],
+                            backgroundColor: 'rgba(0, 212, 255, 0.8)',
+                            borderColor: '#00d4ff',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Cloud Marketplace',
+                            data: [150, 1200, 3500],
+                            backgroundColor: 'rgba(0, 153, 204, 0.8)',
+                            borderColor: '#0099cc',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Professional Services',
+                            data: [100, 800, 2500],
+                            backgroundColor: 'rgba(0, 102, 153, 0.8)',
+                            borderColor: '#006699',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            stacked: true,
+                            ticks: {
+                                color: '#a0a0a0',
+                                callback: function(value) {
+                                    return '$' + value + 'K';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            stacked: true,
+                            ticks: {
+                                color: '#a0a0a0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.parsed.y + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 初始化第一页和图片轮播
+        showSlide(0);
+    </script>
+</body>
+</html>
